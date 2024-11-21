@@ -8,7 +8,7 @@ class InfoInsertFinishPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white, // AppBar 배경색
+        backgroundColor: Color(0xFF265A5A), // AppBar 배경색
         elevation: 0, // 그림자 제거
         actions: [
           IconButton(
