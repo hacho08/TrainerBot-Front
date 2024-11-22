@@ -1,3 +1,4 @@
+import 'package:dx_project_app/phone_number.dart';
 import 'package:flutter/material.dart';
 import 'main_login.dart'; // main_login.dart 파일을 import
 
@@ -23,10 +24,10 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 2초 후 main_login.dart로 이동
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MainLoginPage()),
+        MaterialPageRoute(builder: (context) => MainLoginPage()),
       );
     });
 

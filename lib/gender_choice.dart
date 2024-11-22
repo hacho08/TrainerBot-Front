@@ -1,3 +1,5 @@
+import 'package:dx_project_app/phone_number.dart';
+import 'package:dx_project_app/year.dart';
 import 'package:flutter/material.dart';
 import 'gender_check.dart';
 
@@ -57,11 +59,16 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                       IconButton(
                         icon: Icon(
                           Icons.arrow_back,
-                          color: Colors.teal[800],
+                          color: Color(0xFF989898),
                           size: screenWidth * 0.07,
                         ),
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PhoneNumberPage(),
+                            ),
+                          );
                         },
                       ),
                       Text(
@@ -69,7 +76,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                         style: TextStyle(
                           fontSize: screenWidth * 0.035,
                           fontFamily: "PaperlogyBold",
-                          color: Colors.teal[800],
+                          color: Color(0xFF989898),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -83,7 +90,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                           IconButton(
                             icon: Icon(
                               Icons.arrow_circle_right,
-                              color: Color(0xFFFFCC00),
+                              color: Color(0xFF265A5A),
                               size: screenWidth * 0.1,
                             ),
                             onPressed: () {
@@ -113,7 +120,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                             style: TextStyle(
                               fontSize: screenWidth * 0.035,
                               fontFamily: "PaperlogyBold",
-                              color: Color(0xFFFFCC00),
+                              color: Color(0xFF265A5A),
                             ),
                           ),
                         ],

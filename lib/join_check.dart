@@ -15,7 +15,7 @@ class JoinCheckPage extends StatelessWidget {
               '회원가입이\n완료되었습니다', // 전달된 운동 강도 텍스트를 사용
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 40,
+                fontSize: 80,
                 fontFamily: "PaperlogySemiBold",
                 fontWeight: FontWeight.bold,
               ),

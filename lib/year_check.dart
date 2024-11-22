@@ -1,5 +1,6 @@
 import 'package:dx_project_app/condition_choice.dart';
 import 'package:dx_project_app/gender_choice.dart';
+import 'package:dx_project_app/phone_number.dart';
 import 'package:flutter/material.dart';
 
 class YearCheckPage extends StatelessWidget {
@@ -11,10 +12,10 @@ class YearCheckPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 2초 후 main_login.dart로 이동
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => GenderChoicePage()),
+        MaterialPageRoute(builder: (context) => PhoneNumberPage()),
       );
     });
 

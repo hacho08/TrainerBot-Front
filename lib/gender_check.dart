@@ -14,7 +14,7 @@ class GenderCheckPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 2초 후 main_login.dart로 이동
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MedicalConditionChoicePage()),

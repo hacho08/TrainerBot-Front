@@ -1,6 +1,8 @@
+import 'package:dx_project_app/phone_number.dart';
 import 'package:flutter/material.dart';
 import 'login_check.dart';
 import 'join_check.dart';
+import 'login_phone_number.dart';
 import 'year.dart';
 
 class MainLoginPage extends StatelessWidget {
@@ -42,7 +44,7 @@ class MainLoginPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginCheckPage()),
+                      MaterialPageRoute(builder: (context) => LoginPhoneNumberPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

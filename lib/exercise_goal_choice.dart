@@ -2,14 +2,14 @@ import 'package:dx_project_app/gender_choice.dart';
 import 'package:flutter/material.dart';
 import 'medical_condition_check.dart'; // CheckPage로 이동하는 임포트
 
-class MedicalConditionChoicePage extends StatefulWidget {
+class ExerciseGoalChoicePage extends StatefulWidget {
   @override
-  _MedicalConditionChoicePageState createState() =>
-      _MedicalConditionChoicePageState();
+  _ExerciseGoalChoicePageState createState() =>
+      _ExerciseGoalChoicePageState();
 }
 
-class _MedicalConditionChoicePageState
-    extends State<MedicalConditionChoicePage> {
+class _ExerciseGoalChoicePageState
+    extends State<ExerciseGoalChoicePage> {
   // 각 버튼의 선택 상태를 관리
   List<bool> isSelected = [false, false, false, false, false, false];
 
@@ -19,7 +19,7 @@ class _MedicalConditionChoicePageState
   // 버튼 데이터
   final List<Map<String, dynamic>> buttonData = [
     {
-      "text": "무릎",
+      "text": "걷기",
       "defaultImage": "images/knee.png",
       "selectedImage": "images/knee_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
@@ -28,7 +28,7 @@ class _MedicalConditionChoicePageState
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "허리",
+      "text": "등산",
       "defaultImage": "images/back.png",
       "selectedImage": "images/back_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
@@ -37,7 +37,7 @@ class _MedicalConditionChoicePageState
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "어깨",
+      "text": "골프",
       "defaultImage": "images/shoulder.png",
       "selectedImage": "images/shoulder_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
@@ -46,7 +46,7 @@ class _MedicalConditionChoicePageState
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "목",
+      "text": "탁구",
       "defaultImage": "images/neck.png",
       "selectedImage": "images/neck_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
@@ -55,7 +55,7 @@ class _MedicalConditionChoicePageState
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "손목",
+      "text": "배드민턴",
       "defaultImage": "images/wrist.png",
       "selectedImage": "images/wrist_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
@@ -64,7 +64,7 @@ class _MedicalConditionChoicePageState
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "발목",
+      "text": "수영",
       "defaultImage": "images/ankle.png",
       "selectedImage": "images/ankle_selected.png",
       "defaultColor": Color(0xFFEFE7E1),

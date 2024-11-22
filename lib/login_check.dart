@@ -7,7 +7,7 @@ class LoginCheckPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 2초 후 main_login.dart로 이동
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => ConditionChoicePage()),
@@ -25,7 +25,7 @@ class LoginCheckPage extends StatelessWidget {
               '로그인이\n완료되었습니다', // 전달된 운동 강도 텍스트를 사용
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 40,
+                fontSize: 80,
                 fontFamily: "PaperlogySemiBold",
                 fontWeight: FontWeight.bold,
               ),

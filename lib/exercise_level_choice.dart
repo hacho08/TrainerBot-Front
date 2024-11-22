@@ -1,3 +1,5 @@
+import 'package:dx_project_app/gender_choice.dart';
+import 'package:dx_project_app/medical_condition_choice.dart';
 import 'package:flutter/material.dart';
 import 'exercise_level_check.dart';
 import 'gender_check.dart'; // GenderCheckPage를 임포트
@@ -66,11 +68,16 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                       IconButton(
                         icon: Icon(
                           Icons.arrow_back,
-                          color: Colors.teal[800],
+                          color: Color(0xFF989898),
                           size: screenWidth * 0.07,
                         ),
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MedicalConditionChoicePage(),
+                            ),
+                          );
                         },
                       ),
                       Text(
@@ -78,7 +85,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                         style: TextStyle(
                           fontSize: screenWidth * 0.035,
                           fontFamily: "PaperlogyBold",
-                          color: Colors.teal[800],
+                          color: Color(0xFF989898),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -92,7 +99,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                           IconButton(
                             icon: Icon(
                               Icons.arrow_circle_right,
-                              color: Color(0xFFFFCC00),
+                              color: Color(0xFF265A5A),
                               size: screenWidth * 0.1,
                             ),
                             onPressed: () {
@@ -126,7 +133,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                             style: TextStyle(
                               fontSize: screenWidth * 0.035,
                               fontFamily: "PaperlogyBold",
-                              color: Color(0xFFFFCC00),
+                              color: Color(0xFF265A5A),
                             ),
                           ),
                         ],
