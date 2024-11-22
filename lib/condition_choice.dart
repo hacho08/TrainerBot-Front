@@ -1,7 +1,28 @@
 import 'package:dx_project_app/info_insert_finish.dart';
 import 'package:flutter/material.dart';
+import 'condition_check.dart';
 
-class ConditionChoicePage extends StatelessWidget {
+class ConditionChoicePage extends StatefulWidget {
+  @override
+  _ConditionChoicePageState createState() => _ConditionChoicePageState();
+}
+
+class _ConditionChoicePageState extends State<ConditionChoicePage> {
+  String? condition; // 선택된 운동 강도를 저장할 변수
+
+  void _updateCondition(String selectedCondition) {
+    setState(() {
+      condition = selectedCondition;
+    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ConditionCheckPage(condition: selectedCondition),
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,38 +67,38 @@ class ConditionChoicePage extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            top: 60,
-            right: 40,
-            child: Column(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_circle_right_rounded,
-                    size: 80,
-                    color: Colors.teal[800],
-                  ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => InfoInsertFinishPage()),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  ),
-                ),
-                Text(
-                  '다음',
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontFamily: "PaperlogySemiBold",
-                    color: Colors.teal[800],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Positioned(
+          //   top: 60,
+          //   right: 40,
+          //   child: Column(
+          //     children: [
+          //       IconButton(
+          //         icon: Icon(
+          //           Icons.arrow_circle_right_rounded,
+          //           size: 80,
+          //           color: Colors.teal[800],
+          //         ),
+          //         onPressed: () {
+          //           Navigator.pushReplacement(
+          //             context,
+          //             MaterialPageRoute(builder: (context) => InfoInsertFinishPage()),
+          //           );
+          //         },
+          //         style: TextButton.styleFrom(
+          //           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          //         ),
+          //       ),
+          //       Text(
+          //         '다음',
+          //         style: TextStyle(
+          //           fontSize: 35,
+          //           fontFamily: "PaperlogySemiBold",
+          //           color: Colors.teal[800],
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
@@ -93,7 +114,7 @@ class ConditionChoicePage extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           // 버튼 클릭 시 상태 업데이트
-          _selectedConditionIndex = index; // 클릭된 버튼의 인덱스를 설정
+          _updateCondition(text); // 클릭된 버튼의 인덱스를 설정
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
