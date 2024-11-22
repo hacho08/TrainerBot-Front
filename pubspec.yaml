@@ -72,6 +72,14 @@ flutter:
     - images/neck.png
     - images/shoulder.png
     - images/wrist.png
+    - images/ankle_selected.png
+    - images/back_selected.png
+    - images/knee_selected.png
+    - images/neck_selected.png
+    - images/shoulder_selected.png
+    - images/wrist_selected.png
+    - images/gender_choice_man_selected.png
+    - images/gender_choice_woman_selected.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -1,31 +1,40 @@
 import 'package:flutter/material.dart';
-import 'gender_check.dart';
+import 'exercise_level_check.dart';
+import 'gender_check.dart'; // GenderCheckPage를 임포트
 
-
-class GenderChoicePage extends StatefulWidget {
+class ExerciseLevelChoicePage extends StatefulWidget {
   @override
-  _GenderChoicePageState createState() => _GenderChoicePageState();
+  _ExerciseLevelChoicePageState createState() =>
+      _ExerciseLevelChoicePageState();
 }
 
-class _GenderChoicePageState extends State<GenderChoicePage> {
-  // 버튼의 상태를 관리하는 리스트
-  List<bool> isSelected = [false, false]; // 남자, 여자 버튼에 대해 각각 선택 여부를 저장
+class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
+  // 각 버튼의 선택 상태를 관리
+  List<bool> isSelected = [false, false, false]; // 초보자, 중급자, 고급자 버튼에 대해 각각 선택 여부를 저장
+  int _selectedIndex = -1; // 선택된 버튼의 인덱스를 저장
 
+  // 버튼 데이터
   final List<Map<String, dynamic>> buttonData = [
     {
-      "text": "남자",
-      "defaultImage": "images/gender_choice_man.png",
-      "selectedImage": "images/gender_choice_man_selected.png",
+      "text": "초보자",
+      "text2": "근력운동 경력 6개월 이하",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Colors.teal[800],
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "여자",
-      "defaultImage": "images/gender_choice_woman.png",
-      "selectedImage": "images/gender_choice_woman_selected.png",
-      "defaultColor": Color(0xFFEFE7E1),
+      "text": "중급자",
+      "text2": "근력운동 경력 6개월 초과 2년 미만",
+      "defaultColor": Color(0xFFF4E8DE),
+      "selectedColor": Colors.teal[800],
+      "defaultTextColor": Colors.black,
+      "selectedTextColor": Colors.white,
+    },
+    {
+      "text": "고급자",
+      "text2": "근력운동 경력 2년 이상",
+      "defaultColor": Color(0xFFF2DDCD),
       "selectedColor": Colors.teal[800],
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
@@ -87,24 +96,28 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                               size: screenWidth * 0.1,
                             ),
                             onPressed: () {
-                                // 선택된 운동 강도 텍스트를 CheckPage로 전달
-                                String selectedCondition = "선택되지 않음";  // 기본값 설정
+                              // 선택된 운동 강도 텍스트를 GenderCheckPage로 전달
+                              String selectedCondition = "선택되지 않음";  // 기본값 설정
 
-                                // 선택된 버튼에 맞춰 텍스트를 업데이트
-                                if (_selectedIndex == 0) {
-                                  selectedCondition = "성별이\n남자로\n입력되었습니다.";
-                                } else if (_selectedIndex == 1) {
-                                  selectedCondition = "성별이\n여자로\n입력되었습니다.";
-                                }
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GenderCheckPage(selectedCondition: selectedCondition),
-                                  ),
-                                );
+                              // 선택된 버튼에 맞춰 텍스트를 업데이트
+                              if (_selectedIndex == 0) {
+                                selectedCondition = "근력운동 경험 수준이\n초보자로\n입력되었습니다.";
+                              } else if (_selectedIndex == 1) {
+                                selectedCondition = "근력운동 경험 수준이\n중급자로\n입력되었습니다.";
+                              } else if (_selectedIndex == 2) {
+                                selectedCondition = "근력운동 경험 수준이\n고급자로\n입력되었습니다.";
+                              }
+
+                              // ExerciseLevelCheckPage로 selectedCondition을 전달
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ExerciseLevelCheckPage(selectedCondition: selectedCondition),
+                                ),
+                              );
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => GenderCheckPage(selectedCondition:selectedCondition)),
+                                MaterialPageRoute(builder: (context) => ExerciseLevelCheckPage(selectedCondition:selectedCondition)),
                               );
                             },
                           ),
@@ -136,20 +149,22 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
               children: [
                 SizedBox(height: 50),
                 Text(
-                  '옥수수님의\n성별을 입력하세요',
+                  '옥수수님의\n근력운동 수준을\n선택하세요',
                   style: TextStyle(
                     fontSize: 100,
                     fontFamily: "PaperlogyBold",
                     color: Colors.teal[800],
                   ),
                 ),
-                SizedBox(height: 150),
+                SizedBox(height: 50),
                 Expanded(
                   child: Column(
                     children: [
-                      _buildConditionButton(context, 0), // 남자 버튼
+                      _buildConditionButton(context, 0, screenWidth), // 초보자 버튼
                       const SizedBox(height: 30),
-                      _buildConditionButton(context, 1), // 여자 버튼
+                      _buildConditionButton(context, 1, screenWidth), // 중급자 버튼
+                      const SizedBox(height: 30),
+                      _buildConditionButton(context, 2, screenWidth), // 고급자 버튼
                     ],
                   ),
                 ),
@@ -160,10 +175,9 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
       ),
     );
   }
-  // 선택된 성별을 설정할 변수
-  int _selectedIndex = -1; // -1은 아무것도 선택되지 않음을 나타냄
 
-  Widget _buildConditionButton(BuildContext context, int index) {
+  // 버튼 클릭 시 상태 변경
+  Widget _buildConditionButton(BuildContext context, int index, double screenWidth) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: ElevatedButton(
@@ -172,49 +186,46 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
             // 버튼 클릭 시 선택 상태 변경
             isSelected[index] = !isSelected[index]; // 클릭된 버튼을 토글
             // 한 버튼이 선택되면 다른 버튼은 선택 해제
-            if (index == 0) {
-              isSelected[1] = false; // 남자 버튼 클릭 시 여자 버튼 선택 해제
-            } else {
-              isSelected[0] = false; // 여자 버튼 클릭 시 남자 버튼 선택 해제
+            for (int i = 0; i < isSelected.length; i++) {
+              if (i != index) isSelected[i] = false;
             }
+            _selectedIndex = index; // 클릭된 버튼의 인덱스를 설정
           });
-          // 버튼 클릭 시 상태 업데이트
-          _selectedIndex = index; // 클릭된 버튼의 인덱스를 설정
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: isSelected[index]
-              ? buttonData[index]["selectedColor"] // 선택된 색상
-              : buttonData[index]["defaultColor"], // 기본 색상
+              ? buttonData[index]["selectedColor"]
+              : buttonData[index]["defaultColor"],
           minimumSize: Size(
-            double.infinity,
-            MediaQuery.of(context).size.height * 0.25,
+            screenWidth * 0.9, // 크기를 화면에 맞게 조절 (0.8은 너비의 80%)
+            270, // 버튼의 높이
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(width: 100), // 이미지와 텍스트 간격
             Text(
               buttonData[index]["text"]!,
               style: TextStyle(
                 fontSize: 100,
                 fontFamily: "PaperlogySemiBold",
                 color: isSelected[index]
-                    ? buttonData[index]["selectedTextColor"] // 선택된 텍스트 색상
-                    : buttonData[index]["defaultTextColor"], // 기본 텍스트 색상
+                    ? buttonData[index]["selectedTextColor"]
+                    : buttonData[index]["defaultTextColor"],
               ),
             ),
-            const SizedBox(width: 80), // 이미지와 텍스트 간격
-            Image.asset(
-              isSelected[index]
-                  ? buttonData[index]["selectedImage"] // 선택된 이미지
-                  : buttonData[index]["defaultImage"], // 기본 이미지
-              width: 450,
-              height: 350,
-              fit: BoxFit.contain,
+            Text(
+              buttonData[index]["text2"]!,
+              style: TextStyle(
+                fontSize: 50,
+                fontFamily: "PaperlogySemiBold",
+                color: isSelected[index]
+                    ? buttonData[index]["selectedTextColor"]
+                    : buttonData[index]["defaultTextColor"],
+              ),
             ),
           ],
         ),

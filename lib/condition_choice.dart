@@ -1,7 +1,7 @@
+import 'package:dx_project_app/info_insert_finish.dart';
 import 'package:flutter/material.dart';
 
 class ConditionChoicePage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +35,11 @@ class ConditionChoicePage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildConditionButton(
-                          context, '가볍게', Color(0xFFB5C6C6)),
+                      _buildConditionButton(context, '가볍게', Color(0xFFB5C6C6), 0),
                       SizedBox(height: 30),
-                      _buildConditionButton(
-                          context, '적당히', Color(0xFF7D9C9C)),
+                      _buildConditionButton(context, '적당히', Color(0xFF7D9C9C), 1),
                       SizedBox(height: 30),
-                      _buildConditionButton(
-                          context, '힘껏', Color(0xFF457171)),
+                      _buildConditionButton(context, '힘껏', Color(0xFF457171), 2),
                     ],
                   ),
                 ),
@@ -54,25 +51,28 @@ class ConditionChoicePage extends StatelessWidget {
             right: 40,
             child: Column(
               children: [
-                Icon(
-                  Icons.arrow_circle_right_rounded,
-                  size: 80,
-                  color: Colors.teal[800],
-                ),
-                TextButton(
+                IconButton(
+                  icon: Icon(
+                    Icons.arrow_circle_right_rounded,
+                    size: 80,
+                    color: Colors.teal[800],
+                  ),
                   onPressed: () {
-                    // '다음' 버튼 동작 추가
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => InfoInsertFinishPage()),
+                    );
                   },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   ),
-                  child: Text(
-                    '다음',
-                    style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.teal[800],
-                    ),
+                ),
+                Text(
+                  '다음',
+                  style: TextStyle(
+                    fontSize: 35,
+                    fontFamily: "PaperlogySemiBold",
+                    color: Colors.teal[800],
                   ),
                 ),
               ],
@@ -83,12 +83,17 @@ class ConditionChoicePage extends StatelessWidget {
     );
   }
 
-  Widget _buildConditionButton(BuildContext context, String text, Color? color) {
+  // 선택된 운동 강도를 설정할 변수
+  int _selectedConditionIndex = -1; // -1은 아무것도 선택되지 않음을 나타냄
+
+  // 조건 버튼을 빌드
+  Widget _buildConditionButton(BuildContext context, String text, Color? color, int index) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: ElevatedButton(
         onPressed: () {
-          // 버튼 클릭 시 동작 추가
+          // 버튼 클릭 시 상태 업데이트
+          _selectedConditionIndex = index; // 클릭된 버튼의 인덱스를 설정
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: color,

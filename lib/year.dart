@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'year_check.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,9 +31,17 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
         }
       } else if (value == '확인') {
         // 확인 버튼 눌렀을 때의 동작
-        if (input.isNotEmpty) {
+        if (input.isNotEmpty && input.length == 4) {
+          // 출생연도가 4자리인 경우
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => YearCheckPage(birthYear: input), // NextPage로 이동
+            ),
+          );
+        } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('입력된 값: $input')),
+            SnackBar(content: Text('4자리 출생연도를 입력하세요')),
           );
         }
       } else {
@@ -61,7 +70,7 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 90,
-                  fontWeight: FontWeight.bold,
+                  fontFamily: "PaperlogySemiBold",
                   color: Colors.teal[800],
                 ),
               ),
@@ -75,7 +84,7 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
               style: TextStyle(
                 fontSize: 100,
                 color: input.isEmpty ? Colors.grey : Colors.black,
-                fontWeight: FontWeight.bold,
+                fontFamily: "PaperlogySemiBold",
               ),
             ),
           ),
@@ -131,8 +140,34 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
           key,
           style: TextStyle(
             fontSize: 100,
-            fontWeight: FontWeight.bold,
+            fontFamily: "PaperlogySemiBold",
             color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class NextPage extends StatelessWidget {
+  final String birthYear; // 전달된 출생연도
+
+  NextPage({required this.birthYear}); // 생성자에서 출생연도 받기
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Next Page"),
+        backgroundColor: Colors.teal[800],
+      ),
+      body: Center(
+        child: Text(
+          '입력된 출생연도: $birthYear', // 전달된 출생연도 표시
+          style: TextStyle(
+            fontSize: 30,
+            fontFamily: "PaperlogySemiBold",
+            color: Colors.black,
           ),
         ),
       ),

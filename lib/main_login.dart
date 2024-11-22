@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'check.dart';
+import 'login_check.dart';
+import 'join_check.dart';
+import 'year.dart';
 
 class MainLoginPage extends StatelessWidget {
   const MainLoginPage({super.key});
@@ -38,9 +40,9 @@ class MainLoginPage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // 로그인 버튼 클릭 시 동작
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => checkPage())
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginCheckPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -64,7 +66,10 @@ class MainLoginPage extends StatelessWidget {
                 const SizedBox(width: 20), // 버튼 간격
                 ElevatedButton(
                   onPressed: () {
-                    // 로그인 버튼 클릭 시 동작
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => InputBirthYearScreen()),
+                      );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFD5C6B9),
