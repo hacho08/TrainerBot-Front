@@ -1,7 +1,9 @@
 import 'package:dx_project_app/exercise_level_check.dart';
+import 'package:dx_project_app/exercise_level_choice.dart';
 import 'package:dx_project_app/gender_choice.dart';
 import 'package:flutter/material.dart';
 import 'exercise_goal_check.dart'; // CheckPage로 이동하는 임포트
+import 'exercise_level_check.dart';
 
 class ExerciseGoalChoicePage extends StatefulWidget {
   @override
@@ -89,7 +91,7 @@ class _ExerciseGoalChoicePageState
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => GenderChoicePage(),
+                              builder: (context) => ExerciseLevelChoicePage(),
                             ),
                           );
                         },

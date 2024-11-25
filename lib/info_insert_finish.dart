@@ -1,6 +1,6 @@
 import 'package:dx_project_app/condition_choice.dart';
 import 'package:flutter/material.dart';
-import 'condition_choice.dart';
+import 'main_login.dart';
 
 class InfoInsertFinishPage extends StatelessWidget {
   const InfoInsertFinishPage({super.key});
@@ -11,7 +11,7 @@ class InfoInsertFinishPage extends StatelessWidget {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ConditionChoicePage()),
+        MaterialPageRoute(builder: (context) => MainLoginPage()),
       );
     });
 

@@ -1,5 +1,5 @@
+import 'package:dx_project_app/exercise_goal_choice.dart';
 import 'package:flutter/material.dart';
-import 'gender_choice.dart';
 import 'hobby_exercise_check.dart';
 
 class HobbyExerciseChoicePage extends StatefulWidget {
@@ -106,7 +106,7 @@ class _HobbyExerciseChoicePageState
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => GenderChoicePage(),
+                              builder: (context) => ExerciseGoalChoicePage(),
                             ),
                           );
                         },

@@ -1,7 +1,6 @@
 import 'package:dx_project_app/phone_number.dart';
 import 'package:flutter/material.dart';
 import 'login_check.dart';
-import 'join_check.dart';
 import 'login_phone_number.dart';
 import 'year.dart';
 import 'next_reservation_info.dart';

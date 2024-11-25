@@ -23,6 +23,7 @@ class MedicalConditionCheckPage extends StatelessWidget {
         : selectedConditions.join(', '); // 조건이 있으면 선택된 텍스트를 나열
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

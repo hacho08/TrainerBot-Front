@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'hobby_exercise_choice.dart';
 
 class ExerciseGoalCheckPage extends StatelessWidget {
@@ -21,6 +21,7 @@ class ExerciseGoalCheckPage extends StatelessWidget {
     String displayConditions = selectedConditions.join(', '); // 조건이 있으면 선택된 텍스트를 나열
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

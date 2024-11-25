@@ -43,8 +43,12 @@ class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('잘못 입력되었습니다')),
-          );
+            SnackBar(content: Text('잘못 입력되었습니다',
+                style: TextStyle(
+                fontSize: 60,
+                fontFamily: "PaperlogySemiBold")
+            ),
+            ));
         }
       } else {
         if (input.length < 11) {
