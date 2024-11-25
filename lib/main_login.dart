@@ -4,6 +4,7 @@ import 'login_check.dart';
 import 'join_check.dart';
 import 'login_phone_number.dart';
 import 'year.dart';
+import 'next_reservation_info.dart';
 
 class MainLoginPage extends StatelessWidget {
   const MainLoginPage({super.key});
