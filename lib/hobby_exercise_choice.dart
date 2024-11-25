@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'exercise_level_choice.dart';
 import 'gender_choice.dart';
-import 'medical_condition_check.dart'; // CheckPage로 이동하는 임포트
+import 'hobby_exercise_check.dart';
 
-class MedicalConditionChoicePage extends StatefulWidget {
+class HobbyExerciseChoicePage extends StatefulWidget {
   @override
-  _MedicalConditionChoicePageState createState() =>
-      _MedicalConditionChoicePageState();
+  _HobbyExerciseChoicePageState createState() =>
+      _HobbyExerciseChoicePageState();
 }
 
-class _MedicalConditionChoicePageState
-    extends State<MedicalConditionChoicePage> {
+class _HobbyExerciseChoicePageState
+    extends State<HobbyExerciseChoicePage> {
   // 각 버튼의 선택 상태를 관리
   List<bool> isSelected = [false, false, false, false, false, false];
 
@@ -20,54 +19,54 @@ class _MedicalConditionChoicePageState
   // 버튼 데이터
   final List<Map<String, dynamic>> buttonData = [
     {
-      "text": "무릎",
-      "defaultImage": "images/knee.png",
-      "selectedImage": "images/knee_selected.png",
+      "text": "걷기",
+      "defaultImage": "images/walk.png",
+      "selectedImage": "images/walk_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Color(0xFF00695C),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "허리",
-      "defaultImage": "images/back.png",
-      "selectedImage": "images/back_selected.png",
+      "text": "등산",
+      "defaultImage": "images/mountain.png",
+      "selectedImage": "images/mountain_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Color(0xFF00695C),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "어깨",
-      "defaultImage": "images/shoulder.png",
-      "selectedImage": "images/shoulder_selected.png",
+      "text": "골프",
+      "defaultImage": "images/golf.png",
+      "selectedImage": "images/golf_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Color(0xFF00695C),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "목",
-      "defaultImage": "images/neck.png",
-      "selectedImage": "images/neck_selected.png",
+      "text": "탁구",
+      "defaultImage": "images/pingpong.png",
+      "selectedImage": "images/pingpong_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Color(0xFF00695C),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "손목",
-      "defaultImage": "images/wrist.png",
-      "selectedImage": "images/wrist_selected.png",
+      "text": "배드민턴",
+      "defaultImage": "images/badminton.png",
+      "selectedImage": "images/badminton_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Color(0xFF00695C),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "발목",
-      "defaultImage": "images/ankle.png",
-      "selectedImage": "images/ankle_selected.png",
+      "text": "수영",
+      "defaultImage": "images/swim.png",
+      "selectedImage": "images/swim_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Color(0xFF00695C),
       "defaultTextColor": Colors.black,
@@ -140,7 +139,7 @@ class _MedicalConditionChoicePageState
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      MedicalConditionCheckPage(
+                                      HobbyExerciseCheckPage(
                                           selectedConditions: selectedConditions),
                                 ),
                               );
@@ -151,7 +150,7 @@ class _MedicalConditionChoicePageState
                             style: TextStyle(
                               fontSize: screenWidth * 0.055,
                               fontFamily: "PaperlogyBold",
-                              color: Colors.teal[800],
+                              color: Color(0xFF265A5A),
                             ),
                           ),
                         ],
@@ -171,7 +170,7 @@ class _MedicalConditionChoicePageState
           children: [
             SizedBox(height: 40),
             Text(
-              '옥수수님,\n아프신 곳이 있나요?',
+              '옥수수님의\n취미를 선택해주세요',
               style: TextStyle(
                 fontSize: 100,
                 fontFamily: "PaperlogyBold",
@@ -180,7 +179,7 @@ class _MedicalConditionChoicePageState
             ),
             SizedBox(height: 10),
             Text(
-              '최대 2개 선택가능',
+              '선택하지 않고 넘어가셔도 됩니다',
               style: TextStyle(
                 fontSize: 50,
                 fontFamily: "PaperlogySemiBold",

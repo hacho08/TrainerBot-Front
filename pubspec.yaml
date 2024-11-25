@@ -82,6 +82,26 @@ flutter:
     - images/gender_choice_woman_selected.png
     - images/upper_body.png
     - images/lower_body.png
+    - images/goal_diet.png
+    - images/goal_diet_selected.png
+    - images/goal_muscles.png
+    - images/goal_muscles_selected.png
+    - images/goal_pliability.png
+    - images/goal_pliability_selected.png
+    - images/goal_stamina.png
+    - images/goal_stamina_selected.png
+    - images/walk.png
+    - images/walk_selected.png
+    - images/mountain.png
+    - images/mountain_selected.png
+    - images/golf.png
+    - images/golf_selected.png
+    - images/pingpong.png
+    - images/pingpong_selected.png
+    - images/badminton.png
+    - images/badminton_selected.png
+    - images/swim.png
+    - images/swim_selected.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

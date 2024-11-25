@@ -1,6 +1,7 @@
+import 'package:dx_project_app/exercise_level_check.dart';
 import 'package:dx_project_app/gender_choice.dart';
 import 'package:flutter/material.dart';
-import 'medical_condition_check.dart'; // CheckPage로 이동하는 임포트
+import 'exercise_goal_check.dart'; // CheckPage로 이동하는 임포트
 
 class ExerciseGoalChoicePage extends StatefulWidget {
   @override
@@ -19,59 +20,41 @@ class _ExerciseGoalChoicePageState
   // 버튼 데이터
   final List<Map<String, dynamic>> buttonData = [
     {
-      "text": "걷기",
-      "defaultImage": "images/knee.png",
-      "selectedImage": "images/knee_selected.png",
+      "text": "근력 강화",
+      "defaultImage": "images/goal_muscles.png",
+      "selectedImage": "images/goal_muscles_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Color(0xFF00695C),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "등산",
-      "defaultImage": "images/back.png",
-      "selectedImage": "images/back_selected.png",
+      "text": "체중 감소",
+      "defaultImage": "images/goal_diet.png",
+      "selectedImage": "images/goal_diet_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Color(0xFF00695C),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "골프",
-      "defaultImage": "images/shoulder.png",
-      "selectedImage": "images/shoulder_selected.png",
+      "text": "기초 체력",
+      "defaultImage": "images/goal_stamina.png",
+      "selectedImage": "images/goal_stamina_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Color(0xFF00695C),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
     {
-      "text": "탁구",
-      "defaultImage": "images/neck.png",
-      "selectedImage": "images/neck_selected.png",
+      "text": "유연성 향상",
+      "defaultImage": "images/goal_pliability.png",
+      "selectedImage": "images/goal_pliability_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
       "selectedColor": Color(0xFF00695C),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
-    },
-    {
-      "text": "배드민턴",
-      "defaultImage": "images/wrist.png",
-      "selectedImage": "images/wrist_selected.png",
-      "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
-      "defaultTextColor": Colors.black,
-      "selectedTextColor": Colors.white,
-    },
-    {
-      "text": "수영",
-      "defaultImage": "images/ankle.png",
-      "selectedImage": "images/ankle_selected.png",
-      "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
-      "defaultTextColor": Colors.black,
-      "selectedTextColor": Colors.white,
-    },
+    }
   ];
 
   @override
@@ -82,7 +65,7 @@ class _ExerciseGoalChoicePageState
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight * 0.11),
+        preferredSize: Size.fromHeight(screenHeight * 0.13),
         child: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -114,7 +97,7 @@ class _ExerciseGoalChoicePageState
                       Text(
                         '뒤로 가기',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.035,
+                          fontSize: screenWidth * 0.055,
                           fontFamily: "PaperlogyBold",
                           color: Color(0xFFA3A3A3),
                         ),
@@ -140,7 +123,7 @@ class _ExerciseGoalChoicePageState
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        MedicalConditionCheckPage(
+                                        ExerciseGoalCheckPage(
                                             selectedConditions: selectedConditions),
                                   ),
                                 );
@@ -148,7 +131,7 @@ class _ExerciseGoalChoicePageState
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content:
-                                    Text('최소 1개 이상의 증상을 선택하세요.',
+                                    Text('최소 1개 이상의 목표를 선택하세요.',
                                         style: TextStyle(
                                             fontSize: 60,
                                             fontFamily: "PaperlogySemiBold",
@@ -162,7 +145,7 @@ class _ExerciseGoalChoicePageState
                           Text(
                             '다음',
                             style: TextStyle(
-                              fontSize: screenWidth * 0.035,
+                              fontSize: screenWidth * 0.055,
                               fontFamily: "PaperlogyBold",
                               color: Color(0xFF265A5A),
                             ),
@@ -184,7 +167,7 @@ class _ExerciseGoalChoicePageState
           children: [
             SizedBox(height: 40),
             Text(
-              '옥수수님,\n아프신 곳이 있나요?',
+              '옥수수님의\n운동 목표를\n선택해주세요',
               style: TextStyle(
                 fontSize: 100,
                 fontFamily: "PaperlogyBold",
@@ -193,7 +176,7 @@ class _ExerciseGoalChoicePageState
             ),
             SizedBox(height: 10),
             Text(
-              '최대 2개 선택가능',
+              '최대 2개 선택 가능',
               style: TextStyle(
                 fontSize: 50,
                 fontFamily: "PaperlogySemiBold",
@@ -207,7 +190,7 @@ class _ExerciseGoalChoicePageState
                   crossAxisCount: 2,
                   crossAxisSpacing: 50,
                   mainAxisSpacing: 50,
-                  childAspectRatio: 1.5,
+                  childAspectRatio: 1.3,
                 ),
                 itemCount: buttonData.length,
                 itemBuilder: (context, index) {
