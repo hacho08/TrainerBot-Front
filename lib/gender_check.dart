@@ -22,6 +22,7 @@ class GenderCheckPage extends StatelessWidget {
     });
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

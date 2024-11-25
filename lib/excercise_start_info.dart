@@ -1,6 +1,7 @@
 import 'package:dx_project_app/condition_choice.dart';
 import 'package:flutter/material.dart';
 import 'condition_choice.dart';
+import 'exercise_start_info2.dart';
 
 class ExcerciseStartInfoPage extends StatelessWidget {
   const ExcerciseStartInfoPage({super.key});
@@ -11,7 +12,7 @@ class ExcerciseStartInfoPage extends StatelessWidget {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ConditionChoicePage()),
+        MaterialPageRoute(builder: (context) => ExerciseStartInfo2Page()),
       );
     });
 

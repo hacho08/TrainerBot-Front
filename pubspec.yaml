@@ -82,6 +82,7 @@ flutter:
     - images/gender_choice_woman_selected.png
     - images/upper_body.png
     - images/lower_body.png
+    - images/satisfaction.png
     - images/goal_diet.png
     - images/goal_diet_selected.png
     - images/goal_muscles.png
