@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'year_check.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:dx_project_app/auto_read_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +24,20 @@ class InputBirthYearScreen extends StatefulWidget {
 
 class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
   String input = ''; // 입력된 값 저장
+  late FlutterTts _flutterTts; // FlutterTts 인스턴스 선언
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _readText(); // 페이지가 열리면 읽기 시작
+  }
+
+  Future<void> _readText() async {
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("출생연도를 입력하세요");
+  }
 
   void onKeyPress(String value) {
     setState(() {
@@ -50,6 +66,11 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
         }
       }
     });
+  }
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
   }
 
   @override
