@@ -42,7 +42,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('잘못 입력되었습니다')),
+            SnackBar(content: Text('잘못 입력되었습니다', style: TextStyle(fontSize: 60, fontFamily: "PaperlogySemiBold"),)),
           );
         }
       } else {
@@ -63,14 +63,14 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
           SizedBox(height: height * 0.04),
           // 상단 텍스트
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 100.0),
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 '전화번호를 입력하세요',
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  fontSize: 90,
+                  fontSize: 70,
                   fontFamily: "PaperlogySemiBold",
                   color: Colors.teal[800],
                 ),

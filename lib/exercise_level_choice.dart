@@ -158,7 +158,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                 Text(
                   '옥수수님의\n근력운동 수준을\n선택하세요',
                   style: TextStyle(
-                    fontSize: 100,
+                    fontSize: 70,
                     fontFamily: "PaperlogyBold",
                     color: Colors.teal[800],
                   ),

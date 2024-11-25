@@ -15,7 +15,7 @@ class NameCheckPage extends StatelessWidget {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => InputBirthYearScreen()),
+        MaterialPageRoute(builder: (context) => InputBirthYearScreen(name:name)),
       );
     });
 

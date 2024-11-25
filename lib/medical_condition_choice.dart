@@ -173,7 +173,7 @@ class _MedicalConditionChoicePageState
             Text(
               '옥수수님,\n아프신 곳이 있나요?',
               style: TextStyle(
-                fontSize: 100,
+                fontSize: 70,
                 fontFamily: "PaperlogyBold",
                 color: Colors.teal[800],
               ),
@@ -182,7 +182,7 @@ class _MedicalConditionChoicePageState
             Text(
               '최대 2개 선택가능',
               style: TextStyle(
-                fontSize: 50,
+                fontSize: 40,
                 fontFamily: "PaperlogySemiBold",
                 color: Colors.black,
               ),
@@ -192,9 +192,9 @@ class _MedicalConditionChoicePageState
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 50,
-                  mainAxisSpacing: 50,
-                  childAspectRatio: 1.6,
+                  crossAxisSpacing: 40,
+                  mainAxisSpacing: 40,
+                  childAspectRatio: 1.5,
                 ),
                 itemCount: buttonData.length,
                 itemBuilder: (context, index) {
@@ -242,8 +242,8 @@ class _MedicalConditionChoicePageState
             isSelected[index]
                 ? buttonData[index]["selectedImage"]
                 : buttonData[index]["defaultImage"],
-            width: 130,
-            height: 130,
+            width: 90,
+            height: 90,
             fit: BoxFit.contain,
           ),
           SizedBox(height: 20),
@@ -251,7 +251,7 @@ class _MedicalConditionChoicePageState
             buttonData[index]["text"]!,
             style: TextStyle(
               fontFamily: "PaperlogyRegular",
-              fontSize: 60,
+              fontSize: 50,
               fontWeight: FontWeight.bold,
               color: isSelected[index]
                   ? buttonData[index]["selectedTextColor"]

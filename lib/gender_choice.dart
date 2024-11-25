@@ -1,8 +1,6 @@
 import 'package:dx_project_app/phone_number.dart';
-import 'package:dx_project_app/year.dart';
 import 'package:flutter/material.dart';
 import 'gender_check.dart';
-
 
 class GenderChoicePage extends StatefulWidget {
   @override
@@ -94,24 +92,19 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                               size: screenWidth * 0.1,
                             ),
                             onPressed: () {
-                                // 선택된 운동 강도 텍스트를 CheckPage로 전달
-                                String selectedCondition = "선택되지 않음";  // 기본값 설정
-
-                                // 선택된 버튼에 맞춰 텍스트를 업데이트
-                                if (_selectedIndex == 0) {
-                                  selectedCondition = "성별이\n남자로\n입력되었습니다.";
-                                } else if (_selectedIndex == 1) {
-                                  selectedCondition = "성별이\n여자로\n입력되었습니다.";
-                                }
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GenderCheckPage(selectedCondition: selectedCondition),
-                                  ),
-                                );
-                              Navigator.push(
+                              String selectedCondition = "선택되지 않음"; // 기본값 설정
+                              if (_selectedIndex == 0) {
+                                selectedCondition = "성별이\n남자로\n입력되었습니다.";
+                              } else if (_selectedIndex == 1) {
+                                selectedCondition = "성별이\n여자로\n입력되었습니다.";
+                              }
+                              Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (context) => GenderCheckPage(selectedCondition:selectedCondition)),
+                                MaterialPageRoute(
+                                  builder: (context) => GenderCheckPage(
+                                    selectedCondition: selectedCondition,
+                                  ),
+                                ),
                               );
                             },
                           ),
@@ -133,24 +126,23 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
           ),
         ),
       ),
-
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 60.0),
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1), // 가로 여백을 화면 크기에 맞게 설정
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 50),
+                SizedBox(height: screenHeight * 0.05), // 상단 간격
                 Text(
-                  '옥수수님의\n성별을 입력하세요',
+                  '옥수수님의\n성별을 선택하세요',
                   style: TextStyle(
-                    fontSize: 100,
+                    fontSize: screenWidth * 0.1, // 텍스트 크기를 화면에 비례하게 설정
                     fontFamily: "PaperlogyBold",
                     color: Colors.teal[800],
                   ),
                 ),
-                SizedBox(height: 150),
+                SizedBox(height: screenHeight * 0.05), // 버튼들 간 간격
                 Expanded(
                   child: Column(
                     children: [
@@ -167,34 +159,30 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
       ),
     );
   }
-  // 선택된 성별을 설정할 변수
+
   int _selectedIndex = -1; // -1은 아무것도 선택되지 않음을 나타냄
 
   Widget _buildConditionButton(BuildContext context, int index) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: ElevatedButton(
         onPressed: () {
           setState(() {
-            // 버튼 클릭 시 선택 상태 변경
-            isSelected[index] = !isSelected[index]; // 클릭된 버튼을 토글
-            // 한 버튼이 선택되면 다른 버튼은 선택 해제
+            isSelected[index] = !isSelected[index]; // 선택 상태 토글
             if (index == 0) {
               isSelected[1] = false; // 남자 버튼 클릭 시 여자 버튼 선택 해제
             } else {
               isSelected[0] = false; // 여자 버튼 클릭 시 남자 버튼 선택 해제
             }
           });
-          // 버튼 클릭 시 상태 업데이트
           _selectedIndex = index; // 클릭된 버튼의 인덱스를 설정
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: isSelected[index]
-              ? buttonData[index]["selectedColor"] // 선택된 색상
-              : buttonData[index]["defaultColor"], // 기본 색상
+              ? buttonData[index]["selectedColor"]
+              : buttonData[index]["defaultColor"], // 선택된 색상
           minimumSize: Size(
             double.infinity,
             MediaQuery.of(context).size.height * 0.25,
@@ -206,24 +194,24 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(width: 100), // 이미지와 텍스트 간격
+            SizedBox(width: screenWidth * 0.1), // 이미지와 텍스트 간 간격
             Text(
               buttonData[index]["text"]!,
               style: TextStyle(
-                fontSize: 100,
+                fontSize: screenWidth * 0.1, // 텍스트 크기를 화면에 비례하게 설정
                 fontFamily: "PaperlogySemiBold",
                 color: isSelected[index]
-                    ? buttonData[index]["selectedTextColor"] // 선택된 텍스트 색상
-                    : buttonData[index]["defaultTextColor"], // 기본 텍스트 색상
+                    ? buttonData[index]["selectedTextColor"]
+                    : buttonData[index]["defaultTextColor"], // 선택된 텍스트 색상
               ),
             ),
-            const SizedBox(width: 80), // 이미지와 텍스트 간격
+            SizedBox(width: screenWidth * 0.1), // 이미지와 텍스트 간 간격
             Image.asset(
               isSelected[index]
-                  ? buttonData[index]["selectedImage"] // 선택된 이미지
-                  : buttonData[index]["defaultImage"], // 기본 이미지
-              width: screenWidth * 0.3,  // width를 화면 크기에 맞춰서 조절
-              height: screenWidth * 0.3, // height도 화면 크기에 맞춰서 조절
+                  ? buttonData[index]["selectedImage"]
+                  : buttonData[index]["defaultImage"], // 이미지
+              width: screenWidth * 0.3, // 이미지의 가로 크기 설정
+              height: screenWidth * 0.3, // 이미지의 세로 크기 설정
               fit: BoxFit.contain,
             ),
           ],

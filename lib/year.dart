@@ -1,27 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'year_check.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: InputBirthYearScreen(),
-    );
-  }
-}
-
 class InputBirthYearScreen extends StatefulWidget {
+  final String name;
+
+  // 생성자에서 name을 받습니다.
+  InputBirthYearScreen({required this.name});
+
   @override
   _InputBirthYearScreenState createState() => _InputBirthYearScreenState();
 }
 
 class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
   String input = ''; // 입력된 값 저장
+  late FlutterTts _flutterTts; // FlutterTts 인스턴스 선언
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTTS(); // TTS 초기화
+    _readText(); // 페이지가 열리면 읽기 시작
+  }
+
+  // TTS 초기화 메소드
+  Future<void> _initializeTTS() async {
+    await _flutterTts.setLanguage("ko-KR"); // 언어 설정
+    await _flutterTts.setSpeechRate(0.5); // 음성 속도 설정
+    await _flutterTts.setVolume(1.0); // 볼륨 설정
+    await _flutterTts.setPitch(1.0); // 음성 톤 설정
+  }
+
+  Future<void> _readText() async {
+    await _flutterTts.speak("출생연도를 입력하세요");
+  }
 
   void onKeyPress(String value) {
     setState(() {
@@ -53,6 +66,12 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
   }
 
   @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
 
@@ -62,14 +81,14 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
           SizedBox(height: height * 0.04),
           // 상단 텍스트
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 100.0),
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                '옥수수님의\n출생연도를 입력하세요',
+                '${widget.name}님의\n출생연도를 입력하세요',
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  fontSize: 90,
+                  fontSize: 70,
                   fontFamily: "PaperlogySemiBold",
                   color: Colors.teal[800],
                 ),
@@ -149,10 +168,10 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
   }
 }
 
-class NextPage extends StatelessWidget {
+class YearCheckPage extends StatelessWidget {
   final String birthYear; // 전달된 출생연도
 
-  NextPage({required this.birthYear}); // 생성자에서 출생연도 받기
+  YearCheckPage({required this.birthYear}); // 생성자에서 출생연도 받기
 
   @override
   Widget build(BuildContext context) {
