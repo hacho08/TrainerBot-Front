@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'year_check.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:dx_project_app/auto_read_page.dart';
 
 void main() {
   runApp(MyApp());

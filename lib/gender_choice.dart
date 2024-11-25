@@ -1,6 +1,7 @@
 import 'package:dx_project_app/phone_number.dart';
 import 'package:dx_project_app/year.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'gender_check.dart';
 
 
@@ -12,6 +13,26 @@ class GenderChoicePage extends StatefulWidget {
 class _GenderChoicePageState extends State<GenderChoicePage> {
   // 버튼의 상태를 관리하는 리스트
   List<bool> isSelected = [false, false]; // 남자, 여자 버튼에 대해 각각 선택 여부를 저장
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _readText(); // 페이지가 열리면 읽기 시작
+  }
+
+  Future<void> _readText() async {
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("성별을 선택하세요");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
 
   final List<Map<String, dynamic>> buttonData = [
     {
