@@ -42,7 +42,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight * 0.11),
+        preferredSize: Size.fromHeight(screenHeight * 0.13),
         child: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -60,7 +60,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                         icon: Icon(
                           Icons.arrow_back,
                           color: Color(0xFF989898),
-                          size: screenWidth * 0.07,
+                          size: screenWidth * 0.1,
                         ),
                         onPressed: () {
                           Navigator.pushReplacement(
@@ -74,7 +74,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                       Text(
                         '뒤로 가기',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.035,
+                          fontSize: screenWidth * 0.055,
                           fontFamily: "PaperlogyBold",
                           color: Color(0xFF989898),
                         ),
@@ -90,7 +90,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                           IconButton(
                             icon: Icon(
                               Icons.arrow_circle_right,
-                              color: Color(0xFF265A5A),
+                              color: Colors.teal[800],
                               size: screenWidth * 0.1,
                             ),
                             onPressed: () {
@@ -118,9 +118,9 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                           Text(
                             '다음',
                             style: TextStyle(
-                              fontSize: screenWidth * 0.035,
+                              fontSize: screenWidth * 0.055,
                               fontFamily: "PaperlogyBold",
-                              color: Color(0xFF265A5A),
+                              color: Colors.teal[800],
                             ),
                           ),
                         ],
@@ -171,6 +171,9 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
   int _selectedIndex = -1; // -1은 아무것도 선택되지 않음을 나타냄
 
   Widget _buildConditionButton(BuildContext context, int index) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: ElevatedButton(
@@ -219,8 +222,8 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
               isSelected[index]
                   ? buttonData[index]["selectedImage"] // 선택된 이미지
                   : buttonData[index]["defaultImage"], // 기본 이미지
-              width: 450,
-              height: 350,
+              width: screenWidth * 0.3,  // width를 화면 크기에 맞춰서 조절
+              height: screenWidth * 0.3, // height도 화면 크기에 맞춰서 조절
               fit: BoxFit.contain,
             ),
           ],

@@ -51,7 +51,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight * 0.11),
+        preferredSize: Size.fromHeight(screenHeight * 0.13),
         child: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -83,7 +83,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                       Text(
                         '뒤로 가기',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.035,
+                          fontSize: screenWidth * 0.055,
                           fontFamily: "PaperlogyBold",
                           color: Color(0xFF989898),
                         ),
@@ -131,7 +131,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                           Text(
                             '다음',
                             style: TextStyle(
-                              fontSize: screenWidth * 0.035,
+                              fontSize: screenWidth * 0.055,
                               fontFamily: "PaperlogyBold",
                               color: Color(0xFF265A5A),
                             ),

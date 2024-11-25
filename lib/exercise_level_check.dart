@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'exercise_level_choice.dart';
+import 'exercise_goal_choice.dart';
 
 class ExerciseLevelCheckPage extends StatelessWidget {
   final String selectedCondition;
@@ -9,6 +10,15 @@ class ExerciseLevelCheckPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // 2초 후 이동
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => ExerciseGoalChoicePage()),
+      );
+    });
+
     return Scaffold(
       body: Center(
         child: Column(

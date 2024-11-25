@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
-import 'exercise_level_choice.dart';
+import 'hobby_exercise_choice.dart';
 
-class MedicalConditionCheckPage extends StatelessWidget {
+class ExerciseGoalCheckPage extends StatelessWidget {
   final List<String> selectedConditions;
 
-  // Constructor to receive the selected conditions
-  MedicalConditionCheckPage({required this.selectedConditions});
+  // 생성자에서 selectedCondition을 받습니다.
+  ExerciseGoalCheckPage({required this.selectedConditions});
 
   @override
   Widget build(BuildContext context) {
-    // 2초 후 ExerciseLevelChoicePage로 이동
+    // 2초 후 이동
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ExerciseLevelChoicePage()),
+        MaterialPageRoute(builder: (context) => HobbyExerciseChoicePage()),
       );
     });
 
     // '선택되지 않음' 처리
-    String displayConditions = selectedConditions.isEmpty
-        ? '없음' // 조건이 없으면 '없음'을 표시
-        : selectedConditions.join(', '); // 조건이 있으면 선택된 텍스트를 나열
+    String displayConditions = selectedConditions.join(', '); // 조건이 있으면 선택된 텍스트를 나열
 
     return Scaffold(
       body: Center(
@@ -30,7 +28,7 @@ class MedicalConditionCheckPage extends StatelessWidget {
             Image.asset("images/check.png", width: 300),
             const SizedBox(height: 50),
             Text(
-              '유의해야 할 부위로\n아래 항목이 선택되었습니다\n',
+              '운동 목표로\n아래 항목이 선택되었습니다\n', // 전달된 운동 강도 텍스트를 사용
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 80,

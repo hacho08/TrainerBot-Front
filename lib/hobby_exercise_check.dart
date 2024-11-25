@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'exercise_level_choice.dart';
+import 'info_insert_finish.dart';
 
-class MedicalConditionCheckPage extends StatelessWidget {
+class HobbyExerciseCheckPage extends StatelessWidget {
   final List<String> selectedConditions;
 
   // Constructor to receive the selected conditions
-  MedicalConditionCheckPage({required this.selectedConditions});
+  HobbyExerciseCheckPage({required this.selectedConditions});
 
   @override
   Widget build(BuildContext context) {
-    // 2초 후 ExerciseLevelChoicePage로 이동
+    // 2초 후 InfoInsertFinishPage로 이동
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ExerciseLevelChoicePage()),
+        MaterialPageRoute(builder: (context) => InfoInsertFinishPage()),
       );
     });
 
@@ -30,7 +31,7 @@ class MedicalConditionCheckPage extends StatelessWidget {
             Image.asset("images/check.png", width: 300),
             const SizedBox(height: 50),
             Text(
-              '유의해야 할 부위로\n아래 항목이 선택되었습니다\n',
+              '취미 활동으로\n아래 항목이 입력되었습니다\n',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 80,
