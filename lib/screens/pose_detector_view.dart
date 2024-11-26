@@ -72,7 +72,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         _customPaint = CustomPaint(painter: painter);
 
         // PoseDataSender 호출하여 데이터를 저장
-        PoseDataSender(poses, "pose_data.json").startSendingData();  // JSON 파일로 저장하고 서버로 보내기
+        // PoseDataSender(poses, "pose_data.json").startSendingData();  // JSON 파일로 저장하고 서버로 보내기
 
       } else {
         // 추출된 포즈 없음

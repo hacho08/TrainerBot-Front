@@ -1,7 +1,9 @@
+import 'package:dx_project_app/screens/pose_detector_view.dart';
 import 'package:flutter/material.dart';
 import 'login_phone_number.dart';
 import 'name.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'real_exercise.dart';
 
 class MainLoginPage extends StatefulWidget {
   const MainLoginPage({super.key});
@@ -46,6 +48,20 @@ class _MainLoginPageState extends State<MainLoginPage>{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              ElevatedButton(onPressed: (){
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => RealExercisePage()),
+                );
+              },
+                child: Text(
+                'Pose Detection',
+                style: TextStyle(
+                  fontFamily: "PaperlogySemiBold",
+                  fontSize: width * 0.01, // 글자 크기 비율로 조정
+                  ),
+                ),
+              ),
               Image.asset(
                 "images/main_manse_image.png",
                 width: width * 0.3, // 이미지 크기 화면 비율에 맞게 조정

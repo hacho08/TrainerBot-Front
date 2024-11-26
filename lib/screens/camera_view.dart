@@ -78,8 +78,8 @@ class _CameraViewState extends State<CameraView> {
       // 카메라 화면 보여주기 + 화면에서 실시간으로 포즈 추출
       body: _liveFeedBody(),
       // 전면<->후면 변경 버튼
-      floatingActionButton: _floatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: _floatingActionButton(),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -136,25 +136,25 @@ class _CameraViewState extends State<CameraView> {
           // 추출된 스켈레톤 그리기
           if (widget.customPaint != null) widget.customPaint!,
           // 화면 확대 축소 위젯
-          Positioned(
-            bottom: 100,
-            left: 50,
-            right: 50,
-            child: Slider(
-              value: zoomLevel,
-              min: minZoomLevel,
-              max: maxZoomLevel,
-              onChanged: (newSliderValue) {
-                setState(() {
-                  zoomLevel = newSliderValue;
-                  _controller!.setZoomLevel(zoomLevel);
-                });
-              },
-              divisions: (maxZoomLevel - 1).toInt() < 1
-                  ? null
-                  : (maxZoomLevel - 1).toInt(),
-            ),
-          ),
+          // Positioned(
+          //   bottom: 100,
+          //   left: 50,
+          //   right: 50,
+          //   child: Slider(
+          //     value: zoomLevel,
+          //     min: minZoomLevel,
+          //     max: maxZoomLevel,
+          //     onChanged: (newSliderValue) {
+          //       setState(() {
+          //         zoomLevel = newSliderValue;
+          //         _controller!.setZoomLevel(zoomLevel);
+          //       });
+          //     },
+          //     divisions: (maxZoomLevel - 1).toInt() < 1
+          //         ? null
+          //         : (maxZoomLevel - 1).toInt(),
+          //   ),
+          // ),
         ],
       ),
     );
