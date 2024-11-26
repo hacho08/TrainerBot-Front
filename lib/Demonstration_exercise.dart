@@ -2,8 +2,36 @@ import 'package:dx_project_app/countdown.dart';
 import 'package:flutter/material.dart';
 
 import 'before_countdown.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class DemonstrationExercisePage extends StatelessWidget {
+class DemonstrationExercisePage extends StatefulWidget {
+
+  _DemonstrationExercisePageState createState() => _DemonstrationExercisePageState();
+}
+
+class _DemonstrationExercisePageState extends State<DemonstrationExercisePage>{
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("준비운동을 시작합니다");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;

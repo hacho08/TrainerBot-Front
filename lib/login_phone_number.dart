@@ -2,6 +2,7 @@ import 'package:dx_project_app/login_check.dart';
 import 'package:dx_project_app/phone_number_check.dart';
 import 'package:flutter/material.dart';
 import 'phone_number_check.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,6 +25,27 @@ class LoginPhoneNumberPage extends StatefulWidget {
 
 class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
   String input = ''; // 입력된 값 저장
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("전화번호를 입력해주세요");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
 
   void onKeyPress(String value) {
     setState(() {

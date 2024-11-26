@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'next_reservation_complete.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class NextReservationChoicePage extends StatefulWidget {
   @override
@@ -79,6 +80,27 @@ class _NextReservationChoicePageState
     setState(() {
       selectedTimeIndex = index;
     });
+  }
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("예약을 원하는 날짜와 시간을 선택해주세요");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
   }
 
   @override
