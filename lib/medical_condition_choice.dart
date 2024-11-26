@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'exercise_level_choice.dart';
 import 'gender_choice.dart';
 import 'medical_condition_check.dart'; // CheckPage로 이동하는 임포트
+import 'package:flutter_tts/flutter_tts.dart';
 
 class MedicalConditionChoicePage extends StatefulWidget {
+
   @override
   _MedicalConditionChoicePageState createState() =>
       _MedicalConditionChoicePageState();
 }
 
+
 class _MedicalConditionChoicePageState
     extends State<MedicalConditionChoicePage> {
+
   // 각 버튼의 선택 상태를 관리
   List<bool> isSelected = [false, false, false, false, false, false];
 
@@ -74,6 +78,27 @@ class _MedicalConditionChoicePageState
       "selectedTextColor": Colors.white,
     },
   ];
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("아프신 곳이 있나요?");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

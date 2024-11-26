@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'gender_check.dart';
 
-
 class GenderChoicePage extends StatefulWidget {
   @override
   _GenderChoicePageState createState() => _GenderChoicePageState();
@@ -19,12 +18,21 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
   void initState() {
     super.initState();
     _flutterTts = FlutterTts();
-    _readText(); // 페이지가 열리면 읽기 시작
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.awaitSpeakCompletion(true); // TTS 작업 완료 대기
+
+    // 1초 딜레이 후 TTS 실행
+    Future.delayed(Duration(seconds: 1), () async {
+      await _readText();
+    });
   }
 
   Future<void> _readText() async {
-    await _flutterTts.setLanguage("ko-KR");
-    await _flutterTts.setSpeechRate(0.5);
     await _flutterTts.speak("성별을 선택하세요");
   }
 
@@ -115,24 +123,20 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                               size: screenWidth * 0.1,
                             ),
                             onPressed: () {
-                                // 선택된 운동 강도 텍스트를 CheckPage로 전달
-                                String selectedCondition = "선택되지 않음";  // 기본값 설정
+                              String selectedCondition = "선택되지 않음"; // 기본값 설정
 
-                                // 선택된 버튼에 맞춰 텍스트를 업데이트
-                                if (_selectedIndex == 0) {
-                                  selectedCondition = "성별이\n남자로\n입력되었습니다.";
-                                } else if (_selectedIndex == 1) {
-                                  selectedCondition = "성별이\n여자로\n입력되었습니다.";
-                                }
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GenderCheckPage(selectedCondition: selectedCondition),
-                                  ),
-                                );
-                              Navigator.push(
+                              // 선택된 버튼에 맞춰 텍스트를 업데이트
+                              if (_selectedIndex == 0) {
+                                selectedCondition = "성별이\n남자로\n입력되었습니다.";
+                              } else if (_selectedIndex == 1) {
+                                selectedCondition = "성별이\n여자로\n입력되었습니다.";
+                              }
+                              Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (context) => GenderCheckPage(selectedCondition:selectedCondition)),
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      GenderCheckPage(selectedCondition: selectedCondition),
+                                ),
                               );
                             },
                           ),
@@ -154,7 +158,6 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
           ),
         ),
       ),
-
       body: Stack(
         children: [
           Padding(
@@ -188,34 +191,30 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
       ),
     );
   }
-  // 선택된 성별을 설정할 변수
+
   int _selectedIndex = -1; // -1은 아무것도 선택되지 않음을 나타냄
 
   Widget _buildConditionButton(BuildContext context, int index) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: ElevatedButton(
         onPressed: () {
           setState(() {
-            // 버튼 클릭 시 선택 상태 변경
-            isSelected[index] = !isSelected[index]; // 클릭된 버튼을 토글
-            // 한 버튼이 선택되면 다른 버튼은 선택 해제
+            isSelected[index] = !isSelected[index];
             if (index == 0) {
-              isSelected[1] = false; // 남자 버튼 클릭 시 여자 버튼 선택 해제
+              isSelected[1] = false;
             } else {
-              isSelected[0] = false; // 여자 버튼 클릭 시 남자 버튼 선택 해제
+              isSelected[0] = false;
             }
           });
-          // 버튼 클릭 시 상태 업데이트
-          _selectedIndex = index; // 클릭된 버튼의 인덱스를 설정
+          _selectedIndex = index;
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: isSelected[index]
-              ? buttonData[index]["selectedColor"] // 선택된 색상
-              : buttonData[index]["defaultColor"], // 기본 색상
+              ? buttonData[index]["selectedColor"]
+              : buttonData[index]["defaultColor"],
           minimumSize: Size(
             double.infinity,
             MediaQuery.of(context).size.height * 0.25,
@@ -227,24 +226,24 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(width: 100), // 이미지와 텍스트 간격
+            const SizedBox(width: 100),
             Text(
               buttonData[index]["text"]!,
               style: TextStyle(
                 fontSize: 100,
                 fontFamily: "PaperlogySemiBold",
                 color: isSelected[index]
-                    ? buttonData[index]["selectedTextColor"] // 선택된 텍스트 색상
-                    : buttonData[index]["defaultTextColor"], // 기본 텍스트 색상
+                    ? buttonData[index]["selectedTextColor"]
+                    : buttonData[index]["defaultTextColor"],
               ),
             ),
-            const SizedBox(width: 80), // 이미지와 텍스트 간격
+            const SizedBox(width: 80),
             Image.asset(
               isSelected[index]
-                  ? buttonData[index]["selectedImage"] // 선택된 이미지
-                  : buttonData[index]["defaultImage"], // 기본 이미지
-              width: screenWidth * 0.3,  // width를 화면 크기에 맞춰서 조절
-              height: screenWidth * 0.3, // height도 화면 크기에 맞춰서 조절
+                  ? buttonData[index]["selectedImage"]
+                  : buttonData[index]["defaultImage"],
+              width: screenWidth * 0.3,
+              height: screenWidth * 0.3,
               fit: BoxFit.contain,
             ),
           ],

@@ -1,14 +1,42 @@
 import 'package:dx_project_app/condition_choice.dart';
 import 'package:flutter/material.dart';
 import 'main_login.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class InfoInsertFinishPage extends StatelessWidget {
+class InfoInsertFinishPage extends StatefulWidget {
   const InfoInsertFinishPage({super.key});
+
+  @override
+  _InfoInsertFinishPageState createState() => _InfoInsertFinishPageState();
+}
+
+class _InfoInsertFinishPageState extends State<InfoInsertFinishPage>{
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("모든 정보가 입력되었습니다");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     // 3초 후 condition_choice.dart로 이동
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainLoginPage()),

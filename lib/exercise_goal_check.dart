@@ -1,16 +1,44 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'hobby_exercise_choice.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class ExerciseGoalCheckPage extends StatelessWidget {
+class ExerciseGoalCheckPage extends StatefulWidget {
   final List<String> selectedConditions;
 
   // 생성자에서 selectedCondition을 받습니다.
   ExerciseGoalCheckPage({required this.selectedConditions});
 
   @override
+  _ExerciseGoalCheckPageState createState() => _ExerciseGoalCheckPageState();
+}
+
+  class _ExerciseGoalCheckPageState extends State<ExerciseGoalCheckPage>{
+    late FlutterTts _flutterTts;
+
+    @override
+    void initState() {
+      super.initState();
+      _flutterTts = FlutterTts();
+      _initializeTts(); // TTS 초기화 및 실행
+    }
+
+    Future<void> _initializeTts() async {
+      await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+      await _flutterTts.setLanguage("ko-KR");
+      await _flutterTts.setSpeechRate(0.5);
+      await _flutterTts.speak("운동목표가 선택되었습니다");
+    }
+
+    @override
+    void dispose() {
+      _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+      super.dispose();
+    }
+
+  @override
   Widget build(BuildContext context) {
     // 2초 후 이동
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HobbyExerciseChoicePage()),
@@ -18,7 +46,7 @@ class ExerciseGoalCheckPage extends StatelessWidget {
     });
 
     // '선택되지 않음' 처리
-    String displayConditions = selectedConditions.join(', '); // 조건이 있으면 선택된 텍스트를 나열
+    String displayConditions = {widget.selectedConditions}.join(', '); // 조건이 있으면 선택된 텍스트를 나열
 
     return Scaffold(
       backgroundColor: Colors.white,
