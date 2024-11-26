@@ -1,9 +1,37 @@
 import 'package:flutter/material.dart';
 import 'login_phone_number.dart';
 import 'name.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class MainLoginPage extends StatelessWidget {
+class MainLoginPage extends StatefulWidget {
   const MainLoginPage({super.key});
+
+  @override
+  _MainLoginPageState createState() => _MainLoginPageState();
+}
+
+class _MainLoginPageState extends State<MainLoginPage>{
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("항목을 선택해주세요");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

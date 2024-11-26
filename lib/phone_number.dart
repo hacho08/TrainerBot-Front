@@ -2,6 +2,7 @@ import 'package:dx_project_app/phone_number_check.dart';
 import 'package:flutter/material.dart';
 import 'phone_number_check.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'services/userid_api.dart'; // UserIdApi 임포트
 
 void main() {
   runApp(MyApp());
@@ -24,12 +25,14 @@ class PhoneNumberPage extends StatefulWidget {
 
 class _PhoneNumberPageState extends State<PhoneNumberPage> {
   String input = ''; // 입력된 값 저장
+  late UserIdApi userIdApi; // UserIdApi 인스턴스
   late FlutterTts _flutterTts;
   bool _isSpeaking = false; // 현재 TTS가 실행 중인지 확인
 
   @override
   void initState() {
     super.initState();
+    userIdApi = UserIdApi(); // UserIdApi 초기화
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 시작
   }

@@ -1,12 +1,42 @@
 import 'package:dx_project_app/next_reservation_choice.dart';
 import 'package:flutter/material.dart';
 import 'next_reservation_check.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class NextReservationCompletePage extends StatelessWidget {
+class NextReservationCompletePage extends StatefulWidget {
   final String date;
   final String time;
 
   NextReservationCompletePage({required this.date, required this.time});
+
+  @override
+  _NextReservationCompletePageState createState() =>
+      _NextReservationCompletePageState();
+}
+
+class _NextReservationCompletePageState extends State<NextReservationCompletePage>{
+
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("예약 정보를 확인해주세요");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,9 +140,9 @@ class NextReservationCompletePage extends StatelessWidget {
               ),
 
             SizedBox(height: screenHeight * 0.06),
-            _buildInfoRow('예약 날짜', date, screenWidth, screenHeight),
+            _buildInfoRow('예약 날짜', widget.date, screenWidth, screenHeight),
             SizedBox(height: screenHeight * 0.04),
-            _buildInfoRow('예약 시간', time, screenWidth, screenHeight),
+            _buildInfoRow('예약 시간', widget.time, screenWidth, screenHeight),
           ],
         ),
       ),

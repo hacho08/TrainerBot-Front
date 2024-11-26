@@ -1,14 +1,43 @@
 import 'package:flutter/material.dart';
 import 'next_reservation_choice.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class NextExerciseReservationPage extends StatelessWidget {
+class NextExerciseReservationPage extends StatefulWidget {
+
+  _NextExerciseReservationPageState createState() =>
+      _NextExerciseReservationPageState();
+}
+
+class _NextExerciseReservationPageState extends State<NextExerciseReservationPage>{
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("다음 운동을 예약하시는군요");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
 
     // 3초 후 자동 이동
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
