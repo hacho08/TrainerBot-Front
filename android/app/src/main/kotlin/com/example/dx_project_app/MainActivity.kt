@@ -1,4 +1,4 @@
-package com.example.trainerbot_front
+package com.example.dx_project_app
 
 import io.flutter.embedding.android.FlutterActivity
 

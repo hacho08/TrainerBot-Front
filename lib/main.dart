@@ -1,7 +1,9 @@
-import 'package:camera/camera.dart';
+import 'phone_number.dart';
 import 'package:flutter/material.dart';
-
-import 'package:trainerbot_front/screens/pose_detector_view.dart';
+import 'main_login.dart'; // main_login.dart 파일을 import
+import 'next_reservation_info.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:camera/camera.dart';
 
 // 카메라 목록 변수
 List<CameraDescription> cameras = [];
@@ -22,76 +24,76 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: Home(),//const MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false, // 디버그 배너 제거
+      home: const SplashScreen(), // 시작 화면
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
 
-  final String title;
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  _SplashScreenState createState() => _SplashScreenState();
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+}
+class _SplashScreenState extends State<SplashScreen>{
+  late FlutterTts _flutterTts;
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("안녕하세요");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pose Detection App'),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      // 스켈레톤 추출
-      body: const SafeArea(
-        child: PoseDetectorView(),
-      ),
-    );
-  }
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+    // 2초 후 main_login.dart로 이동
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainLoginPage()),
+      );
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
+      backgroundColor: const Color(0xFF265A5A), // 배경색
+      body:
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
+            Image.asset("images/main_manse_image.png", width: 200), // 이미지
+            const SizedBox(height: 20), // 간격
             const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              'LG 트레이너 봇',
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: "PaperlogySemiBold",
+                fontSize: 80,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             TextButton(onPressed: (){
               print('I clicked');
@@ -102,11 +104,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
