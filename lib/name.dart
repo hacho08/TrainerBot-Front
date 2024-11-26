@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'name_check.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 void main() {
   runApp(MyApp()); // main 함수에서 앱을 실행
@@ -22,25 +23,32 @@ class Name extends StatefulWidget {
 class _NameState extends State<Name> {
   late FocusNode _focusNode;
   late TextEditingController _controller; // TextEditingController를 선언
+  late FlutterTts _flutterTts;
 
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
-    _controller = TextEditingController(); // 컨트롤러 초기화
+    _focusNode = FocusNode(); // FocusNode 초기화
+    _controller = TextEditingController(); // TextEditingController 초기화
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
 
-    // 처음 앱 실행 시 바로 TextField에 포커스를 요청
-    Future.delayed(Duration.zero, () {
-      FocusScope.of(context).requestFocus(_focusNode);
-    });
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("이름을 입력해주시고, 완료 버튼을 눌러주세요");
   }
 
   @override
   void dispose() {
-    _focusNode.dispose();
-    _controller.dispose(); // 컨트롤러 메모리 해제
+    _focusNode.dispose(); // FocusNode 해제
+    _controller.dispose(); // TextEditingController 해제
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {

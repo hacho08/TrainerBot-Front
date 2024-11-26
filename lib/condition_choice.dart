@@ -1,6 +1,7 @@
 import 'package:dx_project_app/info_insert_finish.dart';
 import 'package:flutter/material.dart';
 import 'condition_check.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class ConditionChoicePage extends StatefulWidget {
   @override
@@ -9,6 +10,28 @@ class ConditionChoicePage extends StatefulWidget {
 
 class _ConditionChoicePageState extends State<ConditionChoicePage> {
   String? condition; // 선택된 운동 강도를 저장할 변수
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("컨디션에 맞는 운동 강도를 선택해주세요");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
+
 
   void _updateCondition(String selectedCondition) {
     setState(() {
