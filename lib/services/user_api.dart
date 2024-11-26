@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 class UserApi {
   static const String baseUrl = "http://localhost:8090/api/users"; // 서버 주소
 
-
   // 사용자 이름 추가
   Future<void> addUserName(String userName) async {
     final response = await http.post(
