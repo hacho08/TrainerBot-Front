@@ -30,14 +30,21 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
   void initState() {
     super.initState();
     _flutterTts = FlutterTts();
-    _readText(); // 페이지가 열리면 읽기 시작
+    _initializeTts(); // TTS 초기화 및 시작
+  }
+
+  Future<void> _initializeTts() async {
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.7);
+    await _flutterTts.awaitSpeakCompletion(true); // TTS 작업 완료 대기
+    _readText();
   }
 
   Future<void> _readText() async {
-    await _flutterTts.setLanguage("ko-KR");
-    await _flutterTts.setSpeechRate(0.5);
     await _flutterTts.speak("전화번호를 입력하세요");
   }
+
+
 
   void onKeyPress(String value) {
     setState(() {
@@ -141,6 +148,11 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
         ],
       ),
     );
+  }
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
   }
 
   Widget buildKey(String key) {
