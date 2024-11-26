@@ -3,6 +3,7 @@ import 'package:dx_project_app/exercise_level_choice.dart';
 import 'package:flutter/material.dart';
 import 'exercise_goal_check.dart'; // CheckPage로 이동하는 임포트
 import 'package:flutter_tts/flutter_tts.dart';
+import 'services/user_exergoal_api.dart'; // UserExerGoalApi 임포트
 
 class ExerciseGoalChoicePage extends StatefulWidget {
   @override
@@ -142,24 +143,29 @@ class _ExerciseGoalChoicePageState
                             onPressed: () {
                               // 선택된 버튼들이 1개 이상일 때만 다음 페이지로 이동
                               if (selectedConditions.isNotEmpty) {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ExerciseGoalCheckPage(
+
+                                // API 호출하여 선택된 목표를 서버에 저장
+                                UserExerGoalApi().saveExerciseGoal('user_id', selectedConditions).then((success) {
+                                  if (success) {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ExerciseGoalCheckPage(
                                             selectedConditions: selectedConditions),
-                                  ),
-                                );
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('저장에 실패했습니다. 다시 시도해주세요', style: TextStyle(fontSize: 40, fontFamily:"PaperlogyBold"),),
+                                      ),
+                                    );
+                                  }
+                                });
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content:
-                                    Text('최소 1개 이상의 목표를 선택하세요.',
-                                        style: TextStyle(
-                                            fontSize: 40,
-                                            fontFamily: "PaperlogySemiBold",
-                                        )
-                                    ),
+                                    content: Text('최소 1개 이상의 목표를 선택하세요.', style: TextStyle(fontSize: 40, fontFamily:"PaperlogyBold"),),
                                   ),
                                 );
                               }

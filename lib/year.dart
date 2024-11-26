@@ -59,11 +59,6 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
                   builder: (context) => YearCheckPage(birthYear: input),
                 ),
               );
-            } else {
-              // 서버에 저장 실패
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('서버에 저장하는데 실패했습니다.')),
-              );
             }
           });
         } else {

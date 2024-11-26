@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'gender_check.dart';
 import 'phone_number.dart';
+import 'services/usergender_api.dart'; // UserGenderApi 임포트
 
 class GenderChoicePage extends StatefulWidget {
   @override
@@ -134,14 +135,24 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                                 } else if (_selectedIndex == 1) {
                                   selectedCondition = "여자";
                                 }
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GenderCheckPage(
-                                      selectedCondition: selectedCondition,
-                                    ),
-                                  ),
-                                );
+
+                                // **성별을 서버에 저장하는 API 호출** (라인 44-46)
+                                UserGenderApi().saveUserGender("someUserId", selectedGender!).then((success) {
+                                  if (success) {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => GenderCheckPage(
+                                          selectedCondition: selectedGender!, // 성별을 GenderCheckPage로 전달
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('성별 저장에 실패했습니다.')),
+                                    );
+                                  }
+                                });
                               }
                             },
                           ),
@@ -197,7 +208,9 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
     );
   }
 
-  int _selectedIndex = -1; // -1은 아무것도 선택되지 않음을 나타냄
+  int _selectedIndex = -1;
+
+  String? get selectedGender => null; // -1은 아무것도 선택되지 않음을 나타냄
 
   Widget _buildConditionButton(BuildContext context, int index) {
     final screenWidth = MediaQuery.of(context).size.width;

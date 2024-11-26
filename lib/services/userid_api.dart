@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'package:dx_project_app/services/user_api.dart';
 import 'package:http/http.dart' as http;
 
 class UserIdApi {
-  final String apiUrl = 'http://your-api-url.com/api/users'; // 실제 API URL로 변경
+  final String apiUrl = '${UserApi.baseUrl}/id'; // 실제 API URL로 변경
 
   // 사용자 전화번호 저장 (USER_ID)
   Future<bool> addUserPhoneNumber(String userId) async {

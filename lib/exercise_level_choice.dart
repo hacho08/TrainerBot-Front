@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'exercise_level_check.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'medical_condition_choice.dart';
+import 'services/user_exerlevel_api.dart'; // UserExerLevelApi 임포트
 
 
 class ExerciseLevelChoicePage extends StatefulWidget {
@@ -141,12 +142,21 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                                   selectedCondition = "고급자";
                                 }
 
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ExerciseLevelCheckPage(selectedCondition: selectedCondition),
-                                  ),
-                                );
+                                // 여기에 API 호출 추가
+                                UserExerLevelApi().saveWorkoutExperience('user_id', selectedCondition).then((success) {
+                                  if (success) {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ExerciseLevelCheckPage(selectedCondition: selectedCondition),
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('성공적으로 저장되지 않았습니다. 다시 시도해주세요', style: TextStyle(fontSize: 40, fontFamily:"PaperlogyBold"),)),
+                                    );
+                                  }
+                                });
                               }
                             },
                           ),

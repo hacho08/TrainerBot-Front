@@ -1,8 +1,9 @@
+import 'package:dx_project_app/services/user_api.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class UserYearApi {
-  final String apiUrl = 'http://your-api-url.com/api/users'; // 실제 API URL로 변경
+  final String apiUrl = '${UserApi.baseUrl}/year'; // 실제 API URL로 변경
 
   // 사용자의 출생연도를 서버에 저장하는 함수
   Future<bool> addUserBirthYear(String userName, String birthYear) async {
