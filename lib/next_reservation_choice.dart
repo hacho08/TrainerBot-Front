@@ -122,7 +122,7 @@ class _NextReservationChoicePageState
                 Text(
                   '예약을 원하는\n날짜와 시간을\n선택하세요',
                   style: TextStyle(
-                    fontSize: screenWidth * 0.085,
+                    fontSize: screenWidth * 0.1,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'PaperlogyBold',
                     color: Color(0xFF265A5A),
@@ -133,8 +133,8 @@ class _NextReservationChoicePageState
                     IconButton(
                       icon: Icon(
                         Icons.arrow_circle_right,
-                        color: Colors.teal[800],
-                        size: screenWidth * 0.15,
+                        color: Color(0xFF265A5A),
+                        size: screenWidth * 0.1,
                       ),
                       onPressed: () {
                         if (selectedDateIndex != null &&
@@ -169,7 +169,7 @@ class _NextReservationChoicePageState
                       style: TextStyle(
                         fontFamily: 'PaperlogySemiBold',
                         fontSize: screenWidth * 0.06,
-                        color: Colors.teal[800],
+                        color: Color(0xFF265A5A),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -197,7 +197,7 @@ class _NextReservationChoicePageState
             fontFamily: 'PaperlogySemiBold',
             fontSize: screenWidth * 0.075,
             fontWeight: FontWeight.bold,
-            color: Colors.teal[800],
+            color: Color(0xFF265A5A),
           ),
         ),
         SizedBox(height: screenHeight * 0.02),
@@ -228,7 +228,7 @@ class _NextReservationChoicePageState
               icon: Icon(
                 Icons.arrow_right,
                 color: currentDateIndex < dates.length - 2
-                    ? Colors.teal[800]
+                    ? Color(0xFF265A5A)
                     : Colors.grey,
                 size: screenWidth * 0.12,
               ),
@@ -250,7 +250,7 @@ class _NextReservationChoicePageState
             fontFamily: 'PaperlogySemiBold',
             fontSize: screenWidth * 0.075,
             fontWeight: FontWeight.bold,
-            color: Colors.teal[800],
+            color: Color(0xFF265A5A),
           ),
         ),
         SizedBox(height: screenHeight * 0.02),
@@ -260,7 +260,7 @@ class _NextReservationChoicePageState
             IconButton(
               icon: Icon(
                 Icons.arrow_left,
-                color: currentTimeIndex > 0 ? Colors.teal[800] : Colors.grey,
+                color: currentTimeIndex > 0 ? Color(0xFF265A5A) : Colors.grey,
                 size: screenWidth * 0.12,
               ),
               onPressed: goToPreviousTimes,
@@ -281,7 +281,7 @@ class _NextReservationChoicePageState
               icon: Icon(
                 Icons.arrow_right,
                 color: currentTimeIndex < times.length - 2
-                    ? Colors.teal[800]
+                    ? Color(0xFF265A5A)
                     : Colors.grey,
                 size: screenWidth * 0.12,
               ),
@@ -302,8 +302,8 @@ class _NextReservationChoicePageState
       child: Container(
         padding: EdgeInsets.all(screenWidth * 0.05),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.teal[800] : Colors.white,
-          border: Border.all(color: Colors.teal[800]!, width: 2),
+          color: isSelected ? Color(0xFF265A5A) : Colors.white,
+          border: Border.all(color: Color(0xFF265A5A)!, width: 2),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(
@@ -311,8 +311,8 @@ class _NextReservationChoicePageState
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: screenWidth * 0.05,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            color: isSelected ? Colors.white : Colors.teal[800],
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.bold,
+            color: isSelected ? Colors.white : Color(0xFF265A5A),
           ),
         ),
       ),
@@ -325,12 +325,13 @@ class _NextReservationChoicePageState
     return GestureDetector(
       onTap: () => selectTime(index),
       child: Container(
+        width: screenWidth * 0.27,
         padding: EdgeInsets.symmetric(
             vertical: 10, horizontal: screenWidth * 0.04),
         height: 130,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.teal[800] : Colors.white,
-          border: Border.all(color: Colors.teal[800]!, width: 2),
+          color: isSelected ? Color(0xFF265A5A) : Colors.white,
+          border: Border.all(color: Color(0xFF265A5A)!, width: 2),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
@@ -339,8 +340,8 @@ class _NextReservationChoicePageState
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: screenWidth * 0.05,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              color: isSelected ? Colors.white : Colors.teal[800],
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.bold,
+              color: isSelected ? Colors.white : Color(0xFF265A5A),
             ),
           ),
         ),

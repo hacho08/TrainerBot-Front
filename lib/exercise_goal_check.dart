@@ -46,7 +46,7 @@ class ExerciseGoalCheckPage extends StatefulWidget {
     });
 
     // '선택되지 않음' 처리
-    String displayConditions = {widget.selectedConditions}.join(', '); // 조건이 있으면 선택된 텍스트를 나열
+    String displayConditions = widget.selectedConditions.join(', '); // 조건이 있으면 선택된 텍스트를 나열
 
     return Scaffold(
       backgroundColor: Colors.white,

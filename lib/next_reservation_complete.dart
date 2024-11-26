@@ -1,3 +1,4 @@
+import 'package:dx_project_app/next_reservation_choice.dart';
 import 'package:flutter/material.dart';
 import 'next_reservation_check.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -45,7 +46,7 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight * 0.11),
+        preferredSize: Size.fromHeight(screenHeight * 0.13),
         child: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -62,50 +63,60 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
                       IconButton(
                         icon: Icon(
                           Icons.arrow_back,
-                          color: const Color(0xFF989898),
-                          size: screenWidth * 0.07,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context); // 뒤로 가기 동작 추가
-                        },
-                      ),
-                      Text(
-                        '뒤로 가기',
-                        style: TextStyle(
-                          fontSize: screenWidth * 0.035,
-                          fontFamily: "PaperlogyBold",
-                          color: const Color(0xFF989898),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_circle_right,
-                          color: const Color(0xFF265A5A),
+                          color: Color(0xFF989898),
                           size: screenWidth * 0.1,
                         ),
                         onPressed: () {
-                          // '다음' 버튼 동작 추가
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => NextReservationCheckPage(),
+                              builder: (context) => NextReservationChoicePage(),
                             ),
                           );
                         },
                       ),
                       Text(
-                        '다음',
+                        '뒤로 가기',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.035,
+                          fontSize: screenWidth * 0.055,
                           fontFamily: "PaperlogyBold",
-                          color: const Color(0xFF265A5A),
+                          color: Color(0xFF989898),
                         ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              Icons.arrow_circle_right,
+                              color: Color(0xFF265A5A),
+                              size: screenWidth * 0.1,
+                            ),
+                            onPressed: () {
+
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NextReservationCheckPage(),
+                                    ),
+                                  );
+                              }
+
+                          ),
+                          Text(
+                            '다음',
+                            style: TextStyle(
+                              fontSize: screenWidth * 0.055,
+                              fontFamily: "PaperlogyBold",
+                              color: Color(0xFF265A5A),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -124,7 +135,7 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
             style: TextStyle(
             fontSize: 100,
             fontFamily: "PaperlogyBold",
-            color: Colors.teal[800],
+            color: Color(0xFF265A5A),
                 ),
               ),
 
@@ -147,8 +158,8 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
           title,
           style: TextStyle(
             fontFamily: 'PaperlogyBold',
-            fontSize: screenWidth * 0.08,
-            color: Colors.teal[800],
+            fontSize: screenWidth * 0.09,
+            color: Color(0xFF265A5A),
           ),
         ),
         SizedBox(height: screenHeight * 0.009),
@@ -156,7 +167,7 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
           value,
           style: TextStyle(
             fontFamily: 'PaperlogyBold',
-            fontSize: screenWidth * 0.09,
+            fontSize: screenWidth * 0.13,
             color: Colors.black87,
             decoration: TextDecoration.underline, // 밑줄 추가
             decorationColor: Colors.black, // 밑줄 색상

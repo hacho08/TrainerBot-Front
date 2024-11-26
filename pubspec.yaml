@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.3
+  video_player: ^2.2.19  # 최신 버전 확인 후 사용
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -104,6 +105,9 @@ flutter:
     - images/badminton_selected.png
     - images/swim.png
     - images/swim_selected.png
+    - images/loading.png
+    - images/medal.png
+    - video/test_video.mp4
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -47,9 +47,9 @@ class _HobbyExerciseCheckPageState extends State<HobbyExerciseCheckPage>{
     });
 
     // '선택되지 않음' 처리
-    String displayConditions = {widget.selectedConditions}.isEmpty
+    String displayConditions = widget.selectedConditions.isEmpty
         ? '없음' // 조건이 없으면 '없음'을 표시
-        : {widget.selectedConditions}.join(', '); // 조건이 있으면 선택된 텍스트를 나열
+        : widget.selectedConditions.join(', '); // 조건이 있으면 선택된 텍스트를 나열
 
     return Scaffold(
       backgroundColor: Colors.white,
