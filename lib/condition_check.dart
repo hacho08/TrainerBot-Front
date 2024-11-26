@@ -28,7 +28,7 @@ class ConditionCheckPage extends StatelessWidget {
             Image.asset("images/check.png", width: 300),
             const SizedBox(height: 50),
             Text(
-              '\'${condition}\' 운동강도\n 설정되었습니다.', // condition 변수를 작은 따옴표로 묶음
+              '\'${condition}\' 운동강도\n 설정되었습니다', // condition 변수를 작은 따옴표로 묶음
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 80,

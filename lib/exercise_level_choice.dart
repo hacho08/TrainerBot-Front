@@ -1,8 +1,7 @@
-import 'package:dx_project_app/gender_choice.dart';
-import 'package:dx_project_app/medical_condition_choice.dart';
 import 'package:flutter/material.dart';
 import 'exercise_level_check.dart';
-import 'gender_check.dart'; // GenderCheckPage를 임포트
+import 'gender_check.dart';
+import 'gender_choice.dart'; // GenderCheckPage를 임포트
 
 class ExerciseLevelChoicePage extends StatefulWidget {
   @override
@@ -21,7 +20,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
       "text": "초보자",
       "text2": "근력운동 경력 6개월 이하",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Colors.teal[800],
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -29,7 +28,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
       "text": "중급자",
       "text2": "근력운동 경력 6개월 초과 2년 미만",
       "defaultColor": Color(0xFFF4E8DE),
-      "selectedColor": Colors.teal[800],
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -37,7 +36,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
       "text": "고급자",
       "text2": "근력운동 경력 2년 이상",
       "defaultColor": Color(0xFFF2DDCD),
-      "selectedColor": Colors.teal[800],
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -75,7 +74,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MedicalConditionChoicePage(),
+                              builder: (context) => GenderChoicePage(),
                             ),
                           );
                         },
@@ -103,29 +102,30 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                               size: screenWidth * 0.1,
                             ),
                             onPressed: () {
-                              // 선택된 운동 강도 텍스트를 GenderCheckPage로 전달
-                              String selectedCondition = "선택되지 않음";  // 기본값 설정
+                              if (_selectedIndex == -1) {
+                                // 선택된 운동 강도가 없으면 페이지 이동을 막고 알림 표시
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('운동 강도를 선택하세요', style: TextStyle(fontSize: 40, fontFamily:"PaperlogyBold"),)),
+                                );
+                              } else {
+                                // 선택된 운동 강도에 따라 페이지 이동
+                                String selectedCondition = "선택되지 않음";  // 기본값 설정
 
-                              // 선택된 버튼에 맞춰 텍스트를 업데이트
-                              if (_selectedIndex == 0) {
-                                selectedCondition = "근력운동 경험 수준이\n초보자로\n입력되었습니다.";
-                              } else if (_selectedIndex == 1) {
-                                selectedCondition = "근력운동 경험 수준이\n중급자로\n입력되었습니다.";
-                              } else if (_selectedIndex == 2) {
-                                selectedCondition = "근력운동 경험 수준이\n고급자로\n입력되었습니다.";
+                                if (_selectedIndex == 0) {
+                                  selectedCondition = "초보자";
+                                } else if (_selectedIndex == 1) {
+                                  selectedCondition = "중급자";
+                                } else if (_selectedIndex == 2) {
+                                  selectedCondition = "고급자";
+                                }
+
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ExerciseLevelCheckPage(selectedCondition: selectedCondition),
+                                  ),
+                                );
                               }
-
-                              // ExerciseLevelCheckPage로 selectedCondition을 전달
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ExerciseLevelCheckPage(selectedCondition: selectedCondition),
-                                ),
-                              );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => ExerciseLevelCheckPage(selectedCondition:selectedCondition)),
-                              );
                             },
                           ),
                           Text(
@@ -146,7 +146,6 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
           ),
         ),
       ),
-
       body: Stack(
         children: [
           Padding(
@@ -154,16 +153,16 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 Text(
                   '옥수수님의\n근력운동 수준을\n선택하세요',
                   style: TextStyle(
                     fontSize: 70,
                     fontFamily: "PaperlogyBold",
-                    color: Colors.teal[800],
+                    color: Color(0xFF265A5A),
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 20),
                 Expanded(
                   child: Column(
                     children: [
@@ -186,13 +185,13 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
   // 버튼 클릭 시 상태 변경
   Widget _buildConditionButton(BuildContext context, int index, double screenWidth) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: EdgeInsets.symmetric(horizontal: 5),
       child: ElevatedButton(
         onPressed: () {
           setState(() {
-            // 버튼 클릭 시 선택 상태 변경
-            isSelected[index] = !isSelected[index]; // 클릭된 버튼을 토글
-            // 한 버튼이 선택되면 다른 버튼은 선택 해제
+            // 한 번 클릭되면 해제되지 않도록 설정
+            isSelected[index] = true;
+            // 다른 버튼은 선택 해제
             for (int i = 0; i < isSelected.length; i++) {
               if (i != index) isSelected[i] = false;
             }
@@ -202,10 +201,10 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
         style: ElevatedButton.styleFrom(
           backgroundColor: isSelected[index]
               ? buttonData[index]["selectedColor"]
-              : buttonData[index]["defaultColor"],
+              : buttonData[index]["defaultColor"], // 선택된 색상
           minimumSize: Size(
             screenWidth * 0.9, // 크기를 화면에 맞게 조절 (0.8은 너비의 80%)
-            270, // 버튼의 높이
+            200, // 버튼의 높이
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -217,7 +216,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
             Text(
               buttonData[index]["text"]!,
               style: TextStyle(
-                fontSize: 100,
+                fontSize: 70,
                 fontFamily: "PaperlogySemiBold",
                 color: isSelected[index]
                     ? buttonData[index]["selectedTextColor"]
@@ -227,7 +226,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
             Text(
               buttonData[index]["text2"]!,
               style: TextStyle(
-                fontSize: 50,
+                fontSize: 30,
                 fontFamily: "PaperlogySemiBold",
                 color: isSelected[index]
                     ? buttonData[index]["selectedTextColor"]

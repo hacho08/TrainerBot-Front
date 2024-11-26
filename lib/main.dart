@@ -39,7 +39,7 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("images/main_manse_image.png"), // 이미지
+            Image.asset("images/main_manse_image.png", width: 200), // 이미지
             const SizedBox(height: 20), // 간격
             const Text(
               'LG 트레이너 봇',

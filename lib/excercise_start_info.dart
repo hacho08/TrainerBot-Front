@@ -44,7 +44,7 @@ class ExcerciseStartInfoPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 200),
-              Image.asset('images/clap.png', width: 350),
+              Image.asset('images/clap.png', width: 280),
 
 
             ],

@@ -37,16 +37,16 @@ class _ConditionChoicePageState extends State<ConditionChoicePage> {
                 Text(
                   '오늘의 컨디션은\n어떠신가요?',
                   style: TextStyle(
-                    fontSize: 100,
+                    fontSize: 90,
                     fontFamily: "PaperlogyBold",
-                    color: Colors.teal[800],
+                    color: Color(0xFF265A5A),
                   ),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 30),
                 Text(
                   '컨디션에 맞는 운동 강도를\n선택해주세요',
                   style: TextStyle(
-                    fontSize: 60,
+                    fontSize: 50,
                     fontFamily: "PaperlogySemiBold",
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,

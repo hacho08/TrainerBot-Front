@@ -43,9 +43,9 @@ class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('잘못 입력되었습니다',
+            SnackBar(content: Text('잘 입력되었는지 확인해주세요',
                 style: TextStyle(
-                fontSize: 60,
+                fontSize: 40,
                 fontFamily: "PaperlogySemiBold")
             ),
             ));
@@ -68,16 +68,16 @@ class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
           SizedBox(height: height * 0.04),
           // 상단 텍스트
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 100.0),
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 '전화번호를 입력하세요',
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  fontSize: 90,
+                  fontSize: 70,
                   fontFamily: "PaperlogySemiBold",
-                  color: Colors.teal[800],
+                  color: Color(0xFF265A5A),
                 ),
               ),
             ),
@@ -98,7 +98,7 @@ class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
           // 커스텀 키패드
           Container(
             height: height * 0.6, // 키패드 영역 크기
-            color: Colors.teal[700],
+            color: Color(0xFF265A5A),
             padding: EdgeInsets.all(5),
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
@@ -139,7 +139,7 @@ class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.teal[800], // 버튼 색상
+          color: Color(0xFF265A5A), // 버튼 색상
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(
@@ -165,7 +165,7 @@ class NextPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Next Page"),
-        backgroundColor: Colors.teal[800],
+        backgroundColor: Color(0xFF265A5A),
       ),
       body: Center(
         child: Text(

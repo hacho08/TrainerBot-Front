@@ -1,6 +1,7 @@
 import 'package:dx_project_app/phone_number_check.dart';
 import 'package:flutter/material.dart';
 import 'phone_number_check.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,6 +24,20 @@ class PhoneNumberPage extends StatefulWidget {
 
 class _PhoneNumberPageState extends State<PhoneNumberPage> {
   String input = ''; // 입력된 값 저장
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _readText(); // 페이지가 열리면 읽기 시작
+  }
+
+  Future<void> _readText() async {
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("전화번호를 입력하세요");
+  }
 
   void onKeyPress(String value) {
     setState(() {
@@ -42,7 +57,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('잘못 입력되었습니다', style: TextStyle(fontSize: 60, fontFamily: "PaperlogySemiBold"),)),
+            SnackBar(content: Text('잘 입력되었는지 확인해주세요', style: TextStyle(fontSize: 40, fontFamily: "PaperlogySemiBold"),)),
           );
         }
       } else {
@@ -72,7 +87,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                 style: TextStyle(
                   fontSize: 70,
                   fontFamily: "PaperlogySemiBold",
-                  color: Colors.teal[800],
+                  color: Color(0xFF265A5A),
                 ),
               ),
             ),
@@ -83,7 +98,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
             child: Text(
               input.isEmpty ? '전화번호 입력' : input,
               style: TextStyle(
-                fontSize: 100,
+                fontSize: 80,
                 color: input.isEmpty ? Colors.grey : Colors.black,
                 fontFamily: "PaperlogySemiBold",
               ),
@@ -93,7 +108,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
           // 커스텀 키패드
           Container(
             height: height * 0.6, // 키패드 영역 크기
-            color: Colors.teal[700],
+            color: Color(0xFF265A5A),
             padding: EdgeInsets.all(5),
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
@@ -134,7 +149,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.teal[800], // 버튼 색상
+          color: Color(0xFF265A5A), // 버튼 색상
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(
@@ -160,7 +175,7 @@ class NextPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Next Page"),
-        backgroundColor: Colors.teal[800],
+        backgroundColor: Color(0xFF265A5A),
       ),
       body: Center(
         child: Text(

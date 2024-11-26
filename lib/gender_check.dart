@@ -29,14 +29,35 @@ class GenderCheckPage extends StatelessWidget {
           children: [
             Image.asset("images/check.png", width: 300),
             const SizedBox(height: 50),
-            Text(
-              '$selectedCondition',
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 80,
-                fontFamily: "PaperlogySemiBold",
-                fontWeight: FontWeight.bold,
+            Text.rich(
+              TextSpan(
+                text: '성별이\n',
+                style: const TextStyle(
+                  fontSize: 80,
+                  fontFamily: "PaperlogySemiBold",
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                    text: '$selectedCondition', // $name 부분에 색상 적용
+                    style: TextStyle(
+                      fontSize: 80,
+                      fontFamily: "PaperlogySemiBold",
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF265A5A), // 원하는 색상
+                    ),
+                  ),
+                  const TextSpan(
+                    text: '로\n선택되었습니다',
+                    style: TextStyle(
+                      fontSize: 80,
+                      fontFamily: "PaperlogySemiBold",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

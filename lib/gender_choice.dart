@@ -1,6 +1,6 @@
-import 'package:dx_project_app/phone_number.dart';
 import 'package:flutter/material.dart';
 import 'gender_check.dart';
+import 'phone_number.dart';
 
 class GenderChoicePage extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
       "defaultImage": "images/gender_choice_man.png",
       "selectedImage": "images/gender_choice_man_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Colors.teal[800],
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -26,7 +26,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
       "defaultImage": "images/gender_choice_woman.png",
       "selectedImage": "images/gender_choice_woman_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Colors.teal[800],
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -88,24 +88,31 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                           IconButton(
                             icon: Icon(
                               Icons.arrow_circle_right,
-                              color: Colors.teal[800],
+                              color: Color(0xFF265A5A),
                               size: screenWidth * 0.1,
                             ),
                             onPressed: () {
-                              String selectedCondition = "선택되지 않음"; // 기본값 설정
-                              if (_selectedIndex == 0) {
-                                selectedCondition = "성별이\n남자로\n입력되었습니다.";
-                              } else if (_selectedIndex == 1) {
-                                selectedCondition = "성별이\n여자로\n입력되었습니다.";
-                              }
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GenderCheckPage(
-                                    selectedCondition: selectedCondition,
+                              if (_selectedIndex == -1) {
+                                // 선택되지 않은 경우에는 알림을 띄움
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('성별을 선택해주세요', style: TextStyle(fontSize: 40, fontFamily:"PaperlogyBold"),)),
+                                );
+                              } else {
+                                String selectedCondition = "선택되지 않음"; // 기본값 설정
+                                if (_selectedIndex == 0) {
+                                  selectedCondition = "남자";
+                                } else if (_selectedIndex == 1) {
+                                  selectedCondition = "여자";
+                                }
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GenderCheckPage(
+                                      selectedCondition: selectedCondition,
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
                             },
                           ),
                           Text(
@@ -113,7 +120,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                             style: TextStyle(
                               fontSize: screenWidth * 0.055,
                               fontFamily: "PaperlogyBold",
-                              color: Colors.teal[800],
+                              color: Color(0xFF265A5A),
                             ),
                           ),
                         ],
@@ -139,7 +146,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                   style: TextStyle(
                     fontSize: screenWidth * 0.1, // 텍스트 크기를 화면에 비례하게 설정
                     fontFamily: "PaperlogyBold",
-                    color: Colors.teal[800],
+                    color: Color(0xFF265A5A),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.05), // 버튼들 간 간격
@@ -170,22 +177,21 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
       child: ElevatedButton(
         onPressed: () {
           setState(() {
-            isSelected[index] = !isSelected[index]; // 선택 상태 토글
-            if (index == 0) {
-              isSelected[1] = false; // 남자 버튼 클릭 시 여자 버튼 선택 해제
-            } else {
-              isSelected[0] = false; // 여자 버튼 클릭 시 남자 버튼 선택 해제
+            // 버튼을 한 번 클릭하면 다른 버튼은 선택 해제되고, 클릭된 버튼만 선택됨
+            isSelected[index] = true;
+            for (int i = 0; i < isSelected.length; i++) {
+              if (i != index) isSelected[i] = false;
             }
+            _selectedIndex = index; // 클릭된 버튼의 인덱스를 설정
           });
-          _selectedIndex = index; // 클릭된 버튼의 인덱스를 설정
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: isSelected[index]
               ? buttonData[index]["selectedColor"]
               : buttonData[index]["defaultColor"], // 선택된 색상
           minimumSize: Size(
-            double.infinity,
-            MediaQuery.of(context).size.height * 0.25,
+            screenWidth * 0.9, // 크기를 화면에 맞게 조절 (0.8은 너비의 80%)
+            200, // 버튼의 높이
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),

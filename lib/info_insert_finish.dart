@@ -43,7 +43,7 @@ class InfoInsertFinishPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 200),
-                Image.asset('images/clap.png', width: 350),
+                Image.asset('images/clap.png', width: 280),
                 const SizedBox(height: 100),
                 const Text(
                   '주신 정보에 따라\n맞춤형 운동을\n추천해드릴게요',

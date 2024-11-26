@@ -15,7 +15,7 @@ class NameCheckPage extends StatelessWidget {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => InputBirthYearScreen(name:name)),
+        MaterialPageRoute(builder: (context) => InputBirthYearScreen(name: name)),
       );
     });
 
@@ -26,14 +26,35 @@ class NameCheckPage extends StatelessWidget {
           children: [
             Image.asset("images/check.png", width: 300),
             const SizedBox(height: 50),
-            Text(
-              '이름이 $name(으)로\n입력되었습니다', // 전달된 운동 강도 텍스트를 사용
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 80,
-                fontFamily: "PaperlogySemiBold",
-                fontWeight: FontWeight.bold,
+            Text.rich(
+              TextSpan(
+                text: '이름이 ',
+                style: const TextStyle(
+                  fontSize: 80,
+                  fontFamily: "PaperlogySemiBold",
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                    text: '$name', // $name 부분에 색상 적용
+                    style: TextStyle(
+                      fontSize: 80,
+                      fontFamily: "PaperlogySemiBold",
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF265A5A), // 원하는 색상
+                    ),
+                  ),
+                  const TextSpan(
+                    text: ' (으)로\n입력되었습니다',
+                    style: TextStyle(
+                      fontSize: 80,
+                      fontFamily: "PaperlogySemiBold",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

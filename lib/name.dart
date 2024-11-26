@@ -59,7 +59,7 @@ class _NameState extends State<Name> {
                 IconButton(
                   icon: Icon(
                     Icons.arrow_circle_right,
-                    color: Colors.teal[800],
+                    color: Color(0xFF265A5A),
                     size: screenWidth * 0.1,
                   ),
                   onPressed: () {
@@ -89,7 +89,7 @@ class _NameState extends State<Name> {
                   style: TextStyle(
                     fontSize: screenWidth * 0.055,
                     fontFamily: "PaperlogyBold",
-                    color: Colors.teal[800],
+                    color: Color(0xFF265A5A),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -108,7 +108,7 @@ class _NameState extends State<Name> {
                 style: TextStyle(
                   fontSize: 70,
                   fontFamily: "PaperlogySemiBold",
-                  color: Colors.teal[800],
+                  color: Color(0xFF265A5A),
                 ),
               ),
             ),
