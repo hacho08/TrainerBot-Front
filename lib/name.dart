@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'name_check.dart';
+import 'services/user_api.dart'; // UserApi 임포트
 
 void main() {
   runApp(MyApp()); // main 함수에서 앱을 실행
@@ -22,6 +23,7 @@ class Name extends StatefulWidget {
 class _NameState extends State<Name> {
   late FocusNode _focusNode;
   late TextEditingController _controller; // TextEditingController를 선언
+  final UserApi userApi = UserApi(); // UserApi 인스턴스 생성
 
   @override
   void initState() {
@@ -40,6 +42,15 @@ class _NameState extends State<Name> {
     _focusNode.dispose();
     _controller.dispose(); // 컨트롤러 메모리 해제
     super.dispose();
+  }
+
+  // 사용자 이름을 서버로 전송하는 메서드
+  void _addUserName() async {
+    String userName = _controller.text; // 입력된 이름 가져오기
+
+    // 서버로 사용자 이름 전송
+    await userApi.addUserName(userName); // userApi의 addUserName 메서드 호출
+
   }
 
   @override

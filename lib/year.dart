@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'year_check.dart';
+import 'services/useryear_api.dart'; // UserYearApi 임포트
 
 class InputBirthYearScreen extends StatefulWidget {
   final String name; // name을 받기 위한 변수
@@ -12,7 +13,9 @@ class InputBirthYearScreen extends StatefulWidget {
 }
 
 class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
-  String input = ''; // 입력된 값 저장
+  String input = '';
+
+  get userYearApi => null; // 입력된 값 저장
 
   void onKeyPress(String value) {
     setState(() {
@@ -24,12 +27,23 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
         // 확인 버튼 눌렀을 때의 동작
         if (input.isNotEmpty && input.length == 4) {
           // 출생연도가 4자리인 경우
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => YearCheckPage(birthYear: input), // NextPage로 이동
-            ),
-          );
+          // 서버에 저장
+          userYearApi.addUserBirthYear(widget.name, input).then((success) {
+            if (success) {
+              // 저장 성공 후 NameCheckPage로 이동
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => YearCheckPage(birthYear: input),
+                ),
+              );
+            } else {
+              // 서버에 저장 실패
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('서버에 저장하는데 실패했습니다.')),
+              );
+            }
+          });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('4자리 출생연도를 입력하세요', style: TextStyle(fontSize: 40, fontFamily:"PaperlogyBold"),)),

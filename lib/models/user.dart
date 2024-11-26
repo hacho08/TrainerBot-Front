@@ -1,6 +1,7 @@
 
 class User {
   final String userId;
+  final String userName;
   final int birthYear;
   final String gender;
   final String workoutExperience;
@@ -10,6 +11,7 @@ class User {
   // 생성자
   User({
     required this.userId,
+    required this.userName,
     required this.birthYear,
     required this.gender,
     required this.workoutExperience,
@@ -21,6 +23,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       userId: json['USER_ID'],
+      userName: json['USER_NAME'],
       birthYear: json['BIRTH_YEAR'],
       gender: json['GENDER'],
       workoutExperience: json['WORKOUT_EXPERIENCE'],
@@ -33,6 +36,7 @@ class User {
   Map<String, dynamic> toJson() {
     return {
       'USER_ID': userId,
+      'USER_NAME': userName,
       'BIRTH_YEAR': birthYear,
       'GENDER': gender,
       'WORKOUT_EXPERIENCE': workoutExperience,
