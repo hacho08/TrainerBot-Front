@@ -51,28 +51,32 @@ class _PhoneNumberCheckPageState extends State<PhoneNumberCheckPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("images/check.png", width: 300),
-            const SizedBox(height: 50),
-            Text.rich(
-              TextSpan(
-                text: '전화번호가\n입력되었습니다\n\n',
-                style: const TextStyle(
-                  fontSize: 80,
-                  fontFamily: "PaperlogySemiBold",
-                  fontWeight: FontWeight.bold,
-                ),
-                children: [
+                Image.asset("images/check.png", width: 300),
+                const SizedBox(height: 50),
+              Center(
+                child:
+                Text.rich(
                   TextSpan(
-                    text: '${widget.phoneNumber}', // $name 부분에 색상 적용
-                    style: TextStyle(
+                    text: '전화번호가\n입력되었습니다\n\n',
+                    style: const TextStyle(
                       fontSize: 80,
                       fontFamily: "PaperlogySemiBold",
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF265A5A), // 원하는 색상
                     ),
+                    children: [
+                      TextSpan(
+                        text: '${widget.phoneNumber}', // $name 부분에 색상 적용
+                        style: TextStyle(
+                          fontSize: 80,
+                          fontFamily: "PaperlogySemiBold",
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF265A5A), // 원하는 색상
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                  textAlign: TextAlign.center,
+                ),
             ),
           ],
         ),

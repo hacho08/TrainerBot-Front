@@ -32,7 +32,7 @@ class NextExerciseReservationPage extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'PaperlogyBold',
                   fontSize: screenWidth * 0.09,
-                  color: Colors.teal[800],
+                  color: Color(0xFF265A5A),
                 ),
               ),
               SizedBox(height: screenHeight * 0.05),

@@ -27,14 +27,28 @@ class ConditionCheckPage extends StatelessWidget {
           children: [
             Image.asset("images/check.png", width: 300),
             const SizedBox(height: 50),
-            Text(
-              '\'${condition}\' 운동강도\n 설정되었습니다', // condition 변수를 작은 따옴표로 묶음
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 80,
-                fontFamily: "PaperlogySemiBold",
-                fontWeight: FontWeight.bold,
+            Text.rich(
+              TextSpan(
+                text: "'${condition}'",
+                style: const TextStyle(
+                  fontSize: 80,
+                  fontFamily: "PaperlogySemiBold",
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF265A5A), // 원하는 색상
+                ),
+                children: [
+                  TextSpan(
+                    text: ' 운동강도\n설정되었습니다', // $name 부분에 색상 적용
+                    style: TextStyle(
+                      fontSize: 80,
+                      fontFamily: "PaperlogySemiBold",
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black, // 원하는 색상
+                    ),
+                  ),
+                ],
               ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

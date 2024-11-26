@@ -57,7 +57,7 @@ class ExerciseLevelCheckPage extends StatefulWidget {
             const SizedBox(height: 50),
             Text.rich(
               TextSpan(
-                text: '근련운동 경험 수준이\n',
+                text: '근력운동 경험 수준이\n',
                 style: const TextStyle(
                   fontSize: 80,
                   fontFamily: "PaperlogySemiBold",
