@@ -25,7 +25,7 @@ class _ExerciseGoalChoicePageState
       "defaultImage": "images/goal_muscles.png",
       "selectedImage": "images/goal_muscles_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -34,7 +34,7 @@ class _ExerciseGoalChoicePageState
       "defaultImage": "images/goal_diet.png",
       "selectedImage": "images/goal_diet_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -43,7 +43,7 @@ class _ExerciseGoalChoicePageState
       "defaultImage": "images/goal_stamina.png",
       "selectedImage": "images/goal_stamina_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -52,7 +52,7 @@ class _ExerciseGoalChoicePageState
       "defaultImage": "images/goal_pliability.png",
       "selectedImage": "images/goal_pliability_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     }
@@ -156,7 +156,7 @@ class _ExerciseGoalChoicePageState
                                     content:
                                     Text('최소 1개 이상의 목표를 선택하세요.',
                                         style: TextStyle(
-                                            fontSize: 60,
+                                            fontSize: 40,
                                             fontFamily: "PaperlogySemiBold",
                                         )
                                     ),
@@ -192,16 +192,16 @@ class _ExerciseGoalChoicePageState
             Text(
               '옥수수님의\n운동 목표를\n선택해주세요',
               style: TextStyle(
-                fontSize: 100,
+                fontSize: 70,
                 fontFamily: "PaperlogyBold",
-                color: Colors.teal[800],
+                color: Color(0xFF265A5A),
               ),
             ),
             SizedBox(height: 10),
             Text(
               '최대 2개 선택 가능',
               style: TextStyle(
-                fontSize: 50,
+                fontSize: 40,
                 fontFamily: "PaperlogySemiBold",
                 color: Colors.black,
               ),
@@ -211,9 +211,9 @@ class _ExerciseGoalChoicePageState
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 50,
-                  mainAxisSpacing: 50,
-                  childAspectRatio: 1.3,
+                  crossAxisSpacing: 30,
+                  mainAxisSpacing: 30,
+                  childAspectRatio: 1.1,
                 ),
                 itemCount: buttonData.length,
                 itemBuilder: (context, index) {

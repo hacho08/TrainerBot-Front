@@ -56,18 +56,38 @@ class _YearCheckPageState extends State<YearCheckPage> {
           children: [
             Image.asset("images/check.png", width: 300),
             const SizedBox(height: 50),
-            Text(
-              '출생연도가\n${widget.birthYear}년으로\n설정되었습니다', // 전달된 출생연도 텍스트를 사용
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 80,
-                fontFamily: "PaperlogySemiBold",
-                fontWeight: FontWeight.bold,
+            Text.rich(
+              TextSpan(
+                text: '출생연도가\n',
+                style: const TextStyle(
+                  fontSize: 80,
+                  fontFamily: "PaperlogySemiBold",
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                    text: '${widget.birthYear}년', // $name 부분에 색상 적용
+                    style: TextStyle(
+                      fontSize: 80,
+                      fontFamily: "PaperlogySemiBold",
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF265A5A), // 원하는 색상
+                    ),
+                  ),
+                  const TextSpan(
+                    text: '으로\n설정되었습니다',
+                    style: TextStyle(
+                      fontSize: 80,
+                      fontFamily: "PaperlogySemiBold",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
+             ),
+           ],
       ),
+    ),
     );
   }
 }

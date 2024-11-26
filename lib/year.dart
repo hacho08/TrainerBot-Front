@@ -1,42 +1,18 @@
 import 'package:flutter/material.dart';
 import 'year_check.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: InputBirthYearScreen(),
-    );
-  }
-}
 
 class InputBirthYearScreen extends StatefulWidget {
+  final String name; // name을 받기 위한 변수
+
+  // 생성자에서 name 값을 받아오기
+  InputBirthYearScreen({required this.name});
+
   @override
   _InputBirthYearScreenState createState() => _InputBirthYearScreenState();
 }
 
 class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
   String input = ''; // 입력된 값 저장
-  late FlutterTts _flutterTts; // FlutterTts 인스턴스 선언
-
-  @override
-  void initState() {
-    super.initState();
-    _flutterTts = FlutterTts();
-    _readText(); // 페이지가 열리면 읽기 시작
-  }
-
-  Future<void> _readText() async {
-    await _flutterTts.setLanguage("ko-KR");
-    await _flutterTts.setSpeechRate(0.5);
-    await _flutterTts.speak("출생연도를 입력하세요");
-  }
 
   void onKeyPress(String value) {
     setState(() {
@@ -56,7 +32,7 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('4자리 출생연도를 입력하세요')),
+            SnackBar(content: Text('4자리 출생연도를 입력하세요', style: TextStyle(fontSize: 40, fontFamily:"PaperlogyBold"),)),
           );
         }
       } else {
@@ -65,11 +41,6 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
         }
       }
     });
-  }
-  @override
-  void dispose() {
-    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
-    super.dispose();
   }
 
   @override
@@ -82,16 +53,16 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
           SizedBox(height: height * 0.04),
           // 상단 텍스트
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 100.0),
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                '옥수수님의\n출생연도를 입력하세요',
+                '${widget.name}님의\n출생연도를 입력하세요',
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  fontSize: 90,
+                  fontSize: 70,
                   fontFamily: "PaperlogySemiBold",
-                  color: Colors.teal[800],
+                  color: Color(0xFF265A5A),
                 ),
               ),
             ),
@@ -112,7 +83,7 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
           // 커스텀 키패드
           Container(
             height: height * 0.6, // 키패드 영역 크기
-            color: Colors.teal[700],
+            color: Color(0xFF265A5A),
             padding: EdgeInsets.all(5),
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
@@ -153,7 +124,7 @@ class _InputBirthYearScreenState extends State<InputBirthYearScreen> {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.teal[800], // 버튼 색상
+          color: Color(0xFF265A5A), // 버튼 색상
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(
@@ -179,7 +150,7 @@ class NextPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Next Page"),
-        backgroundColor: Colors.teal[800],
+        backgroundColor: Color(0xFF265A5A),
       ),
       body: Center(
         child: Text(

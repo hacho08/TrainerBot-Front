@@ -9,17 +9,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyWidget(),
+      home: Name(),
     );
   }
 }
 
-class MyWidget extends StatefulWidget {
+class Name extends StatefulWidget {
   @override
-  _MyWidgetState createState() => _MyWidgetState();
+  _NameState createState() => _NameState();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _NameState extends State<Name> {
   late FocusNode _focusNode;
   late TextEditingController _controller; // TextEditingController를 선언
 
@@ -59,7 +59,7 @@ class _MyWidgetState extends State<MyWidget> {
                 IconButton(
                   icon: Icon(
                     Icons.arrow_circle_right,
-                    color: Colors.teal[800],
+                    color: Color(0xFF265A5A),
                     size: screenWidth * 0.1,
                   ),
                   onPressed: () {
@@ -89,7 +89,7 @@ class _MyWidgetState extends State<MyWidget> {
                   style: TextStyle(
                     fontSize: screenWidth * 0.055,
                     fontFamily: "PaperlogyBold",
-                    color: Colors.teal[800],
+                    color: Color(0xFF265A5A),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -108,7 +108,7 @@ class _MyWidgetState extends State<MyWidget> {
                 style: TextStyle(
                   fontSize: 70,
                   fontFamily: "PaperlogySemiBold",
-                  color: Colors.teal[800],
+                  color: Color(0xFF265A5A),
                 ),
               ),
             ),

@@ -60,7 +60,7 @@ class _HobbyExerciseCheckPageState extends State<HobbyExerciseCheckPage>{
             Image.asset("images/check.png", width: 300),
             const SizedBox(height: 50),
             Text(
-              '취미 활동으로\n아래 항목이 입력되었습니다\n',
+              '아래 취미가\n선택되었습니다\n',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 80,

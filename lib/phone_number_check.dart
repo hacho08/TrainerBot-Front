@@ -53,13 +53,25 @@ class _PhoneNumberCheckPageState extends State<PhoneNumberCheckPage> {
           children: [
             Image.asset("images/check.png", width: 300),
             const SizedBox(height: 50),
-            Text(
-              '전화번호가\n입력되었습니다\n\n${widget.phoneNumber}', // 전달된 운동 강도 텍스트를 사용
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 80,
-                fontFamily: "PaperlogySemiBold",
-                fontWeight: FontWeight.bold,
+            Text.rich(
+              TextSpan(
+                text: '전화번호가\n입력되었습니다\n\n',
+                style: const TextStyle(
+                  fontSize: 80,
+                  fontFamily: "PaperlogySemiBold",
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                    text: '${widget.phoneNumber}', // $name 부분에 색상 적용
+                    style: TextStyle(
+                      fontSize: 80,
+                      fontFamily: "PaperlogySemiBold",
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF265A5A), // 원하는 색상
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

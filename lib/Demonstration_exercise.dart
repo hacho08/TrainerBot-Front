@@ -1,4 +1,7 @@
+import 'package:dx_project_app/countdown.dart';
 import 'package:flutter/material.dart';
+
+import 'before_countdown.dart';
 
 class DemonstrationExercisePage extends StatelessWidget {
   @override
@@ -23,21 +26,21 @@ class DemonstrationExercisePage extends StatelessWidget {
                     Text(
                       '준비운동',
                       style: TextStyle(
-                        fontSize: 100,
+                        fontSize: 120,
                         fontFamily: "PaperlogyBold",
-                        color: Colors.teal[800],
+                        color: Color(0xFF265A5A),
                       ),
                     ),
-                    SizedBox(height: screenHeight * 0.005),
+                    SizedBox(height: screenHeight * 0.001),
                     Text(
                       '스트레칭',
                       style: TextStyle(
-                        fontSize: screenWidth * 0.07,
+                        fontSize: screenWidth * 0.08,
                         fontFamily: "PaperlogySemiBold",
-                        color: Colors.teal[800],
+                        color: Color(0xFF265A5A),
                       ),
                     ),
-                    SizedBox(height: screenHeight*0.01),
+                    SizedBox(height: screenHeight*0.005),
                     Text(
                       '목표 갯수 : 5',
                       style: TextStyle(
@@ -54,11 +57,16 @@ class DemonstrationExercisePage extends StatelessWidget {
                     IconButton(
                       icon: Icon(
                         Icons.arrow_circle_right,
-                        color: Colors.teal[800],
+                        color: Color(0xFF265A5A),
                         size: screenWidth * 0.1,
                       ),
                       onPressed: () {
-                        print('운동 시작 버튼 클릭됨');
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BeforeCountdownPage()
+                          ),
+                        );
                       },
                     ),
                     Text(
@@ -66,7 +74,7 @@ class DemonstrationExercisePage extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'PaperlogySemiBold',
                         fontSize: screenWidth * 0.055,
-                        color: Colors.teal[800],
+                        color: Color(0xFF265A5A),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -91,7 +99,7 @@ class DemonstrationExercisePage extends StatelessWidget {
             fontFamily: "PaperlogyBold",
             fontSize: screenWidth * 0.065,
             fontWeight: FontWeight.bold,
-            color: Colors.teal[800],
+            color: Color(0xFF265A5A),
           ),
         ),
         SizedBox(height: screenHeight * 0.01),

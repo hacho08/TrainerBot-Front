@@ -28,7 +28,7 @@ class _MedicalConditionChoicePageState
       "defaultImage": "images/knee.png",
       "selectedImage": "images/knee_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -37,7 +37,7 @@ class _MedicalConditionChoicePageState
       "defaultImage": "images/back.png",
       "selectedImage": "images/back_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -46,7 +46,7 @@ class _MedicalConditionChoicePageState
       "defaultImage": "images/shoulder.png",
       "selectedImage": "images/shoulder_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -55,7 +55,7 @@ class _MedicalConditionChoicePageState
       "defaultImage": "images/neck.png",
       "selectedImage": "images/neck_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -64,7 +64,7 @@ class _MedicalConditionChoicePageState
       "defaultImage": "images/wrist.png",
       "selectedImage": "images/wrist_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -73,7 +73,7 @@ class _MedicalConditionChoicePageState
       "defaultImage": "images/ankle.png",
       "selectedImage": "images/ankle_selected.png",
       "defaultColor": Color(0xFFEFE7E1),
-      "selectedColor": Color(0xFF00695C),
+      "selectedColor": Color(0xFF265A5A),
       "defaultTextColor": Colors.black,
       "selectedTextColor": Colors.white,
     },
@@ -176,7 +176,7 @@ class _MedicalConditionChoicePageState
                             style: TextStyle(
                               fontSize: screenWidth * 0.055,
                               fontFamily: "PaperlogyBold",
-                              color: Colors.teal[800],
+                              color: Color(0xFF265A5A),
                             ),
                           ),
                         ],
@@ -198,16 +198,16 @@ class _MedicalConditionChoicePageState
             Text(
               '옥수수님,\n아프신 곳이 있나요?',
               style: TextStyle(
-                fontSize: 100,
+                fontSize: 70,
                 fontFamily: "PaperlogyBold",
-                color: Colors.teal[800],
+                color: Color(0xFF265A5A),
               ),
             ),
             SizedBox(height: 10),
             Text(
               '최대 2개 선택가능',
               style: TextStyle(
-                fontSize: 50,
+                fontSize: 40,
                 fontFamily: "PaperlogySemiBold",
                 color: Colors.black,
               ),
@@ -217,9 +217,9 @@ class _MedicalConditionChoicePageState
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 50,
-                  mainAxisSpacing: 50,
-                  childAspectRatio: 1.6,
+                  crossAxisSpacing: 40,
+                  mainAxisSpacing: 40,
+                  childAspectRatio: 1.5,
                 ),
                 itemCount: buttonData.length,
                 itemBuilder: (context, index) {
@@ -267,8 +267,8 @@ class _MedicalConditionChoicePageState
             isSelected[index]
                 ? buttonData[index]["selectedImage"]
                 : buttonData[index]["defaultImage"],
-            width: 130,
-            height: 130,
+            width: 90,
+            height: 90,
             fit: BoxFit.contain,
           ),
           SizedBox(height: 20),
@@ -276,7 +276,7 @@ class _MedicalConditionChoicePageState
             buttonData[index]["text"]!,
             style: TextStyle(
               fontFamily: "PaperlogyRegular",
-              fontSize: 60,
+              fontSize: 50,
               fontWeight: FontWeight.bold,
               color: isSelected[index]
                   ? buttonData[index]["selectedTextColor"]

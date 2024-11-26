@@ -1,100 +1,103 @@
-import 'package:dx_project_app/phone_number.dart';
 import 'package:flutter/material.dart';
-import 'login_check.dart';
 import 'login_phone_number.dart';
-import 'year.dart';
-import 'next_reservation_info.dart';
+import 'name.dart';
 
 class MainLoginPage extends StatelessWidget {
   const MainLoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // 화면 크기 얻기
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: const Color(0xFF265A5A), // 메인 로그인 페이지 배경색
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset("images/main_manse_image.png"), // 이미지
-            const SizedBox(height: 20), // 간격
-            const Text(
-              'LG 트레이너 봇',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: "PaperlogySemiBold",
-                fontSize: 110,
-                fontWeight: FontWeight.bold,
+        child: SingleChildScrollView( // 스크롤 가능하게 해서 오버플로우 방지
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "images/main_manse_image.png",
+                width: width * 0.3, // 이미지 크기 화면 비율에 맞게 조정
               ),
-            ),
-            const SizedBox(height: 90), // 간격
-            const Text(
-              '항목을 선택해주세요.',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 70,
-                fontFamily: "PaperlogyRegular",
-              ),
-            ),
-            const SizedBox(height: 40), // 간격
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPhoneNumberPage()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFCF9F5),
-                    foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0), // 둥근 모서리 정도 설정
-                    ),
-                    fixedSize: Size(480, 650), // 버튼의 너비와 높이 설정
-                  ),
-                  child:
-                  const Text(
-                    '로그인',
-                    style: TextStyle(
-                      fontFamily: "PaperlogySemiBold",
-                      fontSize: 100
-                    ),
-
-                  ),
+              const SizedBox(height: 20), // 간격
+              Text(
+                'LG 트레이너 봇',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "PaperlogySemiBold",
+                  fontSize: width * 0.12, // 글자 크기 비율로 조정
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(width: 20), // 버튼 간격
-                ElevatedButton(
-                  onPressed: () {
+              ),
+              SizedBox(height: height * 0.05), // 간격
+              Text(
+                '항목을 선택해주세요.',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: width * 0.08, // 글자 크기 비율로 조정
+                  fontFamily: "PaperlogyRegular",
+                ),
+              ),
+              SizedBox(height: height * 0.05), // 간격
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // 로그인 버튼
+                  ElevatedButton(
+                    onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => InputBirthYearScreen()),
+                        MaterialPageRoute(builder: (context) => LoginPhoneNumberPage()),
                       );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFD5C6B9),
-                    foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0), // 둥근 모서리 정도 설정
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFFFCF9F5),
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0), // 둥근 모서리 정도 설정
+                      ),
+                      fixedSize: Size(width * 0.4, height * 0.4), // 화면 크기에 맞게 크기 설정
                     ),
-                    fixedSize: Size(480, 650), // 버튼의 너비와 높이 설정
-                  ),
-                  child:
-                  const Text(
-                    '회원가입',
-                    style: TextStyle(
+                    child: Text(
+                      '로그인',
+                      style: TextStyle(
                         fontFamily: "PaperlogySemiBold",
-                        fontSize: 100
+                        fontSize: width * 0.08, // 글자 크기 비율로 조정
+                      ),
                     ),
-
                   ),
-                ),
-
-              ],
-            ),
-          ],
+                  SizedBox(width: width * 0.05), // 버튼 간격
+                  // 회원가입 버튼
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Name()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFFD5C6B9),
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0), // 둥근 모서리 정도 설정
+                      ),
+                      fixedSize: Size(width * 0.4, height * 0.4), // 화면 크기에 맞게 크기 설정
+                    ),
+                    child: Text(
+                      '회원가입',
+                      style: TextStyle(
+                        fontFamily: "PaperlogySemiBold",
+                        fontSize: width * 0.08, // 글자 크기 비율로 조정
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

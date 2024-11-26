@@ -26,9 +26,9 @@ class UpperBodyInfoPage extends StatelessWidget {
           children: [
             Text(
               '오늘은\n상체 운동을 진행하세요',
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: screenWidth * 0.085,
+                fontSize: 70,
                 fontWeight: FontWeight.bold,
                 fontFamily: "PaperlogyMedium",
                 color: Color(0xFF265A5A), // 텍스트 색상

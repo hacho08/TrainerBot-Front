@@ -63,7 +63,7 @@ class _MedicalConditionCheckPageState extends State<MedicalConditionCheckPage>{
               '유의해야 할 부위로\n아래 항목이 선택되었습니다\n',
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 80,
+                fontSize: 70,
                 fontFamily: "PaperlogySemiBold",
                 fontWeight: FontWeight.bold,
               ),

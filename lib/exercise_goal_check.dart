@@ -57,7 +57,7 @@ class ExerciseGoalCheckPage extends StatefulWidget {
             Image.asset("images/check.png", width: 300),
             const SizedBox(height: 50),
             Text(
-              '운동 목표로\n아래 항목이 선택되었습니다\n', // 전달된 운동 강도 텍스트를 사용
+              '운동 목표로\n아래 항목이\n선택되었습니다\n', // 전달된 운동 강도 텍스트를 사용
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 80,
