@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,10 +32,21 @@ class _RealExercisePageState extends State<RealExercisePage> {
   String exerciseName = '스쿼트'; // 운동 이름
   int targetSets = 5; // 목표 갯수
   int remainingSets = 3; // 남은 갯수
+  late FlutterTts _flutterTts;
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("하체운동을 시작합니다");
+  }
+
 
   @override
   void initState() {
     super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
     // 비디오 파일 로드
     _controller = VideoPlayerController.asset('video/test_video.mp4') // 비디오 경로 지정
       ..initialize().then((_) {
@@ -46,6 +58,7 @@ class _RealExercisePageState extends State<RealExercisePage> {
 
   @override
   void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
     super.dispose();
     _controller.dispose(); // 비디오 리소스 해제
   }

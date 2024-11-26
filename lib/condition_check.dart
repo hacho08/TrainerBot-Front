@@ -42,7 +42,7 @@ class _ConditionCheckPageState extends State<ConditionCheckPage>{
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => UpperBodyInfoPage(),
+          builder: (context) => LowerBodyInfoPage(),
         ),
       );
     });

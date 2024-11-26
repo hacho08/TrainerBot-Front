@@ -1,7 +1,8 @@
-import 'dart:async';
-import 'package:dx_project_app/real_exercise.dart';
+     import 'dart:async';
+import 'real_exercise.dart';
 import 'package:flutter/material.dart';
-import 'package:dx_project_app/demonstration_exercise.dart'; // 해당 페이지로 이동
+import 'demonstration_exercise.dart';
+import 'package:flutter_tts/flutter_tts.dart';// 해당 페이지로 이동
 
 void main() {
   runApp(const MyApp());
@@ -27,13 +28,31 @@ class RestTimePage extends StatefulWidget {
 class _RestTimePageState extends State<RestTimePage> {
   int _countdown = 60; // 카운트다운 초기값
   late Timer _timer;
+  late FlutterTts _flutterTts;
 
   @override
   void initState() {
     super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
     // 카운트다운 시작
     _startCountdown();
   }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("대단해요!! 1분간 휴식을 취해주세요");
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
+
 
   // 카운트다운을 1초마다 진행
   void _startCountdown() {
@@ -53,11 +72,6 @@ class _RestTimePageState extends State<RestTimePage> {
     });
   }
 
-  @override
-  void dispose() {
-    _timer.cancel(); // 페이지가 닫힐 때 타이머 종료
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

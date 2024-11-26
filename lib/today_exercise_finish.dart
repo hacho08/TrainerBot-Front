@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dx_project_app/real_exercise.dart';
 import 'package:flutter/services.dart';
-
 import 'next_reservation_info.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +26,28 @@ class TodayExerciseFinishPage extends StatefulWidget {
 }
 
 class _TodayExerciseFinishPageState extends State<TodayExerciseFinishPage> {
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("오늘의 운동이 완료되었습니다 ");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
