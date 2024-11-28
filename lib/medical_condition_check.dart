@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'exercise_level_choice.dart';
+import 'models/user.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class MedicalConditionCheckPage extends StatefulWidget {
-  final List<String> selectedConditions;
+  final User user;
 
   // Constructor to receive the selected conditions
-  MedicalConditionCheckPage({required this.selectedConditions});
+  MedicalConditionCheckPage({required this.user});
 
   @override
   _MedicalConditionCheckPageState createState() =>
@@ -15,6 +16,15 @@ class MedicalConditionCheckPage extends StatefulWidget {
 
 class _MedicalConditionCheckPageState extends State<MedicalConditionCheckPage>{
   late FlutterTts _flutterTts;
+
+  final List<String> bodyConditionTexts = [
+    "무릎",
+    "허리",
+    "어깨",
+    "목",
+    "손목",
+    "발목",
+  ];
 
   @override
   void initState() {
@@ -38,18 +48,25 @@ class _MedicalConditionCheckPageState extends State<MedicalConditionCheckPage>{
 
   @override
   Widget build(BuildContext context) {
+    print('bodyconditionIds: ${widget.user.bodyConditionIds}');
+
+    // 변환: Index 리스트를 텍스트 리스트로
+    List<String> selectedTexts = widget.user.bodyConditionIds
+        .map((index) => bodyConditionTexts[index])
+        .toList();
+
     // 2초 후 ExerciseLevelChoicePage로 이동
     Future.delayed(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ExerciseLevelChoicePage()),
+        MaterialPageRoute(builder: (context) => ExerciseLevelChoicePage(user: widget.user)),
       );
     });
 
     // '선택되지 않음' 처리
-    String displayConditions = widget.selectedConditions.isEmpty
+    String displayConditions = widget.user.bodyConditionIds.isEmpty
         ? '없음' // 조건이 없으면 '없음'을 표시
-        : widget.selectedConditions.join(', '); // 조건이 있으면 선택된 텍스트를 나열
+        : selectedTexts.join(', '); // 조건이 있으면 선택된 텍스트를 나열
 
     return Scaffold(
       backgroundColor: Colors.white,

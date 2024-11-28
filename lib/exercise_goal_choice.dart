@@ -1,10 +1,14 @@
-import 'package:dx_project_app/exercise_level_check.dart';
 import 'package:dx_project_app/exercise_level_choice.dart';
 import 'package:flutter/material.dart';
 import 'exercise_goal_check.dart'; // CheckPage로 이동하는 임포트
 import 'package:flutter_tts/flutter_tts.dart';
+import 'models/user.dart';
 
 class ExerciseGoalChoicePage extends StatefulWidget {
+  final User user;
+
+  ExerciseGoalChoicePage({required this.user});
+
   @override
   _ExerciseGoalChoicePageState createState() =>
       _ExerciseGoalChoicePageState();
@@ -80,6 +84,12 @@ class _ExerciseGoalChoicePageState
     super.dispose();
   }
 
+  void _saveUserGoal() {
+    setState(() {
+      widget.user.goal = selectedConditions.join(', ');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -109,10 +119,11 @@ class _ExerciseGoalChoicePageState
                           size: screenWidth * 0.07,
                         ),
                         onPressed: () {
+                          _saveUserGoal();
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ExerciseLevelChoicePage(),
+                              builder: (context) => ExerciseLevelChoicePage(user: widget.user,),
                             ),
                           );
                         },
@@ -142,12 +153,13 @@ class _ExerciseGoalChoicePageState
                             onPressed: () {
                               // 선택된 버튼들이 1개 이상일 때만 다음 페이지로 이동
                               if (selectedConditions.isNotEmpty) {
+                                _saveUserGoal();
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         ExerciseGoalCheckPage(
-                                            selectedConditions: selectedConditions),
+                                            user: widget.user),
                                   ),
                                 );
                               } else {
@@ -190,7 +202,7 @@ class _ExerciseGoalChoicePageState
           children: [
             SizedBox(height: 40),
             Text(
-              '옥수수님의\n운동 목표를\n선택해주세요',
+              '${widget.user.userName}님의\n운동 목표를\n선택해주세요',
               style: TextStyle(
                 fontSize: 70,
                 fontFamily: "PaperlogyBold",

@@ -1,12 +1,13 @@
+import 'package:dx_project_app/models/user.dart';
 import 'package:flutter/material.dart';
 import 'hobby_exercise_choice.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class ExerciseGoalCheckPage extends StatefulWidget {
-  final List<String> selectedConditions;
+  final User user;
 
   // 생성자에서 selectedCondition을 받습니다.
-  ExerciseGoalCheckPage({required this.selectedConditions});
+  ExerciseGoalCheckPage({required this.user});
 
   @override
   _ExerciseGoalCheckPageState createState() => _ExerciseGoalCheckPageState();
@@ -37,16 +38,17 @@ class ExerciseGoalCheckPage extends StatefulWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("goal: ${widget.user.goal}");
     // 2초 후 이동
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HobbyExerciseChoicePage()),
+        MaterialPageRoute(builder: (context) => HobbyExerciseChoicePage(user: widget.user,)),
       );
     });
 
     // '선택되지 않음' 처리
-    String displayConditions = widget.selectedConditions.join(', '); // 조건이 있으면 선택된 텍스트를 나열
+    String displayConditions = widget.user.goal; // 조건이 있으면 선택된 텍스트를 나열
 
     return Scaffold(
       backgroundColor: Colors.white,

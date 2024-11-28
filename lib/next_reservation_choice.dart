@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'next_reservation_complete.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import '../services/reservation_api.dart';
+import 'global/global.dart';
 
 class NextReservationChoicePage extends StatefulWidget {
   @override

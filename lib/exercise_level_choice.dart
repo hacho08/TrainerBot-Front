@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'exercise_level_check.dart';
+import 'models/user.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'medical_condition_choice.dart';
+import 'models/user.dart';
 
 
 class ExerciseLevelChoicePage extends StatefulWidget {
+  final User user;
+
+  ExerciseLevelChoicePage({required this.user});
+
   @override
   _ExerciseLevelChoicePageState createState() =>
       _ExerciseLevelChoicePageState();
@@ -64,6 +70,8 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -96,7 +104,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MedicalConditionChoicePage(),
+                              builder: (context) => MedicalConditionChoicePage(user: widget.user),
                             ),
                           );
                         },
@@ -131,20 +139,15 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
                                 );
                               } else {
                                 // 선택된 운동 강도에 따라 페이지 이동
-                                String selectedCondition = "선택되지 않음";  // 기본값 설정
+                                String selectedCondition = buttonData[_selectedIndex]["text"] as String;
 
-                                if (_selectedIndex == 0) {
-                                  selectedCondition = "초보자";
-                                } else if (_selectedIndex == 1) {
-                                  selectedCondition = "중급자";
-                                } else if (_selectedIndex == 2) {
-                                  selectedCondition = "고급자";
-                                }
+                                widget.user.workoutExperience = selectedCondition;
+
 
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ExerciseLevelCheckPage(selectedCondition: selectedCondition),
+                                    builder: (context) => ExerciseLevelCheckPage(user: widget.user),
                                   ),
                                 );
                               }
@@ -177,7 +180,7 @@ class _ExerciseLevelChoicePageState extends State<ExerciseLevelChoicePage> {
               children: [
                 SizedBox(height: 30),
                 Text(
-                  '옥수수님의\n근력운동 수준을\n선택하세요',
+                  '${widget.user.userName}님의\n근력운동 수준을\n선택하세요',
                   style: TextStyle(
                     fontSize: 70,
                     fontFamily: "PaperlogyBold",

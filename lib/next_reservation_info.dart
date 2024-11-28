@@ -2,6 +2,23 @@ import 'package:flutter/material.dart';
 import 'next_reservation_choice.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false, // 디버그 배너 제거
+      home: NextExerciseReservationPage(), // NextExerciseReservationPage를 초기 화면으로 설정
+    );
+  }
+}
+
+
 class NextExerciseReservationPage extends StatefulWidget {
 
   _NextExerciseReservationPageState createState() =>

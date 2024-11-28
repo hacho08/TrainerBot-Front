@@ -1,14 +1,13 @@
-import 'package:dx_project_app/condition_choice.dart';
-import 'package:dx_project_app/gender_choice.dart';
-import 'package:dx_project_app/year.dart';
+import 'models/user.dart';
+import 'gender_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class PhoneNumberCheckPage extends StatefulWidget {
-  final String phoneNumber;
+  final User user;
 
   // 생성자에서 phoneNumber를 받습니다.
-  PhoneNumberCheckPage({required this.phoneNumber});
+  PhoneNumberCheckPage({required this.user});
 
   @override
   _PhoneNumberCheckPageState createState() => _PhoneNumberCheckPageState();
@@ -38,11 +37,12 @@ class _PhoneNumberCheckPageState extends State<PhoneNumberCheckPage> {
 
   @override
   Widget build(BuildContext context) {
-    // 2초 후 main_login.dart로 이동
+    print("userid: ${widget.user.userId}");
+    // 3초 후 main_login.dart로 이동
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => GenderChoicePage()),
+        MaterialPageRoute(builder: (context) => GenderChoicePage(user: widget.user)),
       );
     });
 
@@ -65,7 +65,7 @@ class _PhoneNumberCheckPageState extends State<PhoneNumberCheckPage> {
                     ),
                     children: [
                       TextSpan(
-                        text: '${widget.phoneNumber}', // $name 부분에 색상 적용
+                        text: '${widget.user.userId}', // $name 부분에 색상 적용
                         style: TextStyle(
                           fontSize: 80,
                           fontFamily: "PaperlogySemiBold",

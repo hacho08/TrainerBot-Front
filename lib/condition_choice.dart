@@ -1,9 +1,13 @@
-import 'package:dx_project_app/info_insert_finish.dart';
 import 'package:flutter/material.dart';
 import 'condition_check.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import '../services/todaycondition_api.dart';
 
 class ConditionChoicePage extends StatefulWidget {
+  final String userId;
+
+  ConditionChoicePage({required this.userId});
+
   @override
   _ConditionChoicePageState createState() => _ConditionChoicePageState();
 }
@@ -11,6 +15,7 @@ class ConditionChoicePage extends StatefulWidget {
 class _ConditionChoicePageState extends State<ConditionChoicePage> {
   String? condition; // 선택된 운동 강도를 저장할 변수
   late FlutterTts _flutterTts;
+  final TodayConditionApi _todayConditionApi = TodayConditionApi();
 
   @override
   void initState() {
@@ -32,15 +37,32 @@ class _ConditionChoicePageState extends State<ConditionChoicePage> {
     super.dispose();
   }
 
-
-  void _updateCondition(String selectedCondition) {
+  void _updateCondition(String condition) async {
     setState(() {
-      condition = selectedCondition;
+      condition = condition;
     });
+
+    try {
+      // 서버에 컨디션 저장
+      await _todayConditionApi.addTodayCondition(widget.userId,condition);
+      print('Condition successfully sent to the server');
+    } catch (e) {
+      print('Failed to send condition to the server: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '컨디션 저장에 실패했습니다. 다시 시도해주세요.',
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+      );
+      return; // 실패 시 아래 코드 실행 방지
+    }
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ConditionCheckPage(condition: selectedCondition),
+        builder: (context) => ConditionCheckPage(condition: condition),
       ),
     );
   }
@@ -90,38 +112,6 @@ class _ConditionChoicePageState extends State<ConditionChoicePage> {
               ],
             ),
           ),
-          // Positioned(
-          //   top: 60,
-          //   right: 40,
-          //   child: Column(
-          //     children: [
-          //       IconButton(
-          //         icon: Icon(
-          //           Icons.arrow_circle_right_rounded,
-          //           size: 80,
-          //           color: Colors.teal[800],
-          //         ),
-          //         onPressed: () {
-          //           Navigator.pushReplacement(
-          //             context,
-          //             MaterialPageRoute(builder: (context) => InfoInsertFinishPage()),
-          //           );
-          //         },
-          //         style: TextButton.styleFrom(
-          //           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          //         ),
-          //       ),
-          //       Text(
-          //         '다음',
-          //         style: TextStyle(
-          //           fontSize: 35,
-          //           fontFamily: "PaperlogySemiBold",
-          //           color: Colors.teal[800],
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );
