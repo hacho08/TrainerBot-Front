@@ -3,7 +3,6 @@ import 'exercise_level_check.dart';
 import 'models/user.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'medical_condition_choice.dart';
-import 'models/user.dart';
 
 
 class ExerciseLevelChoicePage extends StatefulWidget {
