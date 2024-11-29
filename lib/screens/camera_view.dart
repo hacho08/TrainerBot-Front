@@ -205,7 +205,7 @@ class _CameraViewState extends State<CameraView> {
   Uint8List convertYUV420ToNV21(CameraImage image) {
     final int width = image.width;
     final int height = image.height;
-
+    // print("width: ${image.width}, height: ${image.height}");
     // YUV 크기 계산
     final int ySize = image.planes[0].bytes.length;
     final int uvSize = image.planes[1].bytes.length + image.planes[2].bytes.length;

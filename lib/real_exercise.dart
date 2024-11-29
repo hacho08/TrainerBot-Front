@@ -54,76 +54,75 @@ class _RealExercisePageState extends State<RealExercisePage> {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
-
+    print("width: $screenWidth, height: $screenHeight");
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-        child: Column(
+        padding: EdgeInsets.symmetric(horizontal: 0), //screenWidth * 0.05
+        child: Stack(
           children: [
-            SizedBox(height: screenHeight * 0.05),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      exerciseType,  // 운동 종류가 동적으로 변경
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.10,
-                        fontFamily: "PaperlogyBold",
-                        color: Color(0xFF265A5A),
-                      ),
-                    ),
-                    SizedBox(height: screenHeight * 0.001),
-                    Text(
-                      exerciseName,  // 운동 이름이 동적으로 변경
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.08,
-                        fontFamily: "PaperlogySemiBold",
-                        color: Color(0xFF265A5A),
-                      ),
-                    ),
-                    SizedBox(height: screenHeight*0.005),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 90),
-                    Text(
-                      '목표 갯수: $targetSets',  // 목표 갯수가 동적으로 변경
-                      style: TextStyle(
-                        fontSize: 50,
-                        fontFamily: "PaperlogySemiBold",
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox(height: screenHeight * 0.001),
-                    Text(
-                      '남은 갯수: $remainingSets',  // 남은 갯수가 동적으로 변경
-                      style: TextStyle(
-                        fontSize: 50,
-                        fontFamily: "PaperlogySemiBold",
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox(height: screenHeight * 0.005),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: screenHeight * 0.02),
-            // 가로선 추가
             Container(
-              width: double.infinity, // 화면 전체 너비로 선을 만듦
-              height: 2, // 선의 두께
-              color: Color(0xFFB4C1C1), // 선의 색상
+              child: PoseDetectorView(),
+              // width: screenWidth,
             ),
-            SizedBox(height: screenHeight * 0.05),
-            Expanded(
-                child: PoseDetectorView(),
+            Padding(
+              padding: EdgeInsets.all(screenWidth * 0.05),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: screenHeight * 0.05),
+                          Text(
+                            exerciseType,  // 운동 종류가 동적으로 변경
+                            style: TextStyle(
+                              fontSize: screenWidth * 0.10,
+                              fontFamily: "PaperlogyBold",
+                              color: Color(0xFF265A5A),
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.001),
+                          Text(
+                            exerciseName,  // 운동 이름이 동적으로 변경
+                            style: TextStyle(
+                              fontSize: screenWidth * 0.08,
+                              fontFamily: "PaperlogySemiBold",
+                              color: Color(0xFF265A5A),
+                            ),
+                          ),
+                          SizedBox(height: screenHeight*0.005),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 90),
+                          Text(
+                            '목표 갯수: $targetSets',  // 목표 갯수가 동적으로 변경
+                            style: TextStyle(
+                              fontSize: 50,
+                              fontFamily: "PaperlogySemiBold",
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.001),
+                          Text(
+                            '남은 갯수: $remainingSets',  // 남은 갯수가 동적으로 변경
+                            style: TextStyle(
+                              fontSize: 50,
+                              fontFamily: "PaperlogySemiBold",
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

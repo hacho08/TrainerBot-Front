@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
@@ -14,37 +16,53 @@ class PoseDetectorView extends StatefulWidget {
 }
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
-  // 스켈레톤 추출 변수 선언(google_mlkit_pose_detection 라이브러리)
-  final PoseDetector _poseDetector =
-  PoseDetector(options: PoseDetectorOptions());
+  final PoseDetector _poseDetector = PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
   bool _isBusy = false;
-  // 스켈레톤 모양을 그려주는 변수
   CustomPaint? _customPaint;
-  // input Map
-  Map<String, double> inputMap = {};
+
+  late Timer _timer; // Timer 변수 추가
+  List<Pose> _currentPoses = []; // 현재 포즈 데이터를 저장할 변수
+  InputImage? _currentImage; // 마지막에 처리한 이미지 저장
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      print("called");
+      addPoses(_currentImage!);
+    });
+  }
 
   @override
   void dispose() {
     _canProcess = false;
     _poseDetector.close();
+    _timer.cancel(); // 타이머 종료
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // 카메라뷰 보이기
-    return CameraView(
-      // 스켈레톤 그려주는 객체 전달
-      customPaint: _customPaint,
-      // 카메라에서 전해주는 이미지 받을 때마다 아래 함수 실행
-      onImage: (inputImage) {
-        processImage(inputImage); // processImage를 호출하여 이미지 처리
-      },
+    return Container(
+      child: Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.rotationY(pi), // 좌우 반전 제거하는 설정
+        child: CameraView(
+          customPaint: _customPaint,
+          onImage: (inputImage) {
+            setState(() {
+              _currentImage = inputImage; // onImage에서 받은 이미지 저장
+            });
+            processImage(inputImage); // 이미지 처리
+          },
+        ),
+      ),
     );
   }
 
-  // 카메라에서 실시간으로 받아온 이미지 처리: 이미지에 포즈가 추출되었으면 스켈레톤 그려주기
+  // 카메라에서 실시간으로 받아온 이미지 처리
   Future<void> processImage(InputImage inputImage) async {
     if (!_canProcess) {
       return;
@@ -57,13 +75,11 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     _isBusy = true;
 
     try {
-      // poseDetector에서 추출된 포즈 가져오기
+      // 포즈 추출
       List<Pose> poses = await _poseDetector.processImage(inputImage);
-      // print('Detected poses: ${poses.length}');
 
       // 이미지가 정상적이면 포즈에 스켈레톤 그려주기
-      if (inputImage.metadata?.size != null &&
-          inputImage.metadata?.rotation != null) {
+      if (inputImage.metadata?.size != null && inputImage.metadata?.rotation != null) {
         final painter = PosePainter(
           poses,
           inputImage.metadata!.size,
@@ -71,20 +87,45 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         );
         _customPaint = CustomPaint(painter: painter);
 
-        // PoseDataSender 호출하여 데이터를 저장
-        // PoseDataSender(poses, "pose_data.json").startSendingData();  // JSON 파일로 저장하고 서버로 보내기
-
       } else {
-        // 추출된 포즈 없음
         print('No pose detected');
         _customPaint = null;
       }
     } catch (e) {
       print('Error processing image: $e');
     } finally {
-      _isBusy = false; // 항상 false로 설정하여 다음 프레임 처리 가능
+      _isBusy = false;
       if (mounted) {
-        setState(() {}); // UI 업데이트
+        setState(() {});
+      }
+    }
+  }
+
+  // 포즈 데이터를 서버로 보내는 메소드
+  void sendPoseData() {
+    if (_currentPoses.isNotEmpty) {
+      PoseDataSender(_currentPoses, "pose_data.json").startSendingData();
+      print('Sending pose data to API');
+
+      // 전송 후 _currentPoses 초기화
+      setState(() {
+        _currentPoses.clear();  // 데이터 전송 후 초기화
+      });
+    }
+  }
+
+  void addPoses(InputImage inputImage) async {
+    if (inputImage.metadata?.size != null && inputImage.metadata?.rotation != null) {
+      // 포즈 추출
+      List<Pose> poses = await _poseDetector.processImage(inputImage);
+      if (poses.isNotEmpty) {
+        setState(() {
+          _currentPoses.add(poses.first); // 첫 번째 포즈만 추가 (필요에 따라 변경 가능)
+        });
+        print("length ${_currentPoses.length}");
+        if (_currentPoses.length >= 17) {
+          sendPoseData();  // 17개가 되면 서버로 전송
+        }
       }
     }
   }
