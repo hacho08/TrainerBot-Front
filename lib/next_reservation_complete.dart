@@ -1,6 +1,10 @@
+import 'package:dx_project_app/next_reservation_choice.dart';
 import 'package:flutter/material.dart';
+import 'models/reservation.dart';
 import 'next_reservation_check.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'services/reservation_api.dart';
+import 'global/global.dart';
 
 class NextReservationCompletePage extends StatefulWidget {
   final String date;
@@ -16,6 +20,7 @@ class NextReservationCompletePage extends StatefulWidget {
 class _NextReservationCompletePageState extends State<NextReservationCompletePage>{
 
   late FlutterTts _flutterTts;
+  final ReservationApi reservationApi = ReservationApi();
 
   @override
   void initState() {
@@ -29,6 +34,7 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
     await _flutterTts.setLanguage("ko-KR");
     await _flutterTts.setSpeechRate(0.5);
     await _flutterTts.speak("예약 정보를 확인해주세요");
+    print(_parseDateTime(widget.date, widget.time)); // 예약 날짜와 시간 출력
   }
 
   @override
@@ -37,7 +43,65 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
     super.dispose();
   }
 
-  @override
+  Future<void> _saveReservation() async {
+    try {
+      // 예약 날짜와 시간을 결합하여 DateTime 객체 생성
+      DateTime bookingDate = _parseDateTime(widget.date, widget.time);
+
+      // 서버로 전송할 Reservation 객체 생성
+      final reservation = Reservation(
+        userId: globalUserId!, // 전역 변수에서 userId 가져오기
+        bookingDate: bookingDate,
+      );
+
+      // API 호출로 예약 저장
+      await reservationApi.addReservation(reservation);
+
+      // 예약 저장 성공 후 다음 페이지로 이동
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NextReservationCheckPage(),
+        ),
+      );
+    } catch (e) {
+      // 오류 발생 시 사용자에게 알림
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '예약 저장에 실패했습니다. 다시 시도해주세요.',
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      );
+    }
+  }
+
+  DateTime _parseDateTime(String date, String time) {
+    // 월과 일을 추출
+    final dateParts = date.replaceAll('일', '').split('월');
+    int month = int.parse(dateParts[0].trim());
+    int day = int.parse(dateParts[1].trim());
+
+    // 오전/오후 처리
+    bool isMorning = time.contains('오전');
+    final timeParts = time.replaceAll(RegExp(r'[오전|오후\s]'), '').split('시');
+    int hour = int.parse(timeParts[0].trim());
+    if (!isMorning && hour != 12) {
+      hour += 12; // 오후이고 12시가 아닐 경우 12를 더함
+    } else if (isMorning && hour == 12) {
+      hour = 0; // 오전 12시는 0시로 변환
+    }
+
+    // 현재 연도를 사용하여 DateTime 생성
+    int year = DateTime
+        .now()
+        .year;
+    return DateTime(year, month, day, hour, 0, 0);
+  }
+
+
+    @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -45,7 +109,7 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight * 0.11),
+        preferredSize: Size.fromHeight(screenHeight * 0.13),
         child: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -62,50 +126,60 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
                       IconButton(
                         icon: Icon(
                           Icons.arrow_back,
-                          color: const Color(0xFF989898),
-                          size: screenWidth * 0.07,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context); // 뒤로 가기 동작 추가
-                        },
-                      ),
-                      Text(
-                        '뒤로 가기',
-                        style: TextStyle(
-                          fontSize: screenWidth * 0.035,
-                          fontFamily: "PaperlogyBold",
-                          color: const Color(0xFF989898),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_circle_right,
-                          color: const Color(0xFF265A5A),
+                          color: Color(0xFF989898),
                           size: screenWidth * 0.1,
                         ),
                         onPressed: () {
-                          // '다음' 버튼 동작 추가
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => NextReservationCheckPage(),
+                              builder: (context) => NextReservationChoicePage(),
                             ),
                           );
                         },
                       ),
                       Text(
-                        '다음',
+                        '뒤로 가기',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.035,
+                          fontSize: screenWidth * 0.055,
                           fontFamily: "PaperlogyBold",
-                          color: const Color(0xFF265A5A),
+                          color: Color(0xFF989898),
                         ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              Icons.arrow_circle_right,
+                              color: Color(0xFF265A5A),
+                              size: screenWidth * 0.1,
+                            ),
+                            onPressed: () {
+                              _saveReservation(); // 예약 저장 호출
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NextReservationCheckPage(),
+                                    ),
+                                  );
+                              }
+
+                          ),
+                          Text(
+                            '다음',
+                            style: TextStyle(
+                              fontSize: screenWidth * 0.055,
+                              fontFamily: "PaperlogyBold",
+                              color: Color(0xFF265A5A),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -124,7 +198,7 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
             style: TextStyle(
             fontSize: 100,
             fontFamily: "PaperlogyBold",
-            color: Colors.teal[800],
+            color: Color(0xFF265A5A),
                 ),
               ),
 
@@ -147,8 +221,8 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
           title,
           style: TextStyle(
             fontFamily: 'PaperlogyBold',
-            fontSize: screenWidth * 0.08,
-            color: Colors.teal[800],
+            fontSize: screenWidth * 0.09,
+            color: Color(0xFF265A5A),
           ),
         ),
         SizedBox(height: screenHeight * 0.009),
@@ -156,7 +230,7 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
           value,
           style: TextStyle(
             fontFamily: 'PaperlogyBold',
-            fontSize: screenWidth * 0.09,
+            fontSize: screenWidth * 0.13,
             color: Colors.black87,
             decoration: TextDecoration.underline, // 밑줄 추가
             decorationColor: Colors.black, // 밑줄 색상

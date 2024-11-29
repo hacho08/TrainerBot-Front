@@ -1,10 +1,13 @@
-import 'package:dx_project_app/condition_choice.dart';
+import '../models/user.dart';
 import 'package:flutter/material.dart';
 import 'main_login.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'services/user_api.dart';
 
 class InfoInsertFinishPage extends StatefulWidget {
-  const InfoInsertFinishPage({super.key});
+  final User user;
+
+  InfoInsertFinishPage({required this.user});
 
   @override
   _InfoInsertFinishPageState createState() => _InfoInsertFinishPageState();
@@ -12,19 +15,39 @@ class InfoInsertFinishPage extends StatefulWidget {
 
 class _InfoInsertFinishPageState extends State<InfoInsertFinishPage>{
   late FlutterTts _flutterTts;
+  final UserApi userApi = UserApi();
 
   @override
   void initState() {
     super.initState();
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 실행
+    _sendUserData(); // 서버로 사용자 데이터 전송
   }
 
   Future<void> _initializeTts() async {
     await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
     await _flutterTts.setLanguage("ko-KR");
     await _flutterTts.setSpeechRate(0.5);
-    await _flutterTts.speak("모든 정보가 입력되었습니다");
+    await _flutterTts.speak("모든 정보가 입력되었습니다. 잠시 기다려주세요");
+  }
+
+  Future<void> _sendUserData() async {
+    try {
+      print('Sending user data to the server: ${widget.user.toJson()}');
+      await userApi.addUser(widget.user); // 서버로 사용자 데이터 전송
+      print('User data sent successfully');
+    } catch (e) {
+      print('Failed to send user data: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '서버에 정보를 전송하는 데 실패했습니다. 나중에 다시 시도하세요.',
+            style: TextStyle(fontSize: 30),
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -36,7 +59,7 @@ class _InfoInsertFinishPageState extends State<InfoInsertFinishPage>{
   @override
   Widget build(BuildContext context) {
     // 3초 후 condition_choice.dart로 이동
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainLoginPage()),

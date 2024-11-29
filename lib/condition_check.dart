@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
 import 'upper_body_info.dart'; // 다음 페이지 임포트
-import 'lower_body_info.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false, // 디버그 배너 제거
+      home: ConditionCheckPage(condition: '힘껏')
+    );
+  }
+}
 
 class ConditionCheckPage extends StatefulWidget {
   final String condition;
@@ -42,7 +57,7 @@ class _ConditionCheckPageState extends State<ConditionCheckPage>{
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => UpperBodyInfoPage(),
+          builder: (context) => UpperBodyInfoPage()
         ),
       );
     });
@@ -54,15 +69,28 @@ class _ConditionCheckPageState extends State<ConditionCheckPage>{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset("images/check.png", width: 300),
-            const SizedBox(height: 50),
-            Text(
-              '\'${widget.condition}\' 운동강도\n 설정되었습니다', // condition 변수를 작은 따옴표로 묶음
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 80,
-                fontFamily: "PaperlogySemiBold",
-                fontWeight: FontWeight.bold,
+            Text.rich(
+              TextSpan(
+                text: "'${widget.condition}'",
+                style: const TextStyle(
+                  fontSize: 80,
+                  fontFamily: "PaperlogySemiBold",
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF265A5A), // 원하는 색상
+                ),
+                children: [
+                  TextSpan(
+                    text: ' 운동강도\n설정되었습니다', // $name 부분에 색상 적용
+                    style: TextStyle(
+                      fontSize: 80,
+                      fontFamily: "PaperlogySemiBold",
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black, // 원하는 색상
+                    ),
+                  ),
+                ],
               ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

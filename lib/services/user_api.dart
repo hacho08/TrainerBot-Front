@@ -1,38 +1,46 @@
-// lib/services/user_api.dart
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../models/user.dart';
 
 class UserApi {
-  static const String baseUrl = "http://localhost:8090/api/users"; // 서버 주소
+  static const String baseUrl = "http://192.168.0.14:8090/api"; // 서버 주소
 
-
-  // 사용자 이름 추가
-  Future<void> addUserName(String userName) async {
+  // 사용자 추가
+  Future<void> addUser(User user) async {
     final response = await http.post(
-      Uri.parse(baseUrl),
+      Uri.parse('$baseUrl/users'),
       headers: {"Content-Type": "application/json"},
-      body: json.encode({"USER_NAME": userName}), // 서버에 사용자 이름 전송
+      body: json.encode(user.toJson()), // 서버에 사용자 이름 전송
     );
 
     if (response.statusCode == 200) {
-      print('User name added successfully');
+      print('User added successfully');
     } else {
-      print('Failed to add user name');
+      print('Failed to add user: ${response.body}');
     }
   }
 
-  // 사용자 이름 조회
-  Future<String> getUserName(String userId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/$userId'), // userId를 통해 사용자 이름 조회
-    );
+  // 특정 사용자 조회
+  Future<User> getUserById(String userId) async {
+    print('사용자 조회: $userId');
+    final response = await http.post(
+        Uri.parse('$baseUrl/users/login'),
+        headers: {"Content-Type": "text/plain"},
+        body: userId,
+    ); // userId를 서버로 전송);
+    print('Response status: ${response.statusCode}');
+
+    final String responseBody = utf8.decode(response.bodyBytes);
+    print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
-      var user = json.decode(response.body);
-      return user['USER_NAME'];
+      final Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
+
+      // User 객체로 변환
+      return User.fromJson(data);
     } else {
-      return 'User not found';
+      throw Exception('Failed to load user with ID $userId');
     }
   }
 }
+

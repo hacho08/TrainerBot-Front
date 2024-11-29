@@ -1,8 +1,13 @@
 import 'package:dx_project_app/condition_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'models/user.dart';
+import 'global/global.dart';
 
 class LoginCheckPage extends StatefulWidget {
+  final User user;
+
+  LoginCheckPage({required this.user});
 
   @override
   _LoginCheckPageState createState() => _LoginCheckPageState();
@@ -16,6 +21,10 @@ class _LoginCheckPageState extends State<LoginCheckPage>{
     super.initState();
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 실행
+
+    // 전역 변수에 값 저장
+    globalUserName = widget.user.userName;
+    globalUserId = widget.user.userId;
   }
 
   Future<void> _initializeTts() async {
@@ -37,7 +46,7 @@ class _LoginCheckPageState extends State<LoginCheckPage>{
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ConditionChoicePage()),
+        MaterialPageRoute(builder: (context) => ConditionChoicePage(userId: widget.user.userId)),
       );
     });
 

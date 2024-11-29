@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'name_check.dart';
-import 'services/user_api.dart'; // UserApi 임포트
+import 'models/user.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-void main() {
-  runApp(MyApp()); // main 함수에서 앱을 실행
-}
-
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,8 +21,19 @@ class Name extends StatefulWidget {
 class _NameState extends State<Name> {
   late FocusNode _focusNode;
   late TextEditingController _controller; // TextEditingController를 선언
-  final UserApi userApi = UserApi(); // UserApi 인스턴스 생성
   late FlutterTts _flutterTts;
+
+  User user = User(
+    userId: '', // 초기 값 설정
+    userName: '', // 초기 값 설정
+    birthYear: 0,
+    gender: '',
+    workoutExperience: '',
+    goal: '',
+    bodyConditionIds: [],
+    hobby: [],
+    createdAt: DateTime.now(),
+  );
 
   @override
   void initState() {
@@ -51,13 +59,10 @@ class _NameState extends State<Name> {
     super.dispose();
   }
 
-  // 사용자 이름을 서버로 전송하는 메서드
-  void _addUserName() async {
-    String userName = _controller.text; // 입력된 이름 가져오기
-
-    // 서버로 사용자 이름 전송
-    await userApi.addUserName(userName); // userApi의 addUserName 메서드 호출
-
+  void _saveUserName(String name) {
+    setState(() {
+      user.userName = name; // 입력된 이름을 user 객체에 저장
+    });
   }
 
 
@@ -94,10 +99,11 @@ class _NameState extends State<Name> {
                       );
                     } else {
                       // 텍스트가 입력되면 다음 페이지로 이동
+                      _saveUserName(_controller.text); // 입력된 이름을 저장
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => NameCheckPage(name: input),
+                          builder: (context) => NameCheckPage(user: user,),
                         ),
                       );
                     }

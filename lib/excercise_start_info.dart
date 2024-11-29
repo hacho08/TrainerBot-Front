@@ -1,6 +1,4 @@
-import 'package:dx_project_app/condition_choice.dart';
 import 'package:flutter/material.dart';
-import 'condition_choice.dart';
 import 'exercise_start_info2.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -25,6 +23,7 @@ class _ExcerciseStartInfoPageState extends State<ExcerciseStartInfoPage>{
     await _flutterTts.setLanguage("ko-KR");
     await _flutterTts.setSpeechRate(0.5);
     await _flutterTts.speak("운동을 시작합니다");
+    await _flutterTts.speak("정보를 불러오고 있습니다. 잠시만 기다려주세요");
   }
 
   @override
@@ -36,7 +35,7 @@ class _ExcerciseStartInfoPageState extends State<ExcerciseStartInfoPage>{
   @override
   Widget build(BuildContext context) {
     // 3초 후 condition_choice.dart로 이동
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 7), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => ExerciseStartInfo2Page()),

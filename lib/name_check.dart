@@ -1,14 +1,13 @@
-import 'package:dx_project_app/condition_choice.dart';
-import 'package:dx_project_app/gender_choice.dart';
 import 'package:dx_project_app/year.dart';
 import 'package:flutter/material.dart';
+import 'models/user.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class NameCheckPage extends StatefulWidget {
-  final String name;
+  final User user; // User 객체를 받기 위한 변수
 
   // 생성자에서 selectedCondition을 받습니다.
-  NameCheckPage({required this.name});
+  NameCheckPage({required this.user});
 
   @override
   _NameCheckPageState createState() => _NameCheckPageState();
@@ -39,11 +38,12 @@ class NameCheckPage extends StatefulWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("name: ${widget.user.userName}");
     // 2초 후 main_login.dart로 이동
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => InputBirthYearScreen(name: widget.name)),
+        MaterialPageRoute(builder: (context) => InputBirthYearScreen(user: widget.user)),
       );
     });
 
@@ -64,7 +64,7 @@ class NameCheckPage extends StatefulWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: '${widget.name}', // $name 부분에 색상 적용
+                    text: '${widget.user.userName}', // $name 부분에 색상 적용
                     style: TextStyle(
                       fontSize: 80,
                       fontFamily: "PaperlogySemiBold",

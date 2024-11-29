@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'exercise_level_choice.dart';
 import 'gender_choice.dart';
+import 'models/user.dart';
 import 'medical_condition_check.dart'; // CheckPage로 이동하는 임포트
 import 'package:flutter_tts/flutter_tts.dart';
 
 class MedicalConditionChoicePage extends StatefulWidget {
+  final User user;
+
+  MedicalConditionChoicePage({required this.user});
 
   @override
   _MedicalConditionChoicePageState createState() =>
@@ -100,6 +103,15 @@ class _MedicalConditionChoicePageState
     super.dispose();
   }
 
+  void _saveBodyConditionIds() {
+    widget.user.bodyConditionIds = isSelected
+        .asMap()
+        .entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -132,7 +144,7 @@ class _MedicalConditionChoicePageState
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => GenderChoicePage(),
+                              builder: (context) => GenderChoicePage(user: widget.user),
                             ),
                           );
                         },
@@ -160,13 +172,14 @@ class _MedicalConditionChoicePageState
                               size: screenWidth * 0.1,
                             ),
                             onPressed: () {
+                              _saveBodyConditionIds();
                               // 선택된 버튼들이 없거나 있거나 상관 없이 페이지 이동
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       MedicalConditionCheckPage(
-                                          selectedConditions: selectedConditions),
+                                          user: widget.user),
                                 ),
                               );
                             },
@@ -196,7 +209,7 @@ class _MedicalConditionChoicePageState
           children: [
             SizedBox(height: 40),
             Text(
-              '옥수수님,\n아프신 곳이 있나요?',
+              '${widget.user.userName}님,\n아프신 곳이 있나요?',
               style: TextStyle(
                 fontSize: 70,
                 fontFamily: "PaperlogyBold",

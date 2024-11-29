@@ -1,8 +1,9 @@
-import 'package:dx_project_app/login_check.dart';
-import 'package:dx_project_app/phone_number_check.dart';
+import 'login_check.dart';
 import 'package:flutter/material.dart';
-import 'phone_number_check.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'services/user_api.dart';
+import 'models/user.dart';
+import 'main_login.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +27,7 @@ class LoginPhoneNumberPage extends StatefulWidget {
 class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
   String input = ''; // 입력된 값 저장
   late FlutterTts _flutterTts;
+  final UserApi userApi = UserApi();  // UserApi 인스턴스 생성
 
   @override
   void initState() {
@@ -56,13 +58,9 @@ class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
       } else if (value == '확인') {
         // 확인 버튼 눌렀을 때의 동작
         if (input.isNotEmpty && input.length == 11) {
-          // 전화번호가 11자리인 경우
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LoginCheckPage(),
-            ),
-          );
+          print('Input meets criteria, fetching user info...');
+          _fetchUserInfo(input); // 사용자 정보 조회
+          print('Input meets criteria, fetching user infddo...');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('잘 입력되었는지 확인해주세요',
@@ -80,28 +78,75 @@ class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
     });
   }
 
+  Future<void> _fetchUserInfo(String phoneNumber) async {
+    try {
+      print('Fetching user info for phone number: $phoneNumber');
+      User user = await userApi.getUserById(phoneNumber); // 서버에서 사용자 정보 조회
+      print('User retrieved: ${user.toJson()}'); // user 객체 확인
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginCheckPage(user: user), // 조회된 사용자 정보를 전달
+        ),
+      );
+    }
+    catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '사용자를 찾을 수 없습니다.',
+            style: TextStyle(fontSize: 30),
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
-          SizedBox(height: height * 0.04),
-          // 상단 텍스트
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '전화번호를 입력하세요',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 70,
-                  fontFamily: "PaperlogySemiBold",
-                  color: Color(0xFF265A5A),
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.only(top: height * 0.04, left: height * 0.03, right: height * 0.02),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // 텍스트
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '전화번호를 입력하세요',
+                        style: TextStyle(
+                          fontSize: 70,
+                          fontFamily: "PaperlogySemiBold",
+                          color: Color(0xFF265A5A),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                // 홈 버튼
+                IconButton(
+                  icon: Icon(
+                    Icons.home,
+                    color: Color(0xFF265A5A),
+                    size: 60,
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainLoginPage()),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
           SizedBox(height: height * 0.05),
@@ -178,9 +223,9 @@ class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
 }
 
 class NextPage extends StatelessWidget {
-  final String phoneNumber; // 전달된 출생연도
+  final String phoneNumber;
 
-  NextPage({required this.phoneNumber}); // 생성자에서 출생연도 받기
+  NextPage({required this.phoneNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +236,7 @@ class NextPage extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          '입력된 전화번호: $phoneNumber', // 전달된 출생연도 표시
+          '입력된 전화번호: $phoneNumber',
           style: TextStyle(
             fontSize: 30,
             fontFamily: "PaperlogySemiBold",
