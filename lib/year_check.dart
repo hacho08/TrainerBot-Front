@@ -1,5 +1,5 @@
-import 'package:dx_project_app/models/user.dart';
-import 'package:dx_project_app/phone_number.dart';
+import 'models/user.dart';
+import 'phone_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
