@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  provider: ^6.0.3
   flutter:
     sdk: flutter
   http: ^0.13.3
@@ -108,6 +109,13 @@ flutter:
     - images/loading.png
     - images/medal.png
     - video/test_video.mp4
+    - video/dumbbell_curl.mp4
+    - video/standing_knee_up.mp4
+    - video/final_stretching.mp4
+    - video/upper_body_start_stretching.mp4
+    - video/side_lunge.mp4
+    - video/deadlift.mp4
+    - video/lower_body_start_stretching.mp4
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

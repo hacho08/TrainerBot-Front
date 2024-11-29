@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'exercise_level_choice.dart';
 import 'gender_choice.dart';
 import 'medical_condition_check.dart'; // CheckPage로 이동하는 임포트
 import 'package:flutter_tts/flutter_tts.dart';

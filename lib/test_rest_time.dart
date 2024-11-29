@@ -1,38 +1,32 @@
-     import 'dart:async';
-import 'real_exercise.dart';
+import 'dart:async';
+import 'total_demonstrate_exercise.dart';
+import 'upper_and_lower_body_final.dart';
+import 'test_real_exercise.dart';
 import 'package:flutter/material.dart';
-import 'demonstration_exercise.dart';
-import 'package:flutter_tts/flutter_tts.dart';// 해당 페이지로 이동
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter_tts/flutter_tts.dart'; // TTS 패키지
 
-void main() {
-  runApp(const MyApp());
-}
+class TestRestTimePage extends StatefulWidget {
+  final int currentSet;
+  final List<Map<String, dynamic>> exercises;
+  final int currentIndex;
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  // 생성자에서 selectedCondition을 받습니다.
+  TestRestTimePage({required this.currentSet, required this.exercises, required this.currentIndex});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false, // 디버그 배너 제거
-      home: RestTimePage(), // 시작 화면
-    );
-  }
+  _TestRestTimePageState createState() => _TestRestTimePageState();
 }
 
-class RestTimePage extends StatefulWidget {
-  @override
-  _RestTimePageState createState() => _RestTimePageState();
-}
-
-class _RestTimePageState extends State<RestTimePage> {
-  int _countdown = 60; // 카운트다운 초기값
+class _TestRestTimePageState extends State<TestRestTimePage> {
+  int _countdown = 5; // 카운트다운 초기값
   late Timer _timer;
   late FlutterTts _flutterTts;
 
   @override
   void initState() {
     super.initState();
+    print("rest_time 페이지 currentIndex: ${widget.currentIndex}");
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 실행
     // 카운트다운 시작
@@ -53,25 +47,53 @@ class _RestTimePageState extends State<RestTimePage> {
     super.dispose();
   }
 
-
   // 카운트다운을 1초마다 진행
   void _startCountdown() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
+      // setState(() {
         if (_countdown > 1) {
-          _countdown--; // 카운트다운 감소
+          setState(() {
+            _countdown--; // 카운트다운 감소
+          });
+
         } else {
           _timer.cancel(); // 카운트다운이 끝나면 타이머 종료
-          // 0이 되면 다음 페이지로 이동
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => DemonstrationExercisePage()),
-          );
+
+          _goToExercisePage(); // 0이 되면 운동 페이지로 이동
         }
-      });
+      // });
     });
   }
 
+  // 카운트다운이 끝나면 운동 페이지로 돌아가기
+  void _goToExercisePage() {
+    // currentSet이 0이면 TotalDemonstrateExercisePage로 넘어가고 currentIndex를 1 증가시킴
+    if(widget.currentSet-1!=0){
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TestRealExercisePage(sets: widget.currentSet-1, exercises: widget.exercises, currentIndex:widget.currentIndex),
+        ),
+      );
+    } else if (widget.currentIndex==1 && widget.currentSet-1==0) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UpperAndLowerBodyFinalPage(),
+        ),
+      );
+    }
+    else if (widget.currentSet-1==0) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TotalDemonstrateExercisePage(
+            currentIndex: widget.currentIndex + 1, // currentIndex 1 증가
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,12 +126,8 @@ class _RestTimePageState extends State<RestTimePage> {
                             size: screenWidth * 0.1,
                           ),
                           onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RealExercisePage(),
-                              ),
-                            );
+                            // widget.onRestTimeFinished(); // 타이머 종료 후 콜백 함수 호출
+                            _goToExercisePage(); // 0이 되면 운동 페이지로 이동
                           },
                         ),
                       ),

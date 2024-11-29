@@ -93,7 +93,8 @@ class _PhoneNumberPageState extends State<LoginPhoneNumberPage> {
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
+              child:
+              Text(
                 '전화번호를 입력하세요',
                 textAlign: TextAlign.left,
                 style: TextStyle(

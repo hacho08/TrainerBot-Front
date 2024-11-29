@@ -1,6 +1,4 @@
-import 'package:dx_project_app/condition_choice.dart';
 import 'package:flutter/material.dart';
-import 'condition_choice.dart';
 import 'exercise_start_info2.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 

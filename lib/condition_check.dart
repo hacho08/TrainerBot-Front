@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'upper_body_info.dart'; // 다음 페이지 임포트
-import 'lower_body_info.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class ConditionCheckPage extends StatefulWidget {
@@ -42,7 +41,7 @@ class _ConditionCheckPageState extends State<ConditionCheckPage>{
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LowerBodyInfoPage(),
+          builder: (context) => UpperBodyInfoPage()
         ),
       );
     });
