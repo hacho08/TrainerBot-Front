@@ -1,7 +1,5 @@
-import 'phone_number.dart';
 import 'package:flutter/material.dart';
 import 'main_login.dart'; // main_login.dart 파일을 import
-import 'next_reservation_info.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 void main() {

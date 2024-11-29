@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'models/user.dart';
 import 'gender_check.dart';
 import 'phone_number.dart';
 
 class GenderChoicePage extends StatefulWidget {
+  final User user;
+
+  GenderChoicePage({required this.user});
+
   @override
   _GenderChoicePageState createState() => _GenderChoicePageState();
 }
@@ -12,34 +17,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
   // 버튼의 상태를 관리하는 리스트
   List<bool> isSelected = [false, false]; // 남자, 여자 버튼에 대해 각각 선택 여부를 저장
   late FlutterTts _flutterTts;
-
-  @override
-  void initState() {
-    super.initState();
-    _flutterTts = FlutterTts();
-    _initializeTts(); // TTS 초기화 및 실행
-  }
-
-  Future<void> _initializeTts() async {
-    await _flutterTts.setLanguage("ko-KR");
-    await _flutterTts.setSpeechRate(0.5);
-    await _flutterTts.awaitSpeakCompletion(true); // TTS 작업 완료 대기
-
-    // 1초 딜레이 후 TTS 실행
-    Future.delayed(Duration(seconds: 1), () async {
-      await _readText();
-    });
-  }
-
-  Future<void> _readText() async {
-    await _flutterTts.speak("성별을 선택하세요");
-  }
-
-  @override
-  void dispose() {
-    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
-    super.dispose();
-  }
+  int _selectedIndex = -1; // -1은 아무것도 선택되지 않음을 나타냄
 
   final List<Map<String, dynamic>> buttonData = [
     {
@@ -61,6 +39,33 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
       "selectedTextColor": Colors.white,
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+    _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak("성별을 선택하세요");
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    super.dispose();
+  }
+
+  void _saveGender(String input) {
+    setState(() {
+      widget.user.gender = input; // 입력된 성별을 user 객체에 저장
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +99,7 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PhoneNumberPage(),
+                              builder: (context) => PhoneNumberPage(user: widget.user),
                             ),
                           );
                         },
@@ -123,23 +128,22 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
                             ),
                             onPressed: () {
                               if (_selectedIndex == -1) {
-                                // 선택되지 않은 경우에는 알림을 띄움
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('성별을 선택해주세요', style: TextStyle(fontSize: 40, fontFamily:"PaperlogyBold"),)),
+                                  SnackBar(
+                                    content: Text(
+                                      '성별을 선택해주세요',
+                                      style: TextStyle(fontSize: 40, fontFamily: "PaperlogyBold"),
+                                    ),
+                                  ),
                                 );
                               } else {
-                                String selectedCondition = "선택되지 않음"; // 기본값 설정
-                                if (_selectedIndex == 0) {
-                                  selectedCondition = "남자";
-                                } else if (_selectedIndex == 1) {
-                                  selectedCondition = "여자";
-                                }
+                                String selectedGender = _selectedIndex == 0 ? "M" : "F";
+                                _saveGender(selectedGender);
+
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => GenderCheckPage(
-                                      selectedCondition: selectedCondition,
-                                    ),
+                                    builder: (context) => GenderCheckPage(user: widget.user),
                                   ),
                                 );
                               }
@@ -166,26 +170,26 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
       body: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1), // 가로 여백을 화면 크기에 맞게 설정
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: screenHeight * 0.05), // 상단 간격
+                SizedBox(height: screenHeight * 0.05),
                 Text(
-                  '옥수수님의\n성별을 선택하세요',
+                  '${widget.user.userName}님의\n성별을 선택하세요',
                   style: TextStyle(
-                    fontSize: screenWidth * 0.1, // 텍스트 크기를 화면에 비례하게 설정
+                    fontSize: screenWidth * 0.1,
                     fontFamily: "PaperlogyBold",
                     color: Color(0xFF265A5A),
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.05), // 버튼들 간 간격
+                SizedBox(height: screenHeight * 0.05),
                 Expanded(
                   child: Column(
                     children: [
-                      _buildConditionButton(context, 0), // 남자 버튼
+                      _buildConditionButton(context, 0),
                       const SizedBox(height: 30),
-                      _buildConditionButton(context, 1), // 여자 버튼
+                      _buildConditionButton(context, 1),
                     ],
                   ),
                 ),
@@ -197,8 +201,6 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
     );
   }
 
-  int _selectedIndex = -1; // -1은 아무것도 선택되지 않음을 나타냄
-
   Widget _buildConditionButton(BuildContext context, int index) {
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -208,46 +210,41 @@ class _GenderChoicePageState extends State<GenderChoicePage> {
         onPressed: () {
           setState(() {
             // 버튼을 한 번 클릭하면 다른 버튼은 선택 해제되고, 클릭된 버튼만 선택됨
-            isSelected[index] = true;
             for (int i = 0; i < isSelected.length; i++) {
-              if (i != index) isSelected[i] = false;
+              isSelected[i] = i == index; // 클릭된 버튼만 true로 설정
             }
-            _selectedIndex = index; // 클릭된 버튼의 인덱스를 설정
+            _selectedIndex = index; // 클릭된 버튼의 인덱스를 저장
           });
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: isSelected[index]
               ? buttonData[index]["selectedColor"]
               : buttonData[index]["defaultColor"], // 선택된 색상
-          minimumSize: Size(
-            screenWidth * 0.9, // 크기를 화면에 맞게 조절 (0.8은 너비의 80%)
-            200, // 버튼의 높이
-          ),
+          minimumSize: Size(screenWidth * 0.9, 200), // 버튼 크기
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20), // 버튼 모서리 둥글게
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(width: screenWidth * 0.1), // 이미지와 텍스트 간 간격
             Text(
-              buttonData[index]["text"]!,
+              buttonData[index]["text"], // 버튼 텍스트
               style: TextStyle(
-                fontSize: screenWidth * 0.1, // 텍스트 크기를 화면에 비례하게 설정
+                fontSize: screenWidth * 0.1,
                 fontFamily: "PaperlogySemiBold",
                 color: isSelected[index]
                     ? buttonData[index]["selectedTextColor"]
-                    : buttonData[index]["defaultTextColor"], // 선택된 텍스트 색상
+                    : buttonData[index]["defaultTextColor"], // 텍스트 색상
               ),
             ),
-            SizedBox(width: screenWidth * 0.1), // 이미지와 텍스트 간 간격
+            SizedBox(width: screenWidth * 0.1), // 간격 추가
             Image.asset(
               isSelected[index]
                   ? buttonData[index]["selectedImage"]
-                  : buttonData[index]["defaultImage"], // 이미지
-              width: screenWidth * 0.3, // 이미지의 가로 크기 설정
-              height: screenWidth * 0.3, // 이미지의 세로 크기 설정
+                  : buttonData[index]["defaultImage"], // 이미지 선택
+              width: screenWidth * 0.3,
+              height: screenWidth * 0.3,
               fit: BoxFit.contain,
             ),
           ],

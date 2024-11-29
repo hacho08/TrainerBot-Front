@@ -1,16 +1,13 @@
-import 'package:dx_project_app/condition_choice.dart';
-import 'package:dx_project_app/medical_condition_check.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'gender_choice.dart';
-import 'info_insert_finish.dart';
 import 'medical_condition_choice.dart';
+import 'models/user.dart';
 
 class GenderCheckPage extends StatefulWidget {
-  final String selectedCondition;
+  final User user;
 
   // 생성자에서 selectedCondition을 받습니다.
-  GenderCheckPage({required this.selectedCondition});
+  GenderCheckPage({required this.user});
 
   @override
   _GenderCheckPageState createState() => _GenderCheckPageState();
@@ -41,11 +38,12 @@ class _GenderCheckPageState extends State<GenderCheckPage>{
 
   @override
   Widget build(BuildContext context) {
+    print("gender:${widget.user.gender}");
     // 2초 후 MedicalConditionChoicePage.dart로 이동
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MedicalConditionChoicePage()),
+        MaterialPageRoute(builder: (context) => MedicalConditionChoicePage(user: widget.user)),
       );
     });
 
@@ -67,7 +65,7 @@ class _GenderCheckPageState extends State<GenderCheckPage>{
                 ),
                 children: [
                   TextSpan(
-                    text: '${widget.selectedCondition}', // $name 부분에 색상 적용
+                    text: widget.user.gender == 'M' ? '남자' : '여자',
                     style: TextStyle(
                       fontSize: 80,
                       fontFamily: "PaperlogySemiBold",

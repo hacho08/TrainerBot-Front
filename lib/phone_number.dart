@@ -1,38 +1,37 @@
 import 'package:dx_project_app/phone_number_check.dart';
 import 'package:flutter/material.dart';
-import 'phone_number_check.dart';
+import 'models/user.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'services/userid_api.dart'; // UserIdApi 임포트
 
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: PhoneNumberPage(),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: PhoneNumberPage(),
+//     );
+//   }
+// }
 
 class PhoneNumberPage extends StatefulWidget {
+  final User user; // User 객체를 받기 위한 변수
+
+  PhoneNumberPage({required this.user});
+
   @override
   _PhoneNumberPageState createState() => _PhoneNumberPageState();
 }
 
 class _PhoneNumberPageState extends State<PhoneNumberPage> {
   String input = ''; // 입력된 값 저장
-  late UserIdApi userIdApi; // UserIdApi 인스턴스
   late FlutterTts _flutterTts;
   bool _isSpeaking = false; // 현재 TTS가 실행 중인지 확인
 
   @override
   void initState() {
     super.initState();
-    userIdApi = UserIdApi(); // UserIdApi 초기화
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 시작
   }
@@ -76,11 +75,12 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
       } else if (value == '확인') {
         // 확인 버튼 눌렀을 때의 동작
         if (input.isNotEmpty && input.length == 11) {
+          _saveUserId(input);
           // 전화번호가 11자리인 경우
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PhoneNumberCheckPage(phoneNumber: input),
+              builder: (context) => PhoneNumberCheckPage(user:widget.user),
             ),
           );
         } else {
@@ -176,6 +176,12 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
     _flutterTts.stop(); // 페이지 종료 시 TTS 중지
     _flutterTts.awaitSpeakCompletion(false); // 종료 시 대기 비활성화
     super.dispose();
+  }
+
+  void _saveUserId(String input) {
+    setState(() {
+      widget.user.userId = input; // 입력된 이름을 user 객체에 저장
+    });
   }
 
   Widget buildKey(String key) {

@@ -27,7 +27,7 @@ class UpperBodyReadyPage extends StatefulWidget {
 class _UpperBodyReadyPageState extends State<UpperBodyReadyPage> {
   late FlutterTts _flutterTts;
   late VideoPlayerController _controller;
-  int _countdown = 60; // 카운트다운 초기값
+  int _countdown = 20; // 카운트다운 초기값
   late Timer _timer;
 
   @override
@@ -111,6 +111,7 @@ class _UpperBodyReadyPageState extends State<UpperBodyReadyPage> {
                     ),
                     SizedBox(height: screenHeight * 0.005),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           '팔 옆으로 늘리기',
@@ -120,7 +121,7 @@ class _UpperBodyReadyPageState extends State<UpperBodyReadyPage> {
                             color: Color(0xFF265A5A),
                           ),
                         ),
-                        SizedBox(width: 60),
+                        SizedBox(width: 40),
                         // 남은 시간 카운트 표시
                         Text(
                           '남은 시간: $_countdown초',

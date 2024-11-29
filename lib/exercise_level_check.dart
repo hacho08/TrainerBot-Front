@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'exercise_level_choice.dart';
+import 'models/user.dart';
 import 'exercise_goal_choice.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class ExerciseLevelCheckPage extends StatefulWidget {
-  final String selectedCondition;
+  final User user;
 
   // 생성자에서 selectedCondition을 받습니다.
-  ExerciseLevelCheckPage({required this.selectedCondition});
+  ExerciseLevelCheckPage({required this.user});
 
   @override
   _ExerciseLevelCheckPageState createState() => _ExerciseLevelCheckPageState();
@@ -21,6 +22,8 @@ class ExerciseLevelCheckPage extends StatefulWidget {
       super.initState();
       _flutterTts = FlutterTts();
       _initializeTts(); // TTS 초기화 및 실행
+      // User 객체 상태 출력
+      _printUserDetails();
     }
 
     Future<void> _initializeTts() async {
@@ -36,14 +39,18 @@ class ExerciseLevelCheckPage extends StatefulWidget {
       super.dispose();
     }
 
+    void _printUserDetails() {
+      print("Workout Experience: ${widget.user.workoutExperience}");
+    }
+
   @override
   Widget build(BuildContext context) {
 
-    // 2초 후 이동
+      // 2초 후 이동
     Future.delayed(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ExerciseGoalChoicePage()),
+        MaterialPageRoute(builder: (context) => ExerciseGoalChoicePage(user: widget.user,)),
       );
     });
 
@@ -65,7 +72,7 @@ class ExerciseLevelCheckPage extends StatefulWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: '${widget.selectedCondition}', // $name 부분에 색상 적용
+                    text: '${widget.user.workoutExperience}', // $name 부분에 색상 적용
                     style: TextStyle(
                       fontSize: 80,
                       fontFamily: "PaperlogySemiBold",

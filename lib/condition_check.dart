@@ -2,6 +2,22 @@ import 'package:flutter/material.dart';
 import 'upper_body_info.dart'; // 다음 페이지 임포트
 import 'package:flutter_tts/flutter_tts.dart';
 
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false, // 디버그 배너 제거
+      home: ConditionCheckPage(condition: '힘껏')
+    );
+  }
+}
+
 class ConditionCheckPage extends StatefulWidget {
   final String condition;
 

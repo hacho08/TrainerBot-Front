@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
 import 'next_reservation_complete.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import '../services/reservation_api.dart';
+import 'global/global.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false, // 디버그 배너 제거
+      home: NextReservationChoicePage(), // 시작 화면
+    );
+  }
+}
 
 class NextReservationChoicePage extends StatefulWidget {
   @override
@@ -313,6 +331,7 @@ class _NextReservationChoicePageState
             fontSize: screenWidth * 0.05,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.bold,
             color: isSelected ? Colors.white : Color(0xFF265A5A),
+            fontFamily: 'PaperlogyBold',
           ),
         ),
       ),
@@ -342,6 +361,7 @@ class _NextReservationChoicePageState
               fontSize: screenWidth * 0.05,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.bold,
               color: isSelected ? Colors.white : Color(0xFF265A5A),
+              fontFamily: 'PaperlogyBold',
             ),
           ),
         ),

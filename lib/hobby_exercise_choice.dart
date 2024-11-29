@@ -2,8 +2,13 @@ import 'package:dx_project_app/exercise_goal_choice.dart';
 import 'package:flutter/material.dart';
 import 'hobby_exercise_check.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'models/user.dart';
 
 class HobbyExerciseChoicePage extends StatefulWidget {
+  final User user;
+
+  HobbyExerciseChoicePage({required this.user});
+
   @override
   _HobbyExerciseChoicePageState createState() =>
       _HobbyExerciseChoicePageState();
@@ -96,6 +101,15 @@ class _HobbyExerciseChoicePageState
     super.dispose();
   }
 
+  void _saveHobby() {
+    widget.user.hobby = isSelected
+        .asMap()
+        .entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -128,7 +142,7 @@ class _HobbyExerciseChoicePageState
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ExerciseGoalChoicePage(),
+                              builder: (context) => ExerciseGoalChoicePage(user: widget.user,),
                             ),
                           );
                         },
@@ -157,12 +171,13 @@ class _HobbyExerciseChoicePageState
                             ),
                             onPressed: () {
                               // 선택된 버튼들이 없거나 있거나 상관 없이 페이지 이동
+                              _saveHobby();
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       HobbyExerciseCheckPage(
-                                          selectedConditions: selectedConditions),
+                                          user: widget.user,),
                                 ),
                               );
                             },
@@ -192,7 +207,7 @@ class _HobbyExerciseChoicePageState
           children: [
             SizedBox(height: 40),
             Text(
-              '옥수수님의\n취미를 선택해주세요',
+              '${widget.user.userName}님의\n취미를 선택해주세요',
               style: TextStyle(
                 fontSize: 70,
                 fontFamily: "PaperlogyBold",

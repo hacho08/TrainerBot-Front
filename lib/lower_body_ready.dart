@@ -27,7 +27,7 @@ class LowerBodyReadyPage extends StatefulWidget {
 class _LowerBodyReadyPageState extends State<LowerBodyReadyPage> {
   late FlutterTts _flutterTts;
   late VideoPlayerController _controller;
-  int _countdown = 60; // 카운트다운 초기값
+  int _countdown = 20; // 카운트다운 초기값
   late Timer _timer;
 
   @override

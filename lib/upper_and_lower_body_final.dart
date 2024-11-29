@@ -111,6 +111,7 @@ class _UpperAndLowerBodyFinalPageState extends State<UpperAndLowerBodyFinalPage>
                     ),
                     SizedBox(height: screenHeight * 0.005),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           '스트레칭',
@@ -141,7 +142,7 @@ class _UpperAndLowerBodyFinalPageState extends State<UpperAndLowerBodyFinalPage>
             _controller.value.isInitialized
                 ? Container(
               width: screenWidth * 0.9, // 화면 너비의 90%
-              height: screenHeight * 0.65, // 화면 높이의 50%로 크기 설정
+              height: screenHeight * 0.65, // 화면 높이의 65%로 크기 설정
               child: SizedBox(
                 width: _controller.value.size.width,
                 height: _controller.value.size.height,
