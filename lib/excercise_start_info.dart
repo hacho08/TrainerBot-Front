@@ -25,7 +25,7 @@ class _ExcerciseStartInfoPageState extends State<ExcerciseStartInfoPage>{
     super.initState();
     // api 호출
     print("출력 체크1");
-    //getWorkouts();
+    getWorkouts();
     print("출력 체크2");
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 실행

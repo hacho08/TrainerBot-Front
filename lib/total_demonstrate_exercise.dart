@@ -86,7 +86,6 @@ class _TotalDemonstrateExercisePageState
     await _flutterTts.setLanguage("ko-KR");
     await _flutterTts.setSpeechRate(0.5);
     await _flutterTts.speak(currentExercise['tts']);
-    print("video Path!!!!: ${currentExercise['videoPath']} workout: ${currentExercise['name']}");
     _controller = VideoPlayerController.asset(currentExercise['videoPath'])
       ..initialize().then((_) {
         setState(() {});

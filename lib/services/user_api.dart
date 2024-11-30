@@ -8,7 +8,7 @@ class UserApi {
   // 사용자 추가
   Future<void> addUser(User user) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/users'),
+      Uri.parse('$baseUrl/users/join'),
       headers: {"Content-Type": "application/json"},
       body: json.encode(user.toJson()), // 서버에 사용자 이름 전송
     );

@@ -1,23 +1,24 @@
+import 'dart:async';
+
 import 'package:dx_project_app/screens/pose_detector_view.dart';
+import 'package:dx_project_app/test_rest_time.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false, // 디버그 배너 제거
-      home: RealExercisePage(), // 시작 화면
-    );
-  }
-}
 
 class RealExercisePage extends StatefulWidget {
+  final int sets;
+
+  final List<Map<String, dynamic>> exercises;
+  final int currentIndex; // 현재 운동 인덱스
+
+  const RealExercisePage(
+      {Key? key,
+        required this.exercises,
+        required this.sets,
+        required this.currentIndex})
+      : super(key: key);
+
   @override
   _RealExercisePageState createState() => _RealExercisePageState();
 }
@@ -29,32 +30,82 @@ class _RealExercisePageState extends State<RealExercisePage> {
   // AI로부터 받은 운동 데이터에 맞게 이 값을 변경할 수 있습니다.
   String exerciseType = '하체운동'; // 운동 종류
   String exerciseName = '스쿼트'; // 운동 이름
-  int targetSets = 5; // 목표 갯수
+  int targetSets = 20; // 목표 갯수
   int remainingSets = 3; // 남은 갯수
+  int _countdown = 20; // 카운트다운 초기값
+  List<String> koreanNumbers = [
+    '하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열',
+    '열하나', '열둘', '열셋', '열넷', '열다섯', '열여섯', '열일곱', '열여덟', '열아홉', '스물'
+  ];
+  late Timer _timer;
+  late FlutterTts _flutterTts;
+  late int _currentIndex; // 현재 인덱스 상태 변수
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+// await _flutterTts.speak("첫 번째 운동을 시작합니다");
+  }
+  void _startCountdown() {
+    int time = 3;
+    if (widget.exercises[_currentIndex]['name'] == "덤벨컬") {
+      time = 2;
+    }
+
+    _timer = Timer.periodic(Duration(seconds: time), (timer) {
+      setState(() {
+        if (_countdown > 1) {
+          _countdown--; // 카운트다운 감소
+          _flutterTts.speak(koreanNumbers[20-_countdown]);
+        } else if (_countdown == 1) {
+          _timer.cancel(); // 카운트다운이 1초일 때 타이머 종료
+          _goToRestTime(); // 1초가 되면 RestTimePage로 이동
+        }
+      });
+    });
+  }
+
+  // 카운트다운이 끝나면 RestTimePage로 이동
+  void _goToRestTime() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (context) => TestRestTimePage(
+            currentSet: widget.sets,
+            exercises: widget.exercises,
+            currentIndex: widget.currentIndex,
+          )
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
-    // 비디오 파일 로드
-    // _controller = VideoPlayerController.asset('video/test_video.mp4') // 비디오 경로 지정
-    //   ..initialize().then((_) {
-    //     setState(() {});
-    //   })
-    //   ..setLooping(true)  // 반복 재생 설정
-    //   ..play();  // 재생 시작
+    _flutterTts = FlutterTts();
+    _currentIndex = widget.currentIndex; // widget.currentIndex로 초기화
+    _initializeTts(); // TTS 초기화 및 실행
+    targetSets = widget.sets;
+    if (widget.sets == 0) {
+      _currentIndex++;
+    }
+    _startCountdown();
   }
 
   @override
   void dispose() {
     super.dispose();
-    // _controller.dispose(); // 비디오 리소스 해제
+    _flutterTts.stop(); // 페이지 종료 시 TTS 중지
+    _timer.cancel(); // 타이머 해제
   }
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
-    print("width: $screenWidth, height: $screenHeight");
+    var currentExercise = widget.exercises[_currentIndex]; // 리스트를 widget에서 가져옴
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -76,7 +127,7 @@ class _RealExercisePageState extends State<RealExercisePage> {
                         children: [
                           SizedBox(height: screenHeight * 0.05),
                           Text(
-                            exerciseType,  // 운동 종류가 동적으로 변경
+                            currentExercise['type'],  // 운동 종류가 동적으로 변경
                             style: TextStyle(
                               fontSize: screenWidth * 0.10,
                               fontFamily: "PaperlogyBold",
@@ -85,7 +136,7 @@ class _RealExercisePageState extends State<RealExercisePage> {
                           ),
                           SizedBox(height: screenHeight * 0.001),
                           Text(
-                            exerciseName,  // 운동 이름이 동적으로 변경
+                            currentExercise['name'],  // 운동 이름이 동적으로 변경
                             style: TextStyle(
                               fontSize: screenWidth * 0.08,
                               fontFamily: "PaperlogySemiBold",
@@ -100,7 +151,7 @@ class _RealExercisePageState extends State<RealExercisePage> {
                         children: [
                           SizedBox(height: 90),
                           Text(
-                            '목표 갯수: $targetSets',  // 목표 갯수가 동적으로 변경
+                            '남은 반복 횟수: $targetSets',  // 목표 갯수가 동적으로 변경
                             style: TextStyle(
                               fontSize: 50,
                               fontFamily: "PaperlogySemiBold",
@@ -109,7 +160,7 @@ class _RealExercisePageState extends State<RealExercisePage> {
                           ),
                           SizedBox(height: screenHeight * 0.001),
                           Text(
-                            '남은 갯수: $remainingSets',  // 남은 갯수가 동적으로 변경
+                            '남은 갯수: $_countdown',  // 남은 갯수가 동적으로 변경
                             style: TextStyle(
                               fontSize: 50,
                               fontFamily: "PaperlogySemiBold",

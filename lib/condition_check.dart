@@ -64,21 +64,21 @@ class _ConditionCheckPageState extends State<ConditionCheckPage>{
   Widget build(BuildContext context) {
     // 2초 후에 다음 페이지로 이동
     Future.delayed(Duration(seconds: 4), () {
-      if (widget.routine.target == 'upper') {
+      // if (widget.routine.target == 'upper') {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => UpperBodyInfoPage(routine: widget.routine,)
           ),
         );
-      } else { // lower
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => LowerBodyInfoPage(routine: widget.routine,)
-          ),
-        );
-      }
+      // } else { // lower
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => LowerBodyInfoPage(routine: widget.routine,)
+      //     ),
+      //   );
+      // }
 
     });
 

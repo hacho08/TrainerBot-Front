@@ -12,7 +12,7 @@ class PoseDataSender {
     'Nose', 'Left Eye', 'Right Eye', 'Left Ear', 'Right Ear',
     'Left Shoulder', 'Right Shoulder', 'Left Elbow', 'Right Elbow',
     'Left Wrist', 'Right Wrist', 'Left Hip', 'Right Hip', 'Left Knee',
-    'Right Knee', 'Left Ankle', 'Right Ankle', 'Left Foot', 'Right Foot'
+    'Right Knee', 'Left Ankle', 'Right Ankle'//, 'Left Foot', 'Right Foot'
   ];
 
   final List<PoseLandmarkType> bodyParts = [
@@ -25,17 +25,24 @@ class PoseDataSender {
     PoseLandmarkType.leftHip, PoseLandmarkType.rightHip,
     PoseLandmarkType.leftKnee, PoseLandmarkType.rightKnee,
     PoseLandmarkType.leftAnkle, PoseLandmarkType.rightAnkle,
-    PoseLandmarkType.leftFootIndex, PoseLandmarkType.rightFootIndex,
+    // PoseLandmarkType.leftFootIndex, PoseLandmarkType.rightFootIndex,
   ];
   PoseDataSender(this.poses, this.apiUrl);
 
   // 주기적으로 포즈 데이터를 저장하는 메소드
-  void startSendingData() {
-      sendPoseDataToApi();  // 주기적으로 데이터 보내기
-  }
+  // Future<String> startSendingData() async {
+  //       // 주기적으로 데이터 보내기
+  //   String message = await sendPoseDataToApi();
+  //   return message;
+  // }
+
+  // void startSendingData()  {
+  //   // 주기적으로 데이터 보내기
+  //   sendPoseDataToApi();
+  // }
 
   // 포즈 데이터를 API로 보내는 메소드
-  void sendPoseDataToApi() async {
+  Future<String> sendPoseDataToApi() async {
     List<Map<String, Map<String, int>>> poseDataList = [];
 
     // 각 포즈에 대해 부위별로 순서대로 데이터를 추출
@@ -57,7 +64,7 @@ class PoseDataSender {
 
     // workoutName과 poseDataList를 포함하는 새로운 맵 생성
     Map<String, dynamic> workoutData = {
-      'workoutName': 'standing knee up',  // 운동 이름
+      'workoutName': 'standingKneeUp',  // 운동 이름
       'points': poseDataList,  // poseDataList를 'points'로 포함
     };
 
@@ -67,7 +74,7 @@ class PoseDataSender {
     // API로 POST 요청 보내기
     try {
       final response = await http.post(
-        Uri.parse('https://a137-35-245-182-170.ngrok-free.app/getPoseResult'),  // 요청할 API URL
+        Uri.parse('https://cdc4-34-66-141-44.ngrok-free.app/getPoseResult'),  // 요청할 API URL
         headers: {
           'Content-Type': 'application/json',  // JSON 형식으로 보내기 위한 헤더
         },
@@ -77,11 +84,27 @@ class PoseDataSender {
       if (response.statusCode == 200) {
         print('Pose data sent successfully!');
         print(response.body);  // 서버의 응답 내용 출력
+        // 응답 본문을 JSON으로 파싱
+        final data = jsonDecode(response.body);
+
+        // 'message' 부분만 추출
+        final message = data['message'];
+
+        // 'message'는 리스트이므로 첫 번째 요소만 가져오고, 그 안의 첫 번째 문자열을 가져옵니다
+        if (message is List && message.isNotEmpty) {
+          final messageString = message[0][0]; // 첫 번째 리스트, 첫 번째 문자열
+          print("결과값: ${messageString}");
+          return messageString;
+        } else {
+          return "No message found";
+        }
       } else {
         print('Failed to send pose data: ${response.statusCode}');
+        throw Exception('Failed to load data');
       }
     } catch (e) {
       print('Error sending pose data: $e');
+      throw Exception('Failed');
     }
   }
 }

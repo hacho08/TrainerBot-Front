@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:dx_project_app/real_exercise.dart';
+
 import 'test_real_exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -63,7 +65,7 @@ class _TestCountdownPageState extends State<TestCountdownPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => TestRealExercisePage(
+        builder: (context) => RealExercisePage(
             sets: 2,
             exercises: widget.exercises,
             currentIndex: widget.currentIndex),

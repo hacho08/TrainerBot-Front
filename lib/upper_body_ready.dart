@@ -48,7 +48,7 @@ class _UpperBodyReadyPageState extends State<UpperBodyReadyPage> {
     _startCountdown();
 
     // 1분 후 다른 페이지로 이동
-    Future.delayed(Duration(minutes: 1), () {
+    Future.delayed(Duration(seconds: _countdown), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => TotalDemonstrateExercisePage(currentIndex: 0)),  // NextPage로 이동

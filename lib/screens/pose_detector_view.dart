@@ -24,12 +24,13 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   late Timer _timer; // Timer 변수 추가
   List<Pose> _currentPoses = []; // 현재 포즈 데이터를 저장할 변수
   InputImage? _currentImage; // 마지막에 처리한 이미지 저장
+  String _feedbackMessage = ""; // 서버로부터 받은 메시지를 저장할 변수
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
       print("called");
       addPoses(_currentImage!);
     });
@@ -45,8 +46,11 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Transform(
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
+    return Stack(
+      children: [Transform(
         alignment: Alignment.center,
         transform: Matrix4.rotationY(pi), // 좌우 반전 제거하는 설정
         child: CameraView(
@@ -59,6 +63,26 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           },
         ),
       ),
+      // 서버로부터 받은 메시지를 표시하는 부분
+      if (_feedbackMessage.isNotEmpty) ...[
+        Padding(
+          padding: EdgeInsets.all(screenWidth * 0.05),
+            child: Column(
+              children: [
+                SizedBox(height: screenHeight * 0.2),
+                Text(
+                '$_feedbackMessage',
+                style: TextStyle(
+                  fontSize: screenWidth * 0.06,
+                  fontFamily: "PaperlogySemiBold",
+                  color: Color(0xFFCC4343),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ],
     );
   }
 
@@ -104,15 +128,34 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   // 포즈 데이터를 서버로 보내는 메소드
   void sendPoseData() {
     if (_currentPoses.isNotEmpty) {
-      PoseDataSender(_currentPoses, "pose_data.json").startSendingData();
-      print('Sending pose data to API');
+      // PoseDataSender(_currentPoses, "pose_data.json").sendPoseDataToApi();
+      // print('Sending pose data to API');
 
-      // 전송 후 _currentPoses 초기화
-      setState(() {
-        _currentPoses.clear();  // 데이터 전송 후 초기화
+      PoseDataSender(_currentPoses, "pose_data.json").sendPoseDataToApi().then((message) {
+        setState(() {
+          _feedbackMessage = message;  // 서버 응답을 상태로 업데이트
+          _showFeedbackMessage(_feedbackMessage);
+        });
+        print('Server response: $message');
       });
+      // // 전송 후 _currentPoses 초기화
+      // setState(() {
+      //   _currentPoses.clear();  // 데이터 전송 후 초기화
+      // });;
     }
   }
+  // void sendPoseData() {
+  //   if (_currentPoses.isNotEmpty) {
+  //     String feedbackMessage = PoseDataSender(_currentPoses, "pose_data.json").startSendingData() as String;
+  //     print('Sending pose data to API');
+  //
+  //     // // 전송 후 _currentPoses 초기화
+  //     // setState(() {
+  //     //   _currentPoses.clear();  // 데이터 전송 후 초기화
+  //     // });
+  //     print("mesage!!!!!!: $feedbackMessage");
+  //   }
+  // }
 
   void addPoses(InputImage inputImage) async {
     if (inputImage.metadata?.size != null && inputImage.metadata?.rotation != null) {
@@ -125,8 +168,25 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         print("length ${_currentPoses.length}");
         if (_currentPoses.length >= 17) {
           sendPoseData();  // 17개가 되면 서버로 전송
+          setState(() {
+            _currentPoses.clear();  // 데이터 전송 후 초기화
+          });
         }
       }
     }
+  }
+
+  // 5초 후에 메시지를 사라지게 하는 함수
+  void _showFeedbackMessage(String message) {
+    setState(() {
+      _feedbackMessage = message;
+    });
+
+    // 5초 후에 메시지 지우기
+    _timer = Timer(Duration(seconds: 5), () {
+      setState(() {
+        _feedbackMessage = ''; // 메시지를 비움
+      });
+    });
   }
 }
