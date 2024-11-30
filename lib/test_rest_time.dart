@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:dx_project_app/today_exercise_finish.dart';
+
 import 'total_demonstrate_exercise.dart';
 import 'upper_and_lower_body_final.dart';
 import 'test_real_exercise.dart';
@@ -68,31 +70,31 @@ class _TestRestTimePageState extends State<TestRestTimePage> {
   // 카운트다운이 끝나면 운동 페이지로 돌아가기
   void _goToExercisePage() {
     // currentSet이 0이면 TotalDemonstrateExercisePage로 넘어가고 currentIndex를 1 증가시킴
-    if(widget.currentSet-1!=0){
+    // if(widget.currentSet-1!=0){
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => TestRealExercisePage(sets: widget.currentSet-1, exercises: widget.exercises, currentIndex:widget.currentIndex),
+          builder: (context) => TodayExerciseFinishPage(),//TestRealExercisePage(sets: widget.currentSet-1, exercises: widget.exercises, currentIndex:widget.currentIndex),
         ),
       );
-    } else if (widget.currentIndex==1 && widget.currentSet-1==0) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => UpperAndLowerBodyFinalPage(),
-        ),
-      );
-    }
-    else if (widget.currentSet-1==0) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TotalDemonstrateExercisePage(
-            currentIndex: widget.currentIndex + 1, // currentIndex 1 증가
-          ),
-        ),
-      );
-    }
+    // } else if (widget.currentIndex==1 && widget.currentSet-1==0) {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => UpperAndLowerBodyFinalPage(),
+    //     ),
+    //   );
+    // }
+    // else if (widget.currentSet-1==0) {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => TotalDemonstrateExercisePage(
+    //         currentIndex: widget.currentIndex + 1, // currentIndex 1 증가
+    //       ),
+    //     ),
+    //   );
+    // }
   }
 
   @override

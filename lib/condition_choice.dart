@@ -1,3 +1,4 @@
+import 'package:dx_project_app/models/routine.dart';
 import 'package:flutter/material.dart';
 import 'condition_check.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -44,8 +45,17 @@ class _ConditionChoicePageState extends State<ConditionChoicePage> {
 
     try {
       // 서버에 컨디션 저장
-      await _todayConditionApi.addTodayCondition(widget.userId,condition);
+      print(condition + widget.userId);
+      Routine routine = await _todayConditionApi.addTodayCondition(widget.userId, condition);
       print('Condition successfully sent to the server');
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConditionCheckPage(condition: condition, routine: routine,),
+        ),
+      );
+
     } catch (e) {
       print('Failed to send condition to the server: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -59,12 +69,7 @@ class _ConditionChoicePageState extends State<ConditionChoicePage> {
       return; // 실패 시 아래 코드 실행 방지
     }
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ConditionCheckPage(condition: condition),
-      ),
-    );
+
   }
 
 

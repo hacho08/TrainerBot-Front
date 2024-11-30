@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/reservation.dart';
 
 class ReservationApi{
-  static const String baseUrl = "http://192.168.0.14:8090/api";
+  static const String baseUrl = "http://192.168.0.13:8090/api";
 
   // 예약 추가
   Future<void> addReservation(Reservation reservation) async {
