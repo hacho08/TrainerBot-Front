@@ -1,12 +1,37 @@
+import 'package:dx_project_app/models/routine.dart';
 import 'package:flutter/material.dart';
-import 'upper_body_info.dart'; // 다음 페이지 임포트
 import 'lower_body_info.dart';
+import 'upper_body_info.dart'; // 다음 페이지 임포트
 import 'package:flutter_tts/flutter_tts.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Routine exampleRoutine = Routine(
+      userId: '01011112222',
+      target: 'upper', // 예시 데이터 (예: upper body)
+      condition: '힘껏',
+      createdAt: DateTime.now(), routineId: 'aaaa',
+    );
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false, // 디버그 배너 제거
+      home: ConditionCheckPage(condition: '힘껏', routine: exampleRoutine,)
+    );
+  }
+}
 
 class ConditionCheckPage extends StatefulWidget {
   final String condition;
+  final Routine routine;
 
-  ConditionCheckPage({required this.condition});
+  ConditionCheckPage({required this.condition, required this.routine});
 
   @override
   _ConditionCheckPageState createState() => _ConditionCheckPageState();
@@ -39,12 +64,22 @@ class _ConditionCheckPageState extends State<ConditionCheckPage>{
   Widget build(BuildContext context) {
     // 2초 후에 다음 페이지로 이동
     Future.delayed(Duration(seconds: 4), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LowerBodyInfoPage(),
-        ),
-      );
+      if (widget.routine.target == 'upper') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => UpperBodyInfoPage(routine: widget.routine,)
+          ),
+        );
+      } else { // lower
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => LowerBodyInfoPage(routine: widget.routine,)
+          ),
+        );
+      }
+
     });
 
     return Scaffold(

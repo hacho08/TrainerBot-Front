@@ -1,24 +1,8 @@
+import 'main_login.dart';
 import 'package:flutter/material.dart';
-import 'package:dx_project_app/real_exercise.dart';
 import 'package:flutter/services.dart';
 import 'next_reservation_info.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false, // 디버그 배너 제거
-      home: TodayExerciseFinishPage(), // 시작 화면
-    );
-  }
-}
 
 class TodayExerciseFinishPage extends StatefulWidget {
   @override
@@ -79,7 +63,13 @@ class _TodayExerciseFinishPageState extends State<TodayExerciseFinishPage> {
                             size: screenWidth * 0.1,
                           ),
                           onPressed: () {
-                            SystemNavigator.pop();  // 앱을 종료
+                            // 메인(로그인/회원가입) 페이지로 이동
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainLoginPage(),
+                              ),
+                            );
                           },
                         ),
                       ),
@@ -126,7 +116,7 @@ class _TodayExerciseFinishPageState extends State<TodayExerciseFinishPage> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NextExerciseReservationPage(), // 여기에 실제 운동 예약 페이지로 이동하는 코드 넣기
+                    builder: (context) => NextExerciseReservationPage(),
                   ),
                 );
               },

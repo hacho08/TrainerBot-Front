@@ -71,7 +71,7 @@ class _NameState extends State<Name> {
     final height = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     String input = _controller.text; // TextField에서 입력된 값을 실시간으로 가져오기
-
+    print("screenWidth ${screenWidth} screenHeight ${height}");
     return Scaffold(
       body: Column(
         children: [

@@ -1,22 +1,33 @@
 import 'dart:async';
-import 'package:dx_project_app/countdown.dart';
+import 'test_countdown.dart';
 import 'package:flutter/material.dart';
 
-class BeforeCountdownPage extends StatefulWidget {
+class TestBeforeCountdownPage extends StatefulWidget {
+  final List<Map<String, dynamic>> exercises;
+  final int currentIndex; // 현재 운동 인덱스
+
+// 생성자를 통해 exercises 리스트를 받음
+  TestBeforeCountdownPage(
+      {required this.exercises, required this.currentIndex});
+
   @override
-  _BeforeCountdownPageState createState() => _BeforeCountdownPageState();
+  _TestBeforeCountdownPageState createState() =>
+      _TestBeforeCountdownPageState();
 }
 
-class _BeforeCountdownPageState extends State<BeforeCountdownPage> {
-
+class _TestBeforeCountdownPageState extends State<TestBeforeCountdownPage> {
   @override
   void initState() {
     super.initState();
-    // 페이지가 띄워진 후 1초 뒤에 다른 페이지로 이동
+    print("2번 페이지 currentIndex: ${widget.currentIndex}");
+// 페이지가 띄워진 후 1초 뒤에 다른 페이지로 이동
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => CountdownPage()),
+        MaterialPageRoute(
+            builder: (context) => TestCountdownPage(
+                exercises: widget.exercises,
+                currentIndex: widget.currentIndex)),
       );
     });
   }
@@ -32,15 +43,14 @@ class _BeforeCountdownPageState extends State<BeforeCountdownPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // "3초 후 시작합니다" 텍스트
+// "3초 후 시작합니다" 텍스트
             Text(
               '3초 후\n시작합니다',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: screenWidth * 0.15, // 화면 크기에 맞춰 숫자 크기 설정
+                  fontSize: screenWidth * 0.15, // 화면 크기에 맞춰 숫자 크기 설정
                   fontFamily: 'PaperlogySemiBold',
-                  color: Color(0xFF265A5A)
-              ),
+                  color: Color(0xFF265A5A)),
             ),
           ],
         ),

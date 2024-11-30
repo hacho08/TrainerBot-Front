@@ -1,10 +1,25 @@
+import 'phone_number.dart';
 import 'package:flutter/material.dart';
 import 'main_login.dart'; // main_login.dart 파일을 import
+import 'next_reservation_info.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:camera/camera.dart';
 
-void main() {
+// 카메라 목록 변수
+List<CameraDescription> cameras = [];
+
+Future<void> main() async {
+  // 비동기 메서드를 사용함
+  WidgetsFlutterBinding.ensureInitialized();
+  // 사용 가능한 카메라 목록 받아옴
+  cameras = await availableCameras();
+  // 앱 실행
   runApp(const MyApp());
 }
+
+// void main() {
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,6 +33,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -27,6 +43,8 @@ class SplashScreen extends StatefulWidget {
 }
 class _SplashScreenState extends State<SplashScreen>{
   late FlutterTts _flutterTts;
+
+
 
   @override
   void initState() {
@@ -46,6 +64,7 @@ class _SplashScreenState extends State<SplashScreen>{
   void dispose() {
     _flutterTts.stop(); // 페이지 종료 시 TTS 중지
     super.dispose();
+
   }
 
   @override
@@ -76,6 +95,12 @@ class _SplashScreenState extends State<SplashScreen>{
                 fontWeight: FontWeight.bold,
               ),
             ),
+            TextButton(onPressed: (){
+              print('I clicked');
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => PoseDetectionPage(cameras: cameras)))
+            },
+            child: Text('포즈'))
           ],
         ),
       ),

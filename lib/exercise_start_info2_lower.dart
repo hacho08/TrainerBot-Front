@@ -1,13 +1,13 @@
-import 'upper_body_ready.dart';
+import 'lower_body_ready.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-class ExerciseStartInfo2Page extends StatefulWidget {
+class ExerciseStartInfo2LowerPage extends StatefulWidget {
   @override
-  _ExerciseStartInfo2PageState createState() => _ExerciseStartInfo2PageState();
+  _ExerciseStartInfo2LowerPageState createState() => _ExerciseStartInfo2LowerPageState();
 }
 
-class _ExerciseStartInfo2PageState extends State<ExerciseStartInfo2Page> {
+class _ExerciseStartInfo2LowerPageState extends State<ExerciseStartInfo2LowerPage> {
   late FlutterTts _flutterTts;
 
   @override
@@ -21,7 +21,7 @@ class _ExerciseStartInfo2PageState extends State<ExerciseStartInfo2Page> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => UpperBodyReadyPage(),
+          builder: (context) => LowerBodyReadyPage(),
         ),
       );
     });
@@ -64,7 +64,7 @@ class _ExerciseStartInfo2PageState extends State<ExerciseStartInfo2Page> {
             SizedBox(height: screenHeight * 0.06),
             _buildInfoBox(context, '운동 시간', '1시간', screenWidth, screenHeight),
             SizedBox(height: screenHeight * 0.02),
-            _buildInfoBox(context, '운동 부위', '상체', screenWidth, screenHeight),
+            _buildInfoBox(context, '운동 부위', '하체', screenWidth, screenHeight),
             SizedBox(height: screenHeight * 0.02),
             _buildInfoBox(context, '운동 갯수', '4가지', screenWidth, screenHeight),
           ],

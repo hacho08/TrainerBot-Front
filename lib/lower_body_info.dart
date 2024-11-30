@@ -1,8 +1,14 @@
+import 'package:dx_project_app/models/routine.dart';
 import 'package:flutter/material.dart';
 import 'excercise_start_info.dart'; // exercise_start_info 페이지를 import하세요.
 import 'package:flutter_tts/flutter_tts.dart';
 
 class LowerBodyInfoPage extends StatefulWidget {
+  final Routine routine; // 예시로 target이라는 파라미터를 받는다고 가정
+
+  // 생성자에서 target을 받도록 설정
+  LowerBodyInfoPage({required this.routine});
+
 
   _LowerBodyInfoPageState createState() => _LowerBodyInfoPageState();
 
@@ -41,7 +47,7 @@ class _LowerBodyInfoPageState extends State<LowerBodyInfoPage>{
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => ExcerciseStartInfoPage(), // 이동할 페이지
+          builder: (context) => ExcerciseStartInfoPage(routine: widget.routine,), // 이동할 페이지
         ),
       );
     });

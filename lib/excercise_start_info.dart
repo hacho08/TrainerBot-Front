@@ -1,23 +1,40 @@
-import 'package:dx_project_app/condition_choice.dart';
+import 'package:dx_project_app/models/routine.dart';
+import 'package:dx_project_app/models/workout.dart';
+import 'package:dx_project_app/services/workout_api.dart';
 import 'package:flutter/material.dart';
-import 'condition_choice.dart';
 import 'exercise_start_info2.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class ExcerciseStartInfoPage extends StatefulWidget {
-  const ExcerciseStartInfoPage({super.key});
+
+  final Routine routine; // 예시로 target이라는 파라미터를 받는다고 가정
+
+  // 생성자에서 target을 받도록 설정
+  ExcerciseStartInfoPage({required this.routine});
+
 
   _ExcerciseStartInfoPageState createState() => _ExcerciseStartInfoPageState();
 }
 
 class _ExcerciseStartInfoPageState extends State<ExcerciseStartInfoPage>{
   late FlutterTts _flutterTts;
+  final WorkoutApi workoutApi = WorkoutApi();
 
   @override
-  void initState() {
+  void initState()  {
     super.initState();
+    // api 호출
+    print("출력 체크1");
+    //getWorkouts();
+    print("출력 체크2");
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 실행
+  }
+
+  Future<void> getWorkouts() async {
+    print("출력 체크3");
+    List<Workout> workoutList = await workoutApi.getWorkouts(widget.routine.userId, widget.routine.routineId);
+    print("출력체크4 $workoutList");
   }
 
   Future<void> _initializeTts() async {
