@@ -55,21 +55,34 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
       );
 
       // API 호출로 예약 저장
-      await reservationApi.addReservation(reservation);
+      final statusCode = await reservationApi.addReservation(reservation);
 
-      // 예약 저장 성공 후 다음 페이지로 이동
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => NextReservationCheckPage(),
-        ),
-      );
+      if (statusCode == 200) {
+        // 예약 저장 성공 후 다음 페이지로 이동
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NextReservationCheckPage(),
+          ),
+        );
+      } else {
+        // 실패 상태 코드 처리
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '예약 저장에 실패했습니다. 오류 코드: $statusCode',
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        );
+      }
+
     } catch (e) {
-      // 오류 발생 시 사용자에게 알림
+      // 네트워크 또는 기타 예외 처리
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            '예약 저장에 실패했습니다. 다시 시도해주세요.',
+            '오류가 발생했습니다. 다시 시도해주세요.',
             style: TextStyle(fontSize: 16),
           ),
         ),
