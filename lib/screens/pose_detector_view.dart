@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'dart:async';
+import 'package:dx_project_app/main_login.dart';
+import 'package:dx_project_app/utils/pose/pose_monitor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
@@ -22,25 +24,45 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   CustomPaint? _customPaint;
 
   late Timer _timer; // Timer 변수 추가
+  late PoseMonitor _poseMonitor;  // PoseMonitor 인스턴스
+
   List<Pose> _currentPoses = []; // 현재 포즈 데이터를 저장할 변수
   InputImage? _currentImage; // 마지막에 처리한 이미지 저장
   String _feedbackMessage = ""; // 서버로부터 받은 메시지를 저장할 변수
+  bool _fallDetected = false; // 넘어짐 감지 여부
+  Timer? _motionTimer;
+  int fallCount = 0;
+  String workoutName = "standingKneeUp";
+
+  // late final Function(bool) onExerciseCompletedToReal;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _timer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
-      print("called");
       addPoses(_currentImage!);
     });
+
+    _poseMonitor = PoseMonitor(_poseDetector, _updateReportMessage, _onExerciseCompleted);  // PoseMonitor 초기화
+
   }
+
+  void _onExerciseCompleted(bool completed) {
+
+  }
+
+  void _updateReportMessage(String message) {
+    _showFeedbackMessage(message);
+  }
+
 
   @override
   void dispose() {
     _canProcess = false;
     _poseDetector.close();
     _timer.cancel(); // 타이머 종료
+    _motionTimer?.cancel();
     super.dispose();
   }
 
@@ -111,6 +133,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         );
         _customPaint = CustomPaint(painter: painter);
 
+
       } else {
         print('No pose detected');
         _customPaint = null;
@@ -128,8 +151,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   // 포즈 데이터를 서버로 보내는 메소드
   void sendPoseData() {
     if (_currentPoses.isNotEmpty) {
-      // PoseDataSender(_currentPoses, "pose_data.json").sendPoseDataToApi();
-      // print('Sending pose data to API');
 
       PoseDataSender(_currentPoses, "pose_data.json").sendPoseDataToApi().then((message) {
         setState(() {
@@ -138,24 +159,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         });
         print('Server response: $message');
       });
-      // // 전송 후 _currentPoses 초기화
-      // setState(() {
-      //   _currentPoses.clear();  // 데이터 전송 후 초기화
-      // });;
     }
   }
-  // void sendPoseData() {
-  //   if (_currentPoses.isNotEmpty) {
-  //     String feedbackMessage = PoseDataSender(_currentPoses, "pose_data.json").startSendingData() as String;
-  //     print('Sending pose data to API');
-  //
-  //     // // 전송 후 _currentPoses 초기화
-  //     // setState(() {
-  //     //   _currentPoses.clear();  // 데이터 전송 후 초기화
-  //     // });
-  //     print("mesage!!!!!!: $feedbackMessage");
-  //   }
-  // }
+
 
   void addPoses(InputImage inputImage) async {
     if (inputImage.metadata?.size != null && inputImage.metadata?.rotation != null) {
@@ -172,6 +178,42 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
             _currentPoses.clear();  // 데이터 전송 후 초기화
           });
         }
+      }
+
+      print("fall detected: ${_fallDetected}, ");
+      // 포즈 모니터링
+      if (_fallDetected == false) {
+        if(_poseMonitor.isPersonFallen(poses.first)) {
+          _showFeedbackMessage("넘어짐이 감지되었습니다.\n5초 이상 움직임이 없다면 자동 신고됩니다.");
+          _fallDetected = true;
+        }
+        //_poseMonitor.startMonitoring(pose);  // 포즈 모니터링 시작
+      } else{
+        if(_poseMonitor.isPersonFallen(poses.first)) {
+          fallCount += 1;
+        } else {
+          fallCount = 0;
+          _fallDetected = false;
+        }
+      }
+
+      if (fallCount == 5) {
+        if (_fallDetected) {
+          _showFeedbackMessage("신고되었습니다.");
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => MainLoginPage()),
+          );
+        } else {
+          fallCount = 0;
+          _fallDetected = false;
+        }
+      }
+
+      if(_poseMonitor.isKneeUp(poses.first)) {
+        print("knee up");
+      } else {
+        print("knee down");
       }
     }
   }

@@ -66,7 +66,7 @@ class _TestCountdownPageState extends State<TestCountdownPage> {
       context,
       MaterialPageRoute(
         builder: (context) => RealExercisePage(
-            sets: 2,
+            sets: 1,
             exercises: widget.exercises,
             currentIndex: widget.currentIndex),
       ),

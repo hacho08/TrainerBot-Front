@@ -45,16 +45,16 @@ class _TotalDemonstrateExercisePageState
       'type': '상체운동',
       'name': '스탠딩 니업',
       'videoPath': 'video/standing_knee_up.mp4',
-      'tts': '첫 번째 운동을 시작합니다',
+      'tts': '첫 번째 운동을 배워봅시다. 운동 시에는 정면을 바라봐주시고 연습이 완료되면 운동시작 버튼을 눌러주세요',
     },
-    {
-      //index 1
-      'index': 1,
-      'type': '상체운동',
-      'name': '덤벨 컬',
-      'videoPath': 'video/dumbbell_curl.mp4',
-      'tts': '두 번째 운동을 시작합니다',
-    },
+    // {
+    //   //index 1
+    //   'index': 1,
+    //   'type': '상체운동',
+    //   'name': '덤벨 컬',
+    //   'videoPath': 'video/dumbbell_curl.mp4',
+    //   'tts': '두 번째 운동을 시작합니다. 운동 시에는 정면을 바라봐주세요.',
+    // },
 // { //index 2
 //   'index': 2,
 //   'type': '하체운동',
@@ -76,22 +76,36 @@ class _TotalDemonstrateExercisePageState
     super.initState();
     _flutterTts = FlutterTts();
     _currentIndex = widget.currentIndex;
+    _initializeTts();
     _loadExercise();
     print("1번 페이지 currentIndex: ${widget.currentIndex}");
+  }
+
+  Future<void> _initializeTts() async {
+    await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
+    await _flutterTts.setLanguage("ko-KR");
+    await _flutterTts.setSpeechRate(0.5);
+    await _flutterTts.speak('첫 번째 운동을 배워봅시다. 실제 운동 시에는 정면을 바라봐주시고 연습이 완료되면 운동시작 버튼을 눌러주세요');
   }
 
 // 운동을 로드하고 TTS 설정
   Future<void> _loadExercise() async {
     var currentExercise = exercises[_currentIndex];
-    await _flutterTts.setLanguage("ko-KR");
-    await _flutterTts.setSpeechRate(0.5);
-    await _flutterTts.speak(currentExercise['tts']);
     _controller = VideoPlayerController.asset(currentExercise['videoPath'])
       ..initialize().then((_) {
-        setState(() {});
+        // 비디오 초기화가 완료된 후 setState 호출
+        if (mounted) {
+          setState(() {});  // controller 초기화가 완료된 후 화면 갱신
+        }
       })
       ..setLooping(true)
       ..play();
+
+
+    // await _flutterTts.setLanguage("ko-KR");
+    // await _flutterTts.setSpeechRate(0.5);
+    // await _flutterTts.speak('첫 번째 운동을 배워봅시다. 실제 운동 시에는 정면을 바라봐주시고 연습이 완료되면 운동시작 버튼을 눌러주세요');
+
   }
 
   @override

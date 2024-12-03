@@ -45,6 +45,7 @@ class _ConditionCheckPageState extends State<ConditionCheckPage>{
     super.initState();
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 실행
+    widget.routine.condition = widget.condition;
   }
 
   Future<void> _initializeTts() async {

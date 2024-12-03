@@ -13,6 +13,39 @@ class MainLoginPage extends StatefulWidget {
 }
 
 class _MainLoginPageState extends State<MainLoginPage>{
+  List<Map<String, dynamic>> exercises = [
+    {
+      //index 0
+      'index': 0,
+      'type': '상체운동',
+      'name': '스탠딩 니업',
+      'videoPath': 'video/standing_knee_up.mp4',
+      'tts': '첫 번째 운동을 시작합니다',
+    },
+    {
+      //index 1
+      'index': 1,
+      'type': '상체운동',
+      'name': '덤벨 컬',
+      'videoPath': 'video/dumbbell_curl.mp4',
+      'tts': '두 번째 운동을 시작합니다',
+    },
+// { //index 2
+//   'index': 2,
+//   'type': '하체운동',
+//   'name': '사이드 런지',
+//   'videoPath': 'video/dumbbell_curl.mp4',
+//   'tts': '첫 번째 운동을 시작합니다',
+// },
+// { //index 3
+//   'index': 3,
+//   'type': '하체운동',
+//   'name': '바벨 데드리프트',
+//   'videoPath': 'video/dumbbell_curl.mp4',
+//   'tts': '두 번째 운동을 시작합니다',
+// }
+  ];
+
   late FlutterTts _flutterTts;
 
   @override
@@ -48,20 +81,20 @@ class _MainLoginPageState extends State<MainLoginPage>{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // ElevatedButton(onPressed: (){
-              //   Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => RealExercisePage()),
-              //   );
-              // },
-              //   child: Text(
-              //   'Pose Detection',
-              //   style: TextStyle(
-              //     fontFamily: "PaperlogySemiBold",
-              //     fontSize: width * 0.01, // 글자 크기 비율로 조정
-              //     ),
-              //   ),
-              // ),
+              ElevatedButton(onPressed: (){
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => RealExercisePage(exercises: exercises, sets: 1, currentIndex: 0, )),
+                );
+              },
+                child: Text(
+                'Pose Detection',
+                style: TextStyle(
+                  fontFamily: "PaperlogySemiBold",
+                  fontSize: width * 0.01, // 글자 크기 비율로 조정
+                  ),
+                ),
+              ),
               Image.asset(
                 "images/main_manse_image.png",
                 width: width * 0.3, // 이미지 크기 화면 비율에 맞게 조정

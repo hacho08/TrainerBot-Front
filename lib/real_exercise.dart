@@ -47,6 +47,22 @@ class _RealExercisePageState extends State<RealExercisePage> {
     await _flutterTts.setSpeechRate(0.5);
 // await _flutterTts.speak("첫 번째 운동을 시작합니다");
   }
+  // 운동 완료 여부를 받아서 처리하는 함수
+  // 운동 완료 여부에 따라 카운트 감소 처리
+  void onExerciseCompleted(bool completed) {
+    setState(() {
+      if (completed) {
+        _countdown--;
+        // if (targetSets <= 0) {
+        //    // = "운동이 완료되었습니다!";
+        //   _goToRestTime();
+        // }
+      } else {
+        // _feedbackMessage = "운동이 잘못되었습니다. 다시 시도해주세요.";
+      }
+    });
+  }
+
   void _startCountdown() {
     int time = 3;
     if (widget.exercises[_currentIndex]['name'] == "덤벨컬") {
@@ -151,7 +167,7 @@ class _RealExercisePageState extends State<RealExercisePage> {
                         children: [
                           SizedBox(height: 90),
                           Text(
-                            '남은 반복 횟수: $targetSets',  // 목표 갯수가 동적으로 변경
+                            '남은 반복 횟수: $targetSets',  // 세트 수가 동적으로 변경
                             style: TextStyle(
                               fontSize: 50,
                               fontFamily: "PaperlogySemiBold",

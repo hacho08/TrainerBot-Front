@@ -6,17 +6,19 @@ import '../models/routine.dart';
 import '../models/workout.dart';
 
 class WorkoutApi {
-  static const String baseUrl = "http://192.168.0.13:8090/api";  // Node.js 서버 주소
+  static const String baseUrl = "http://192.168.35.2:8090/api";  // Node.js 서버 주소
 
   // 데이터 삽입
-  Future<List<Workout>> getWorkouts(String userId, String routineId) async {
+  Future<List<Workout>> getWorkouts(String userId, String routineId, String target, String condition) async {
     final url = Uri.parse('$baseUrl/getWorkouts'); // API 엔드포인트
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'userId': userId,
-        'routineId': routineId, // condition 데이터를 전송
+        'routineId': routineId,
+        'target': target,
+        'condition': condition,
       }),
     );
 

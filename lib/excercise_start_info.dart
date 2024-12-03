@@ -24,16 +24,13 @@ class _ExcerciseStartInfoPageState extends State<ExcerciseStartInfoPage>{
   void initState()  {
     super.initState();
     // api 호출
-    print("출력 체크1");
     getWorkouts();
-    print("출력 체크2");
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 실행
   }
 
   Future<void> getWorkouts() async {
-    print("출력 체크3");
-    List<Workout> workoutList = await workoutApi.getWorkouts(widget.routine.userId, widget.routine.routineId);
+    List<Workout> workoutList = await workoutApi.getWorkouts(widget.routine.userId, widget.routine.routineId, widget.routine.target, widget.routine.condition);
     print("출력체크4 $workoutList");
   }
 

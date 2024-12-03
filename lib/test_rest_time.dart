@@ -78,7 +78,7 @@ class _TestRestTimePageState extends State<TestRestTimePage> {
           builder: (context) => RealExercisePage(sets: widget.currentSet-1, exercises: widget.exercises, currentIndex:widget.currentIndex),
         ),
       );
-    } else if (widget.currentIndex==1 && widget.currentSet-1==0) {
+    } else if (widget.currentIndex==0 && widget.currentSet-1==0) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

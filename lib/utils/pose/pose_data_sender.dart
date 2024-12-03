@@ -64,7 +64,7 @@ class PoseDataSender {
 
     // workoutName과 poseDataList를 포함하는 새로운 맵 생성
     Map<String, dynamic> workoutData = {
-      'workoutName': 'standingKneeUp',  // 운동 이름
+      'workoutName': 'standingKneeUp',//'dumbbellCurl',//'standingKneeUp',  // 운동 이름
       'points': poseDataList,  // poseDataList를 'points'로 포함
     };
 
@@ -74,7 +74,7 @@ class PoseDataSender {
     // API로 POST 요청 보내기
     try {
       final response = await http.post(
-        Uri.parse('https://cdc4-34-66-141-44.ngrok-free.app/getPoseResult'),  // 요청할 API URL
+        Uri.parse('https://01dd-35-194-155-66.ngrok-free.app/getPoseResult'),  // 요청할 API URL
         headers: {
           'Content-Type': 'application/json',  // JSON 형식으로 보내기 위한 헤더
         },
@@ -92,7 +92,8 @@ class PoseDataSender {
 
         // 'message'는 리스트이므로 첫 번째 요소만 가져오고, 그 안의 첫 번째 문자열을 가져옵니다
         if (message is List && message.isNotEmpty) {
-          final messageString = message[0][0]; // 첫 번째 리스트, 첫 번째 문자열
+          final messageString = message[0].join('\n'); // 첫 번째 리스트, 첫 번째 문자열
+          // String result = messages[0].join(', ');
           print("결과값: ${messageString}");
           return messageString;
         } else {

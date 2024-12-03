@@ -22,6 +22,7 @@ class _LowerBodyInfoPageState extends State<LowerBodyInfoPage>{
     super.initState();
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 실행
+    widget.routine.target = "lower";
   }
 
   Future<void> _initializeTts() async {

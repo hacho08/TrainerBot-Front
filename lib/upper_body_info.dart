@@ -20,6 +20,7 @@ class _UpperBodyInfoPageState extends State<UpperBodyInfoPage>{
     super.initState();
     _flutterTts = FlutterTts();
     _initializeTts(); // TTS 초기화 및 실행
+    widget.routine.target = "upper";
   }
 
   Future<void> _initializeTts() async {

@@ -27,7 +27,7 @@ class UpperBodyReadyPage extends StatefulWidget {
 class _UpperBodyReadyPageState extends State<UpperBodyReadyPage> {
   late FlutterTts _flutterTts;
   late VideoPlayerController _controller;
-  int _countdown = 20; // 카운트다운 초기값
+  int _countdown = 10; // 카운트다운 초기값
   late Timer _timer;
 
   @override
@@ -60,7 +60,7 @@ class _UpperBodyReadyPageState extends State<UpperBodyReadyPage> {
     await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
     await _flutterTts.setLanguage("ko-KR");
     await _flutterTts.setSpeechRate(0.5);
-    await _flutterTts.speak("준비운동을 시작합니다");
+    await _flutterTts.speak("준비운동을 시작합니다. 화면을 따라해주세요");
   }
 
   void _startCountdown() {
