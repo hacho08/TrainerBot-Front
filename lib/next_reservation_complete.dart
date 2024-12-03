@@ -10,7 +10,8 @@ class NextReservationCompletePage extends StatefulWidget {
   final String date;
   final String time;
 
-  NextReservationCompletePage({required this.date, required this.time});
+  NextReservationCompletePage({required this.date, required String time})
+      : this.time = time.replaceAll('\n', ' ');
 
   @override
   _NextReservationCompletePageState createState() =>
