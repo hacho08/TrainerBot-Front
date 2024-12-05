@@ -9,11 +9,10 @@ class PoseMonitor {
   bool _isFallen = false; // 넘어짐 상태를 추적하는 플래그
   bool _fallDetected = false; // 넘어짐 감지 여부
   Function(String) onReportTrigger;
-  final Function(bool) onExerciseCompleted;
 
 
 
-  PoseMonitor(this._poseDetector, this.onReportTrigger, this.onExerciseCompleted);
+  PoseMonitor(this._poseDetector, this.onReportTrigger);
 
   // 무릎이 올라갔는지 체크하는 함수
   bool isKneeUp(Pose pose) {
@@ -26,7 +25,7 @@ class PoseMonitor {
       double ankleAngle = calculateAngle(knee.x, knee.y, ankle.x, ankle.y);
 
       // 무릎이 올라갔는지 체크 (예: 각도가 90도 이상일 때)
-      if (kneeAngle < 90 && ankleAngle < 90) {
+      if (kneeAngle < 90 ) { ///&& ankleAngle < 90
         return true;  // 무릎이 충분히 올라갔을 때
       }
     }
@@ -44,7 +43,7 @@ class PoseMonitor {
       }
     }
       // 운동 완료 여부 확인 (예시로 무릎을 체크)
-    onExerciseCompleted(exerciseCompleted);  // 완료 여부를 콜백으로 전달
+    // onExerciseCompleted(exerciseCompleted);  // 완료 여부를 콜백으로 전달
   }
 
   // 사람이 넘어졌는지 감지하는 로직
@@ -125,7 +124,7 @@ class PoseMonitor {
       });
     }
 
-    isKneeUp(pose);
+    // isKneeUp(pose);
   }
 
   // 신고 트리거

@@ -130,6 +130,7 @@ class _RealExercisePageState extends State<RealExercisePage> {
           children: [
             Container(
               child: PoseDetectorView(),
+
             ),
             Padding(
               padding: EdgeInsets.all(screenWidth * 0.05),

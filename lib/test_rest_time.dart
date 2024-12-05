@@ -40,7 +40,7 @@ class _TestRestTimePageState extends State<TestRestTimePage> {
     await Future.delayed(Duration(seconds: 1)); // 1초 딜레이
     await _flutterTts.setLanguage("ko-KR");
     await _flutterTts.setSpeechRate(0.5);
-    await _flutterTts.speak("대단해요!! 1분간 휴식을 취해주세요");
+    await _flutterTts.speak("대단해요!! 5초간 휴식을 취해주세요");
   }
 
   @override

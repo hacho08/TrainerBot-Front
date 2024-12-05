@@ -58,7 +58,7 @@ class _NextReservationCompletePageState extends State<NextReservationCompletePag
       // API 호출로 예약 저장
       final statusCode = await reservationApi.addReservation(reservation);
 
-      if (statusCode == 200) {
+      if (statusCode == 200 || statusCode == 201) {
         // 예약 저장 성공 후 다음 페이지로 이동
         Navigator.pushReplacement(
           context,

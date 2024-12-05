@@ -11,10 +11,13 @@ import 'camera_view.dart';
 
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
+  // final Function(bool) onKneeRaised; // 콜백 함수 추가
+
   const PoseDetectorView({super.key});
 
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
+
 }
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
@@ -33,6 +36,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   Timer? _motionTimer;
   int fallCount = 0;
   String workoutName = "standingKneeUp";
+  int raiseCount = 0;
 
   // late final Function(bool) onExerciseCompletedToReal;
 
@@ -44,11 +48,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       addPoses(_currentImage!);
     });
 
-    _poseMonitor = PoseMonitor(_poseDetector, _updateReportMessage, _onExerciseCompleted);  // PoseMonitor 초기화
-
-  }
-
-  void _onExerciseCompleted(bool completed) {
+    _poseMonitor = PoseMonitor(_poseDetector, _updateReportMessage);  // PoseMonitor 초기화
 
   }
 
@@ -210,12 +210,21 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         }
       }
 
-      if(_poseMonitor.isKneeUp(poses.first)) {
-        print("knee up");
-      } else {
-        print("knee down");
-      }
+      // if(_poseMonitor.isKneeUp(poses.first)) {
+      //   print("knee up");
+      //   raiseCount ++;
+      //   if (raiseCount == 2) {
+      //     // 무릎을 두 번 들었을 때 콜백 호출
+      //     widget.onKneeRaised(true);
+      //     raiseCount = 0;
+      //
+      //   }
+      // } else {
+      //
+      //   print("knee down");
+      // }
     }
+
   }
 
   // 5초 후에 메시지를 사라지게 하는 함수

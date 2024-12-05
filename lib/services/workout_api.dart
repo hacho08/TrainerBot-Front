@@ -6,7 +6,7 @@ import '../models/routine.dart';
 import '../models/workout.dart';
 
 class WorkoutApi {
-  static const String baseUrl = "http://192.168.35.2:8090/api";  // Node.js 서버 주소
+  static const String baseUrl = "http://192.168.0.32:8090/api";  // Node.js 서버 주소
 
   // 데이터 삽입
   Future<List<Workout>> getWorkouts(String userId, String routineId, String target, String condition) async {

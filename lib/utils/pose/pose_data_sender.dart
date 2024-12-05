@@ -74,7 +74,7 @@ class PoseDataSender {
     // API로 POST 요청 보내기
     try {
       final response = await http.post(
-        Uri.parse('https://01dd-35-194-155-66.ngrok-free.app/getPoseResult'),  // 요청할 API URL
+        Uri.parse('https://c273-34-48-51-152.ngrok-free.app/getPoseResult'),  // 요청할 API URL
         headers: {
           'Content-Type': 'application/json',  // JSON 형식으로 보내기 위한 헤더
         },

@@ -27,7 +27,7 @@ class UpperAndLowerBodyFinalPage extends StatefulWidget {
 class _UpperAndLowerBodyFinalPageState extends State<UpperAndLowerBodyFinalPage> {
   late FlutterTts _flutterTts;
   late VideoPlayerController _controller;
-  int _countdown = 20; // 카운트다운 초기값
+  int _countdown = 5; // 카운트다운 초기값
   late Timer _timer;
 
   @override
@@ -48,7 +48,7 @@ class _UpperAndLowerBodyFinalPageState extends State<UpperAndLowerBodyFinalPage>
     _startCountdown();
 
     // 1분 후 다른 페이지로 이동
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => TodayExerciseFinishPage()),  // NextPage로 이동

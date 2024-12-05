@@ -81,20 +81,6 @@ class _MainLoginPageState extends State<MainLoginPage>{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(onPressed: (){
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => RealExercisePage(exercises: exercises, sets: 1, currentIndex: 0, )),
-                );
-              },
-                child: Text(
-                'Pose Detection',
-                style: TextStyle(
-                  fontFamily: "PaperlogySemiBold",
-                  fontSize: width * 0.01, // 글자 크기 비율로 조정
-                  ),
-                ),
-              ),
               Image.asset(
                 "images/main_manse_image.png",
                 width: width * 0.3, // 이미지 크기 화면 비율에 맞게 조정
@@ -170,6 +156,30 @@ class _MainLoginPageState extends State<MainLoginPage>{
                         fontSize: width * 0.08, // 글자 크기 비율로 조정
                       ),
                     ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  SizedBox(height: height * 0.05),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+                    children: [
+                      Center(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => RealExercisePage(exercises: exercises, sets: 1, currentIndex: 0, )),
+                              );
+                            },
+                            child: Text(
+                              'Pose Detection',
+                              style: TextStyle(fontSize: 5, color: Colors.black),
+                            ),
+                          ),
+                      ),
+                    ]
                   ),
                 ],
               ),
